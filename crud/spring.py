@@ -2,302 +2,157 @@
 
 import argparse
 import os
-from template import *
+from springCLI.template import *
+import springCLI.java_class_content as jcc
+from springCLI.utils.FileUtils import *
 
 parser = argparse.ArgumentParser(description='Generate a basic Java class')
 parser.add_argument('-cname', '--class-name', nargs='+', required=True, help='Name of the class(es) to create')
-parser.add_argument('-pck', '--package', required=True, help='Package name (e.g. "com.example.mypackage")')
+parser.add_argument('-pck', '--package', action='store_true', help='Package name (e.g. "com.example.mypackage")')
 parser.add_argument('-a', '--all', action='store_true', help='Create all basic classes')
 parser.add_argument('-ctrl', '--controller', action='store_true', help='Create a Spring controller')
 parser.add_argument('-srv', '--service', action='store_true', help='Create a Spring service')
 parser.add_argument('-m', '--mapper', action='store_true', help='Create a Spring mapper using mapstruct')
-parser.add_argument('-rep', '--repository', action='store_true', help='Create a JPA Repository using an Integer as a primary key')
-parser.add_argument('-e', '--entity', action='store_true', help='Create a JPA Repository using an Integer as a primary key')
+parser.add_argument('-rep', '--repository', action='store_true', help='Create a JPA Repository using a Long as a primary key')
+parser.add_argument('-e', '--entity', action='store_true', help='Create an Entity with a Long as a primary key')
 parser.add_argument('-c', '--crud', action='store_true', help='Write basic REST methods into classes')
 parser.add_argument('-dto', '--dto', action='store_true', help='Creates a DTO of the entity')
+parser.add_argument('-lucas', '--lucas', action='store_true', help='LUCAS')
 
 
 args = parser.parse_args()
+package_name = XmlParser.get_package_from_pom()
+package_dir = "src/main/java/" + package_name.replace('.', '/') + (args.package.replace('.', '/')if args.package else '')
+file_writer = FileWriter(package_name, package_dir)
 
-def write(template:Template):
-    controller_dir = os.path.join(package_dir, 'entity' if template.nom == '' else template.nom.lower())
-    if not os.path.exists(controller_dir):
-        os.makedirs(controller_dir)
-    class_file = os.path.join(controller_dir, template.class_name + template.nom + '.java')
-    class_template = template.template.format(
-        package=args.package,
-        class_name=template.class_name,
-        imports=template.imports,
-        body=template.body,
-        class_name_lower=class_name.lower()
-    )
-    with open(class_file, 'w') as f:
-        f.write(class_template)
+
+#Create a template for each java class type
+controller = JavaClass(
+    'Controller',
+    jcc.template,
+    imports=jcc.controller['imports'],
+    annotations=jcc.controller['annotations']
+
+
+   )
+
+service = JavaClass(
+    'Service',
+    jcc.template,
+    imports=jcc.service['imports'],
+    annotations=jcc.service['annotations']
+)
+
+mapper = JavaClass(
+    'Mapper',
+    jcc.template,
+    imports=jcc.mapper['imports'],
+    annotations=jcc.mapper['annotations'],
+    class_type='interface'
+)
+
+entity = JavaClass(
+    '',
+    jcc.template,
+    imports=jcc.entity['imports'],
+    annotations=jcc.entity['annotations'],
+    body=jcc.entity['body']
+)
+
+
+dto = JavaClass(
+    'Dto',
+    jcc.template,
+    imports=jcc.dto['imports'],
+    annotations=jcc.dto['annotations'],
+    body=jcc.dto['body']
+)
+
+repo = JavaClass(
+    'Repository',
+    jcc.template,
+    annotations=jcc.repository['annotations'],
+    class_type='interface'
+)
+
+if args.lucas:
+    file_writer.write_abstract_classes()
+
 
 for class_name in args.class_name:
     # Create the package directory if it doesn't exist
-    package_dir = "src/main/java/" + args.package.replace('.', '/')
     if not os.path.exists(package_dir):
         os.makedirs(package_dir)
 
     # Create the Java class file
     class_file = os.path.join(package_dir, class_name + '.java')
 
+    #Setting up the class name for the filewriter
+    file_writer.class_name = class_name
 
-    #Create a template for each java class type
-    controller = Template(
-        'Controller',
-        '''package {package}.controller;
+    # Setting up imports for every class type
+    repo.imports=jcc.repository['imports'].format(package=package_name, class_name=class_name)
+    controller.imports=jcc.controller['imports']
+    service.imports=jcc.service['imports']
+    entity.imports=jcc.entity['imports']
+    dto.imports=jcc.dto['imports']
+    mapper.imports=jcc.mapper['imports']
 
-{imports}
-
-@RestController
-@RequiredArgsConstructor
-@RequestMapping("api/v1/{class_name_lower}")
-public class {class_name}Controller {{
-{body}
-}}
-        ''',
-        imports='''import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;''',
-        class_name=class_name
-
-    )
+    repo.extends = jcc.repository['extends'].format(class_name=class_name)
 
 
-
-    service = Template(
-        'Service',
-        '''package {package}.service;
-
-{imports}
-
-@Service
-@Validated
-@RequiredArgsConstructor
-public class {class_name}Service {{
-{body}
-}}
-    ''',
-        imports='''import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;''',
-        class_name=class_name
-    )
-
-
-
-    mapper = Template(
-        'Mapper',
-        '''package {package}.mapper;
-
-{imports}
-
-@Mapper(componentModel = "spring")
-public interface {class_name}Mapper {{
-{body}
-}}
-    ''',
-        imports='import org.mapstruct.Mapper;',
-        class_name=class_name
-        )
-
-
-
-    entity = Template(
-        '',
-        '''package {package}.entity;
-
-{imports}
-
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
-@Entity
-@Builder
-public class {class_name} {{
-    @Id()
-    private Integer id;
-    
-}}
-    ''',
-        imports='''
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-    ''',
-        class_name=class_name
-    )
-
-
-    dto = Template(
-        'Dto',
-        '''package {package}.dto;
-
-{imports}
-
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
-@Builder
-public class {class_name}Dto {{
-    private Integer id;
-}}
-    ''',
-        imports='''
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-    ''',
-        class_name=class_name
-    )
-
-    repo = Template(
-        'Repository',
-        '''package {package}.repository;
-
-{imports}
-
-import java.util.Optional;
-
-public interface {class_name}Repository extends JpaRepository<{class_name}, Long> {{
-}}
-    ''',
-        imports='''import {package}.entity.{class_name};
-import org.springframework.data.jpa.repository.JpaRepository;
-    '''.format(package=args.package, class_name=class_name),
-        class_name=class_name
-        )
-
-
-    #gestion des arguments
+    # Handle the args
     if args.crud:
-        controller.body = '''
-            private final {class_name}Service service;
 
-    @GetMapping("all")
-    public ResponseEntity<List<{class_name}>> getAll{class_name}(){{
-        return ResponseEntity.ok(service.findAll());
-    }}
-
-    @GetMapping("/{{id}}")
-    public ResponseEntity<{class_name}Dto> get{class_name}(@PathVariable Long id){{
-        return ResponseEntity.ok(service.find(id));
-    }}
-
-    @PostMapping
-    public ResponseEntity<{class_name}Dto> save{class_name}(@RequestBody {class_name}Dto dto){{
-        return ResponseEntity.ok(service.save(dto));
-    }}
-
-    @PatchMapping("/{{id}}")
-    public ResponseEntity<{class_name}Dto> changeA(@PathVariable Long id, @RequestBody {class_name}Dto dto){{
-        return ResponseEntity.ok(service.change(id, dto));
-    }}
-
-    @DeleteMapping("{{id}}")
-    public ResponseEntity<Map<String, String>> delete{class_name}(@PathVariable Long id){{
-        return ResponseEntity.ok(service.delete(id));
-    }}
-        '''.format(class_name=controller.class_name)
-
-        controller.imports +='''
+        if args.lucas:
+            controller.annotations = '''
+@RestController
+@RequestMapping("api/v1/{class_name_lower}")'''.format(class_name_lower=class_name[0].lower() + class_name[1:])
+            controller.body = jcc.controller['abstract_body'].format(class_name=class_name, class_name_lower=class_name[0].lower() + class_name[1:])
+            controller.extends = 'extends BaseController<{class_name}Dto>'.format(class_name=class_name)
+            controller.imports += '''
+import {package}.controller.BaseController;
 import {package}.dto.{class_name}Dto;
-import org.springframework.http.ResponseEntity;
-import {package}.entity.{class_name};
 import {package}.service.{class_name}Service;
-import org.springframework.web.bind.annotation.*;
+            '''.format(package=package_name, class_name=class_name)
 
-import java.util.List;
-import java.util.Map;
-        '''.format(class_name=controller.class_name, package=args.package)
+            service.implements = 'implements BaseService<{class_name}Dto>'.format(class_name = class_name)
+            service.imports += '''
+\nimport {package}.service.BaseService;
+            '''.format(package=package_name, class_name=class_name) 
+
+        else:
+            controller.body = jcc.controller['body'].format(class_name=class_name, class_name_lower=class_name[0].lower() + class_name[1:])
+            controller.imports +=jcc.controller['opt_imports'].format(class_name=class_name, package=package_name)
 
 
-        service.body='''private final {class_name}Repository repository;
-private final {class_name}Mapper mapper;
-
-public List<{class_name}> findAll() {{
-    return repository.findAll();
-}}
-
-public {class_name}Dto find(Long id) {{
-    //TODO change type of exception with custom exception. Add exception handler
-    return mapper.to{class_name}Dto(repository.findById(id).orElseThrow(RuntimeException::new));
-}}
-
-public {class_name}Dto save({class_name}Dto {class_name_lower}Dto) {{
-    repository.save(mapper.to{class_name}({class_name_lower}Dto));
-    return {class_name_lower}Dto;
-}}
-
-public {class_name}Dto change(Long id, {class_name}Dto {class_name_lower}Dto) {{
-    //TODO implement logic. For now, it throws a NullPointerException
-    return null;
-}}
-
-public Map<String, String> delete(Long id) {{
-    //TODO customiser le message de réponse
-    Map<String, String> response = new HashMap<>();
-    response.put("message", "entity has been deleted");
-    repository.deleteById(id);
-    return response;
-}}
-        '''.format(
-            class_name=service.class_name,
-            class_name_lower=class_name.lower()
+        service.body=jcc.service['body'].format(
+            class_name=class_name,
+            class_name_lower=class_name[0].lower() + class_name[1:]
         )
-
-        service.imports += '''
-import {package}.dto.{class_name}Dto;
-import {package}.mapper.{class_name}Mapper;
-import {package}.entity.{class_name};
-import {package}.repository.{class_name}Repository;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-        '''.format(
-            package=args.package,
+        service.imports += jcc.service['opt_imports'].format(
+            package=package_name,
             class_name=class_name
         )
 
 
-        mapper.body += '''
-    {class_name} to{class_name}({class_name}Dto {class_name_lower}dto);
-
-    {class_name}Dto to{class_name}Dto({class_name} {class_name_lower});
-        '''.format(class_name=class_name, class_name_lower=class_name.lower())
-
-        mapper.imports += '''
-import {package}.entity.{class_name};
-import {package}.dto.{class_name}Dto;
-        '''.format(package=args.package, class_name=class_name)
-
+        mapper.body = jcc.mapper['body'].format(class_name=class_name, class_name_lower=class_name[0].lower() + class_name[1:])
+        mapper.imports += jcc.mapper['opt_imports'].format(package=package_name, class_name=class_name)
 
     if args.all:
-        write(controller)
-        write(service)
-        write(mapper)
-        write(repo)
-        write(entity)
-        write(dto)
+        for java_class in [controller, service, mapper, repo, entity, dto]:
+            file_writer.write(java_class)
     else:
         if args.controller:
-            write(controller)
+            file_writer.write(controller)
         if args.service:
-            write(service)
+            file_writer.write(service)
         if args.mapper:
-            write(mapper)
+            file_writer.write(mapper)
         if args.repository:
-            write(repo)
+            file_writer.write(repo)
         if args.entity:
-            write(entity)
+            file_writer.write(entity)
         if args.dto:
-            write(dto)
+            file_writer.write(dto)
 
