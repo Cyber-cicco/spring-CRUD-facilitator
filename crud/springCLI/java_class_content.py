@@ -134,8 +134,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;    
     ''',
-    'extends':'',
+    'extends':'extends BaseController<{class_name}Dto>',
     'implements':'',
+    'abstract_imports':'''
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;    
+
+import {package}.dto.{class_name}Dto;
+import {package}.service.{class_name}Service;
+    ''',
+    'abstract_annotations':'''
+@RestController
+@RequestMapping("api/v1/{class_name_lower}")''',
     'abstract_body': '''
     public {class_name}Controller({class_name}Service {class_name_lower}Service){{
         super({class_name_lower}Service);
@@ -201,7 +211,7 @@ import java.util.List;
 import java.util.Map;    
     ''',
     'extends':'',
-    'implements':''}
+    'implements':'implements BaseService<{class_name}Dto>'}
 
 mapper = {
     'template':

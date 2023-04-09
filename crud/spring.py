@@ -105,21 +105,12 @@ for class_name in args.class_name:
     if args.crud:
 
         if args.lucas:
-            controller.annotations = '''
-@RestController
-@RequestMapping("api/v1/{class_name_lower}")'''.format(class_name_lower=class_name[0].lower() + class_name[1:])
+            controller.annotations = jcc.controller['abstract_annotations'].format(class_name_lower=class_name[0].lower() + class_name[1:])
             controller.body = jcc.controller['abstract_body'].format(class_name=class_name, class_name_lower=class_name[0].lower() + class_name[1:])
-            controller.extends = 'extends BaseController<{class_name}Dto>'.format(class_name=class_name)
-            controller.imports += '''
-import {package}.controller.BaseController;
-import {package}.dto.{class_name}Dto;
-import {package}.service.{class_name}Service;
-            '''.format(package=package_name, class_name=class_name)
+            controller.extends = jcc.controller['extends'].format(class_name=class_name)
+            controller.imports = jcc.controller['abstract_imports'].format(package=package_name, class_name=class_name)
 
             service.implements = 'implements BaseService<{class_name}Dto>'.format(class_name = class_name)
-            service.imports += '''
-\nimport {package}.service.BaseService;
-            '''.format(package=package_name, class_name=class_name) 
 
         else:
             controller.body = jcc.controller['body'].format(class_name=class_name, class_name_lower=class_name[0].lower() + class_name[1:])
