@@ -1,7 +1,5 @@
 template = '''package {package}.{type_lower};
-
 {imports}
-
 {annotations}
 public {class_type} {class_name}{type} {extends} {implements} {{
 {body}
@@ -11,7 +9,7 @@ public {class_type} {class_name}{type} {extends} {implements} {{
 
 abs_controller = {
     'abs':
-    '''package {package}.controller;
+'''package {package}.controller;
 
 import {package}.service.BaseService;
 import lombok.RequiredArgsConstructor;
@@ -58,7 +56,7 @@ public abstract class BaseController<T> {{
     public {class_name}Controller({class_name}Service {class_name_lower}Service){{
     super({class_name_lower}Service);
 }}
-    '''}
+'''}
 
 abs_service = '''package fr.cicco.crud.service;
 
@@ -214,17 +212,6 @@ import java.util.Map;
     'implements':'implements BaseService<{class_name}Dto>'}
 
 mapper = {
-    'template':
-    '''
-package {package}.mapper;
-
-{imports}
-
-{annotations}
-public interface {class_name}Mapper {extends} {implements} {{
-{body}
-}}    
-    ''',
     'body':
     '''
     {class_name} to{class_name}({class_name}Dto {class_name_lower}dto);
@@ -233,10 +220,9 @@ public interface {class_name}Mapper {extends} {implements} {{
     ''',
     'annotations':
     '''
-    @Mapper(componentModel = "spring")''',
+@Mapper(componentModel = "spring")''',
     'imports': 
-    '''
-import org.mapstruct.Mapper;    
+    '''import org.mapstruct.Mapper;    
     ''',
     'opt_imports':
     '''
@@ -277,17 +263,6 @@ import lombok.NoArgsConstructor;
     'implements':''}
 
 dto = {
-    'template':
-    '''
-package {package}.dto;
-
-{imports}
-
-{annotations}
-public class {class_name}Dto {extends} {implements} {{
-{body}
-}}    
-    ''',
     'imports': 
     '''
 import lombok.AllArgsConstructor;
@@ -313,16 +288,6 @@ import lombok.NoArgsConstructor;
     'implements':''}
 
 repository = {
-    'template':
-    '''
-package {package}.repository;
-
-{imports}
-
-{annotations}
-public interface {class_name}{type} {extends} {implements} {{
-}}    
-    ''',
     'body':
     '''
       

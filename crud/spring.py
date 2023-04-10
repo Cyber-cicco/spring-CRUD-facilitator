@@ -31,22 +31,17 @@ controller = JavaClass(
     'Controller',
     jcc.template,
     imports=jcc.controller['imports'],
-    annotations=jcc.controller['annotations']
-
-
    )
 
 service = JavaClass(
     'Service',
     jcc.template,
-    imports=jcc.service['imports'],
     annotations=jcc.service['annotations']
 )
 
 mapper = JavaClass(
     'Mapper',
     jcc.template,
-    imports=jcc.mapper['imports'],
     annotations=jcc.mapper['annotations'],
     class_type='interface'
 )
@@ -54,7 +49,6 @@ mapper = JavaClass(
 entity = JavaClass(
     '',
     jcc.template,
-    imports=jcc.entity['imports'],
     annotations=jcc.entity['annotations'],
     body=jcc.entity['body']
 )
@@ -63,7 +57,6 @@ entity = JavaClass(
 dto = JavaClass(
     'Dto',
     jcc.template,
-    imports=jcc.dto['imports'],
     annotations=jcc.dto['annotations'],
     body=jcc.dto['body']
 )
@@ -77,6 +70,7 @@ repo = JavaClass(
 
 if args.lucas:
     file_writer.write_abstract_classes()
+    args.crud = True
 
 
 for class_name in args.class_name:
@@ -87,8 +81,12 @@ for class_name in args.class_name:
     # Create the Java class file
     class_file = os.path.join(package_dir, class_name + '.java')
 
-    #Setting up the class name for the filewriter
+    # Setting up the class name for the filewriter
     file_writer.class_name = class_name
+
+    # Setting up the class name without the first letter capitalised
+    class_name_lower = class_name[0].lower() + class_name[1:]
+
 
     # Setting up imports for every class type
     repo.imports=jcc.repository['imports'].format(package=package_name, class_name=class_name)
@@ -98,6 +96,8 @@ for class_name in args.class_name:
     dto.imports=jcc.dto['imports']
     mapper.imports=jcc.mapper['imports']
 
+    controller.annotations=jcc.controller['annotations'].format(class_name_lower=class_name_lower)
+
     repo.extends = jcc.repository['extends'].format(class_name=class_name)
 
 
@@ -105,21 +105,21 @@ for class_name in args.class_name:
     if args.crud:
 
         if args.lucas:
-            controller.annotations = jcc.controller['abstract_annotations'].format(class_name_lower=class_name[0].lower() + class_name[1:])
-            controller.body = jcc.controller['abstract_body'].format(class_name=class_name, class_name_lower=class_name[0].lower() + class_name[1:])
+            controller.annotations = jcc.controller['abstract_annotations'].format(class_name_lower=class_name_lower)
+            controller.body = jcc.controller['abstract_body'].format(class_name=class_name, class_name_lower=class_name_lower)
             controller.extends = jcc.controller['extends'].format(class_name=class_name)
             controller.imports = jcc.controller['abstract_imports'].format(package=package_name, class_name=class_name)
 
             service.implements = 'implements BaseService<{class_name}Dto>'.format(class_name = class_name)
 
         else:
-            controller.body = jcc.controller['body'].format(class_name=class_name, class_name_lower=class_name[0].lower() + class_name[1:])
+            controller.body = jcc.controller['body'].format(class_name=class_name, class_name_lower=class_name_lower)
             controller.imports +=jcc.controller['opt_imports'].format(class_name=class_name, package=package_name)
 
 
         service.body=jcc.service['body'].format(
             class_name=class_name,
-            class_name_lower=class_name[0].lower() + class_name[1:]
+            class_name_lower=class_name_lower
         )
         service.imports += jcc.service['opt_imports'].format(
             package=package_name,
@@ -127,7 +127,7 @@ for class_name in args.class_name:
         )
 
 
-        mapper.body = jcc.mapper['body'].format(class_name=class_name, class_name_lower=class_name[0].lower() + class_name[1:])
+        mapper.body = jcc.mapper['body'].format(class_name=class_name, class_name_lower=class_name_lower)
         mapper.imports += jcc.mapper['opt_imports'].format(package=package_name, class_name=class_name)
 
     if args.all:
