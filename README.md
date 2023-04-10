@@ -201,13 +201,213 @@ public class Test1Controller   {
 }
 ```
 
+```java
+package fr.cicco.crud.service;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;    
+    
+import fr.cicco.crud.dto.Test1Dto;
+import fr.cicco.crud.mapper.Test1Mapper;
+import fr.cicco.crud.repository.Test1Repository;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;    
+    
+
+@Service
+@Validated
+@RequiredArgsConstructor
+public class Test1Service   {
+
+
+    private final Test1Repository test1Repository;
+    private final Test1Mapper test1Mapper;
+
+    public List<Test1Dto> findAll() {
+        return test1Repository.findAll().stream()
+            .map(test1Mapper::toTest1Dto)
+            .toList();
+    }
+
+    public Test1Dto findById(Long id) {
+        //TODO change type of exception with custom exception. Add exception handler
+        return test1Mapper.toTest1Dto(test1Repository.findById(id).orElseThrow(RuntimeException::new));
+    }
+    
+    public Test1Dto save(Test1Dto test1Dto) {
+        test1Repository.save(test1Mapper.toTest1(test1Dto));
+        return test1Dto;
+    }
+    
+    public Test1Dto change(Long id, Test1Dto test1Dto) {
+        //TODO implement logic.
+        return null;
+    }
+    
+    public Map<String, String> delete(Long id) {
+        //TODO customiser le message de réponse
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "entity has been deleted");
+        test1Repository.deleteById(id);
+        return response;
+    }      
+    
+}
+
+```
+
 L'option --crud permet de remplir les controllers et services avec des méthodes de base pour accéder à vos entités en base de données. Si vous avez bien configuré votre application.properties, avec spring.data.jpa.generate-dll : true, et que vous avez aussi créer et configurer les accès à la base de données, vous devriez pouvoir post, get et delete sur les tables de la base de données. Pour l'instant, les entités contiennent que des Id et pas d'autres champs.
 
 Enfin, encore plus intéressant, l'option --lucas, qui permet de créer un controller abstrait et une interface pour les services.
 
+```java
+package fr.cicco.crud.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;    
+
+import fr.cicco.crud.dto.Test1Dto;
+import fr.cicco.crud.service.Test1Service;
+    
+
+@RestController
+@RequestMapping("api/v1/test1")
+public class Test1Controller extends BaseController<Test1Dto>  {
+
+    public Test1Controller(Test1Service test1Service){
+        super(test1Service);
+    }
+    
+}
+```
+
+```java
+package fr.cicco.crud.controller;
+
+import fr.cicco.crud.service.BaseService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
+
+@RestController
+@RequiredArgsConstructor
+public abstract class BaseController<T> {
+
+    private final BaseService<T> service;
+
+    @GetMapping("/all")
+    public ResponseEntity<List<T>> getAll(){
+        return ResponseEntity.ok(service.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<T> get(@PathVariable Long id){
+        return ResponseEntity.ok(service.findById(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<T> save(@RequestBody T dto){
+        return ResponseEntity.ok(service.save(dto));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<T> change(@PathVariable Long id, @RequestBody T dto){
+        return ResponseEntity.ok(service.change(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String, String>> delete(@PathVariable Long id){
+        return ResponseEntity.ok(service.delete(id));
+    }
+}
+```
+```java
+package fr.cicco.crud.service;
+
+import java.util.List;
+import java.util.Map;
+
+public interface BaseService<T> {
+
+    List<T> findAll();
+
+    T findById(Long id);
+
+    T save(T dto);
+
+    T change(Long id, T dto);
+
+    Map<String, String> delete(Long id);
+
+}
+
+```
+```java
+package fr.cicco.crud.service;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;    
+    
+import fr.cicco.crud.dto.Test1Dto;
+import fr.cicco.crud.mapper.Test1Mapper;
+import fr.cicco.crud.repository.Test1Repository;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;    
+    
+
+@Service
+@Validated
+@RequiredArgsConstructor
+public class Test1Service  implements BaseService<Test1Dto> {
+
+
+    private final Test1Repository test1Repository;
+    private final Test1Mapper test1Mapper;
+
+    public List<Test1Dto> findAll() {
+        return test1Repository.findAll().stream()
+            .map(test1Mapper::toTest1Dto)
+            .toList();
+    }
+
+    public Test1Dto findById(Long id) {
+        //TODO change type of exception with custom exception. Add exception handler
+        return test1Mapper.toTest1Dto(test1Repository.findById(id).orElseThrow(RuntimeException::new));
+    }
+    
+    public Test1Dto save(Test1Dto test1Dto) {
+        test1Repository.save(test1Mapper.toTest1(test1Dto));
+        return test1Dto;
+    }
+    
+    public Test1Dto change(Long id, Test1Dto test1Dto) {
+        //TODO implement logic.
+        return null;
+    }
+    
+    public Map<String, String> delete(Long id) {
+        //TODO customiser le message de réponse
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "entity has been deleted");
+        test1Repository.deleteById(id);
+        return response;
+    }      
+    
+}
+```
+
 ## Personaliser le script
 
-Le contenu des classes java se trouvent dans le script java_class_content. Si vous voulez rajouter une annotation, changer le contenu des classes lors de l'utilisation de l'option CRUD, il suffit d'aller regarder dans ce script pour trouver ce qui vous intéresse. 
+Le contenu des classes java se trouvent dans le script java_class_content. Si vous voulez rajouter une annotation, changer le contenu des classes lors de l'utilisation de l'option CRUD, le type de la réponse, etc., il suffit d'aller regarder dans ce script pour trouver ce qui vous intéresse. 
 Pour rajouter des arguments, il faut toucher au spring.py.
 FileUtils est la classe servant à écrire dans les fichiers.
 
