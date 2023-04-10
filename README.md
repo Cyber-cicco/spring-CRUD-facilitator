@@ -259,7 +259,7 @@ public class Test1Service   {
 
 ```
 
-L'option --crud permet de remplir les controllers et services avec des méthodes de base pour accéder à vos entités en base de données. Si vous avez bien configuré votre application.properties, avec spring.data.jpa.generate-dll : true, et que vous avez aussi créer et configurer les accès à la base de données, vous devriez pouvoir post, get et delete sur les tables de la base de données. Pour l'instant, les entités contiennent que des Id et pas d'autres champs.
+L'option --crud permet de remplir les controllers et services avec des méthodes de base pour accéder à vos entités en base de données. Si vous avez bien configuré votre application.properties, avec spring.data.jpa.generate-dll : true, et que vous avez aussi créer et configurer les accès à la base de données, vous devriez pouvoir post, get et delete sur les tables de la base de données. Pour l'instant, les entités ne contiennent que des Id, aucun autre champs.
 
 Enfin, encore plus intéressant, l'option --lucas, qui permet de créer un controller abstrait et une interface pour les services.
 
@@ -425,4 +425,4 @@ Comme ça dès que vous verrez une classe qui utilise du code redondant et que l
 
 ## Avertissement
 
-Le script comporte peut être des bugs, surtout si vous décider de l'utiliser au mauvais endroit. Ce n'est pas un produit finit, juste un petit projet personnel
+Le script comporte peut être des bugs, surtout si vous décidez de l'utiliser au mauvais endroit. Ce n'est pas un produit finit, juste un petit projet personnel
