@@ -3,9 +3,9 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-
+.jhipster
 ### Intellij ###
-.idea
+.idea/
 
 ### STS ###
 .apt_generated
