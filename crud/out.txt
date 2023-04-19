@@ -1,0 +1,22 @@
+{'type': 'number', 'name': 'id'}
+inner type : List<List<List<List<CacaDto>>>>
+innnterraz reraz : List<List<List<CacaDto>>>
+inner type : List<List<List<CacaDto>>>
+innnterraz reraz : List<List<CacaDto>>
+inner type : List<List<CacaDto>>
+innnterraz reraz : List<CacaDto>
+inner type : List<CacaDto>
+innnterraz reraz : CacaDto
+inner type : List<Map<String, CacaDto>>
+innnterraz reraz : Map<String, CacaDto>
+{'type': 'number', 'name': 'id'}
+{'type': 'Pipi', 'name': 'pipiDto'}
+{'type': 'Date', 'name': 'debut'}
+{'type': 'Date', 'name': 'fin'}
+{'type': 'number', 'name': 'duree'}
+{'type': 'number', 'name': 'consistance'}
+{'type': 'Object', 'name': 'pipiToCaca'}
+{'type': 'Caca[][][][]', 'name': 'listOfListOfListOfListOfExcrements'}
+{'type': 'Object[]', 'name': 'listOfStringToCaca'}
+{'type': 'number', 'name': 'id'}
+{'type': 'number', 'name': 'id'}

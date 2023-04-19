@@ -8,7 +8,7 @@ from springCLI.utils.FileUtils import *
 
 parser = argparse.ArgumentParser(description='Generate a basic Java class')
 parser.add_argument('-cname', '--class-name', nargs='+', required=True, help='Name of the class(es) to create')
-parser.add_argument('-pck', '--package', action='store_true', help='Package name (e.g. "com.example.mypackage")')
+parser.add_argument('-pck', '--package', nargs='+', action='store_true', help='Package name (e.g. "com.example.mypackage")')
 parser.add_argument('-a', '--all', action='store_true', help='Create all basic classes')
 parser.add_argument('-ctrl', '--controller', action='store_true', help='Create a Spring controller')
 parser.add_argument('-srv', '--service', action='store_true', help='Create a Spring service')

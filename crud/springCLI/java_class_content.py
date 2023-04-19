@@ -83,13 +83,13 @@ controller = {
     '''
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/{class_name_lower}")''',
+@RequestMapping("/api/v1/{class_name_lower}")''',
     'body':
     '''
    
     private final {class_name}Service {class_name_lower}Service;
 
-    @GetMapping("all")
+    @GetMapping("/all")
     public ResponseEntity<List<{class_name}Dto>> getAll{class_name}(){{
         return ResponseEntity.ok({class_name_lower}Service.findAll());
     }}
