@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as ET
 from ..template import JavaClass
 import os
-from ..java_class_content import *
+from ..datas.java_class_content import *
 
 class XmlParser:
     
@@ -57,3 +57,17 @@ class FileWriter:
             f.write(class_template)
         with open(class_file_service, 'w') as f:
             f.write(class_template_service)
+
+class FileReader:
+    
+    def __init__(self) -> None:
+        pass
+
+    #parse the directories in search for the controller
+    def read_files_in_directory(self, directory, suffix, function):
+        for file_name in os.listdir(directory):
+            file_path = os.path.join(directory, file_name)
+            if os.path.isfile(file_path) and file_name.endswith(suffix):
+                function(file_path)
+            elif os.path.isdir(file_path):
+                self.read_files_in_directory(file_path, suffix, function)

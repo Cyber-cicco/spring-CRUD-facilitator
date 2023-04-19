@@ -1,60 +1,8 @@
 import os
 import re
-
-type_mapping = {
-    'String': 'string',
-    'int': 'number',
-    'Integer': 'number',
-    'long': 'number',
-    'Long': 'number',
-    'float': 'number',
-    'double': 'number',
-    'Double': 'number',
-    'Float': 'number',
-    'double': 'number',
-    'boolean': 'boolean',
-    'Boolean': 'boolean',
-    'LocalDateTime' : 'Date',
-    'LocalDate' : 'Date',
-    'LocalTime' : 'Date',
-    'MultipartFile' : 'File',
-    'HttpStatus':'HttpStatusCode',
-    # add more type mappings as needed
-}
-
-file_template = '''
-//{file_path}
-{imports}
-
-export interface {class_name} {{
-
-{body}
-}}
-'''
-
-def find_ts_type(java_type:str, imports:list=[]):
-    java_type = java_type.strip()
-    if java_type in type_mapping.keys():
-        return type_mapping.get(java_type, 'any')
-    else:
-        if java_type.endswith("Dto"):
-            new_type = java_type[:-3]
-            imports.append(f"import {{{new_type}}} from \"./{new_type.lower()}\";\n")
-            return new_type
-        elif '<' in java_type:
-            next_type = java_type.split('<')[0].strip()
-            if 'Map' == next_type:
-                return 'Object'
-            elif 'List' == next_type :
-                inner_type = java_type[ java_type.index("<")+1 : -1 ].strip()
-                return find_ts_type(inner_type, imports) + "[]"
-            elif 'ResponseEntity' == next_type:
-                inner_type = java_type[ java_type.index("<")+1 : -1 ].strip()
-                return find_ts_type(inner_type, imports)
-            else:
-                return 'any'
-        else:
-            return "any"
+from springCLI.utils.FileUtils import *
+from springCLI.datas.ts_interface_content import file_template
+import springCLI.utils.java_to_ts_transformer as jts
 
 def find_all_fields(file_path:str):
     file_name = os.path.basename(file_path)
@@ -71,14 +19,13 @@ def find_all_fields(file_path:str):
         matches = re.findall(pattern, contents)
         for match in matches:
             java_type = match[1]
-            typescript_type = find_ts_type(java_type, imports)
+            typescript_type = jts.find_ts_type(java_type, imports)
             field_name = match[2]
             typescript_body.append({"type":typescript_type, "name":field_name})
         for field in typescript_body:
             name = field["name"]
             ts_type = field["type"]
             body += f"  {name}:{ts_type},\n" 
-            print(field)
         for imp in imports:
             imports_string += imp
         # Create the TypeScript file
@@ -89,15 +36,9 @@ def find_all_fields(file_path:str):
 
 
 
-def read_files_in_directory(directory):
-    for file_name in os.listdir(directory):
-        file_path = os.path.join(directory, file_name)
-        if os.path.isfile(file_path) and file_name.endswith("Dto.java"):
-            find_all_fields(file_path)
-        elif os.path.isdir(file_path):
-            read_files_in_directory(file_path)
 
 current_directory = os.getcwd()
-read_files_in_directory(current_directory)
+file_reader = FileReader()
+file_reader.read_files_in_directory(current_directory, 'Dto.java', find_all_fields)
 
 

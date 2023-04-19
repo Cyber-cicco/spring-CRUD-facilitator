@@ -105,7 +105,7 @@ controller = {
     }}
 
     @PatchMapping("/{{id}}")
-    public ResponseEntity<{class_name}Dto> changeA(@PathVariable Long id, @RequestBody {class_name}Dto dto){{
+    public ResponseEntity<{class_name}Dto> change{class_name}(@PathVariable Long id, @RequestBody {class_name}Dto dto){{
         return ResponseEntity.ok({class_name_lower}Service.change(id, dto));
     }}
 
