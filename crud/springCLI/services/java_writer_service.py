@@ -1,8 +1,10 @@
 import os
 from springCLI.template import *
 import springCLI.datas.java_class_content as jcc
-from springCLI.utils.FileUtils import *
+import springCLI.services.entites_getter as eg
+from springCLI.utils.fileUtils import *
 from springCLI.services.java_writer_service import *
+
 
 class JavaWriterService:
 
@@ -39,7 +41,6 @@ class JavaWriterService:
             '',
             jcc.template,
             annotations=jcc.entity['annotations'],
-            body=jcc.entity['body']
         )
 
 
@@ -62,7 +63,7 @@ class JavaWriterService:
             args.crud = True
 
 
-        for class_name in args.class_name:
+        for class_name in eg.find_all_entites():
             # Create the package directory if it doesn't exist
             if not os.path.exists(package_dir):
                 os.makedirs(package_dir)
@@ -82,6 +83,7 @@ class JavaWriterService:
             controller.imports=jcc.controller['imports']
             service.imports=jcc.service['imports']
             entity.imports=jcc.entity['imports']
+            entity.body=eg.create_entity_body(class_name)
             dto.imports=jcc.dto['imports']
             mapper.imports=jcc.mapper['imports']
 

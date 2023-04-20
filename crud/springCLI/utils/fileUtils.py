@@ -15,11 +15,19 @@ class XmlParser:
 class FileWriter:
 
     
-    def __init__(self, package_name, package_dir) -> None:
+    def __init__(self, package_name='', package_dir='') -> None:
         self.package_name=package_name
         self.package_dir = package_dir
         self.class_name = ''
 
+    def write_python_file(self, content, class_name):
+        class_name = class_name.lower()
+        dir = os.path.join('springCLI/python_entities_template')
+        if not os.path.exists(dir):
+            os.makedirs(dir)
+        class_file = os.path.join(dir, '{class_name}.py'.format(class_name=class_name))
+        with open(class_file, 'w') as f:
+            f.write(content)
 
     def write(self, jc:JavaClass):
         dir = os.path.join(self.package_dir, 'entity' if jc.type == '' else jc.type.lower())

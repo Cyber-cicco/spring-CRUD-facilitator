@@ -1,6 +1,6 @@
 import os
 import re
-from springCLI.utils.FileUtils import *
+from springCLI.utils.fileUtils import *
 from springCLI.datas.ts_interface_content import file_template
 import springCLI.utils.java_to_ts_transformer as jts
 
@@ -33,12 +33,3 @@ def find_all_fields(file_path:str):
         ts_file_path = os.path.join("models", ts_file_name)
         with open(ts_file_path, "w") as ts_file:
             ts_file.write(file_template.format(imports=imports_string, class_name=class_name, body=body, file_path=file_path))
-
-
-
-
-current_directory = os.getcwd()
-file_reader = FileReader()
-file_reader.read_files_in_directory(current_directory, 'Dto.java', find_all_fields)
-
-

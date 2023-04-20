@@ -1,0 +1,15 @@
+String = "String"
+Integer = "Integer"
+Double = "Double"
+Long = "Long"
+Id = "Id"
+LocalDateTime = "LocalDateTime"
+LocalDate = 'LocalDate'
+LocalTime = 'LocalTime'
+List = "list:"
+name = 'name'
+fields = 'fields'
+options = 'options'
+dto = 'dto'
+Type = 'type'
+Object = 'Object'

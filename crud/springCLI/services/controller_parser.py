@@ -1,7 +1,7 @@
 import os
 import re
-from springCLI.datas.ts_service_content import template_http, template_ts_service
-from springCLI.utils.FileUtils import *
+from ..datas.ts_service_content import template_http, template_ts_service
+from ..utils.fileUtils import *
 import springCLI.utils.java_to_ts_transformer as jts
 
 
@@ -224,7 +224,3 @@ def generate_angular_service(file_path):
 
     with open(f"typescriptService/{service_name}", "w") as f:
         f.write(template)
-
-current_directory = os.getcwd()
-file_reader = FileReader()
-file_reader.read_files_in_directory(current_directory, 'Controller.java', generate_angular_service)
