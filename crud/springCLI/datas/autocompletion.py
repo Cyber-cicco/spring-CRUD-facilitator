@@ -1,5 +1,6 @@
 String = "String"
 Integer = "Integer"
+Boolean = "Boolean"
 Double = "Double"
 Long = "Long"
 Id = "Id"

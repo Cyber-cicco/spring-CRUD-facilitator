@@ -1,22 +1,24 @@
-template_entites = '''
-from autocompletion import *
+template_entities = '''
+from ..datas.autocompletion import *
 
-entities = {
+name = '{name}'
+
+entity = {{
     {entities}
-}
+}}
 
 
 '''
 
 template_entity = '''
-    '{name}' : {
+    '{name}' : {{
             {fields}
-        }
+        }}
 '''
 
 field_template = '''
-        '{field_name}':{
+        '{field_name}':{{
             Type: {field_type},
             options:{options}
-        },
+        }},
 '''

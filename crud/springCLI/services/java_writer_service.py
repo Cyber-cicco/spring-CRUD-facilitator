@@ -62,8 +62,9 @@ class JavaWriterService:
             file_writer.write_abstract_classes()
             args.crud = True
 
+        entites_name = eg.find_all_entites()
 
-        for class_name in eg.find_all_entites():
+        for class_name in entites_name:
             # Create the package directory if it doesn't exist
             if not os.path.exists(package_dir):
                 os.makedirs(package_dir)
@@ -79,12 +80,15 @@ class JavaWriterService:
 
 
             # Setting up imports for every class type
+            java_content = eg.define_content_based_on_entity(class_name, entites_name)
+
             repo.imports=jcc.repository['imports'].format(package=package_name, class_name=class_name)
             controller.imports=jcc.controller['imports']
             service.imports=jcc.service['imports']
-            entity.imports=jcc.entity['imports']
-            entity.body=eg.create_entity_body(class_name)
-            dto.imports=jcc.dto['imports']
+            entity.imports=jcc.entity['imports'] + java_content.entity_imports 
+            entity.body=java_content.entity_fields
+            dto.imports=jcc.dto['imports'] + java_content.dto_imports
+            dto.body = java_content.dto_fields
             mapper.imports=jcc.mapper['imports']
 
             controller.annotations=jcc.controller['annotations'].format(class_name_lower=class_name_lower)

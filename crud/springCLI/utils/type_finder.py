@@ -5,9 +5,9 @@ def infere_type_by_name(type):
     if type.endswith('List'):
         returned_type = '"List<{returned}>"'
     if type.startswith('@'):
-        returned_type='{returned}'
         if type.endswith('List'):
             type = type.replace('List', '')
+            returned_type = returned_type.replace('"', '')
         return '"' + returned_type.format(returned=type.replace('@','')[0].upper() + type[2:])  + '"' 
     if type.startswith('id'):
         return returned_type.format(returned='Long')
