@@ -7,10 +7,12 @@ entity = {
     
     'Adresse' : {
             
-        'id':{
-            Type: Long,
+        'codePostal':{
+            Type: String,
             options:{
-                'dto':[[]]
+                'dto':[
+                    {'exists':True, 'fields':[]}
+                ]
         
             }
         },
@@ -18,15 +20,9 @@ entity = {
         'nomRue':{
             Type: String,
             options:{
-                'dto':[[]]
-        
-            }
-        },
-
-        'codePostal':{
-            Type: Object,
-            options:{
-                'dto':[[]]
+                'dto':[
+                    {'exists':True, 'fields':[]}
+                ]
         
             }
         },
@@ -34,7 +30,9 @@ entity = {
         'nomVille':{
             Type: String,
             options:{
-                'dto':[[]]
+                'dto':[
+                    {'exists':True, 'fields':[]}
+                ]
         
             }
         },

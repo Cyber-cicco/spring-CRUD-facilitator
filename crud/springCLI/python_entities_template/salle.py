@@ -10,7 +10,9 @@ entity = {
         'id':{
             Type: Long,
             options:{
-                'dto':[[]]
+                'dto':[
+                    {'exists':True, 'fields':[]}
+                ]
         
             }
         },
@@ -18,23 +20,39 @@ entity = {
         'nom':{
             Type: String,
             options:{
-                'dto':[[]]
+                'dto':[
+                    {'exists':True, 'fields':[]}
+                ]
         
             }
         },
 
-        'nbPlaces':{
+        'cinema':{
+            Type: "Cinema",
+            options:{
+                'dto':[
+                    {'exists':True, 'fields':['nom', 'nbsVisiteurParJour' ]}
+                ]
+        
+            }
+        },
+
+        'nbPlacesDisponibles':{
             Type: Integer,
             options:{
-                'dto':[[]]
+                'dto':[
+                    {'exists':True, 'fields':[]}
+                ]
         
             }
         },
 
-        'has3D':{
-            Type: Object,
+        'nbPlacesReserves':{
+            Type: Integer,
             options:{
-                'dto':[[]]
+                'dto':[
+                    {'exists':True, 'fields':[]}
+                ]
         
             }
         },

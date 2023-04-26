@@ -10,7 +10,9 @@ entity = {
         'id':{
             Type: Long,
             options:{
-                'dto':[[]]
+                'dto':[
+                    {'exists':True, 'fields':[]}
+                ]
         
             }
         },
@@ -18,15 +20,9 @@ entity = {
         'nom':{
             Type: String,
             options:{
-                'dto':[[]]
-        
-            }
-        },
-
-        'prenom':{
-            Type: String,
-            options:{
-                'dto':[[]]
+                'dto':[
+                    {'exists':True, 'fields':[]}
+                ]
         
             }
         },
@@ -34,23 +30,9 @@ entity = {
         'adresse':{
             Type: "Adresse",
             options:{
-                'dto':[[]]
-        
-            }
-        },
-
-        'reservationList':{
-            Type: "List<Reservation>",
-            options:{
-                'dto':[[]]
-        
-            }
-        },
-
-        'mdp':{
-            Type: Object,
-            options:{
-                'dto':[[]]
+                'dto':[
+                    {'exists':True, 'fields':[]}
+                ]
         
             }
         },

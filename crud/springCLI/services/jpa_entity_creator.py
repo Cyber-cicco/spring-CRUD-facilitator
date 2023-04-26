@@ -11,7 +11,9 @@ def create_entites(args):
         fields = ''
         entites = ''
         options = '''{
-                'dto':[[]]
+                'dto':[
+                    {'exists':True, 'fields':[]}
+                ]
         
             }'''
         for field in args.fields:

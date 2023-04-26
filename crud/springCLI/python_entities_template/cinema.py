@@ -7,18 +7,32 @@ entity = {
     
     'Cinema' : {
             
-        'nom':{
-            Type: String,
+        'id':{
+            Type: Long,
             options:{
-                'dto':[[]]
+                'dto':[
+                    {'exists':True, 'fields':[]}
+                ]
         
             }
         },
 
-        'adresse':{
-            Type: "Adresse",
+        'nom':{
+            Type: String,
             options:{
-                'dto':[[]]
+                'dto':[
+                    {'exists':True, 'fields':[]}
+                ]
+        
+            }
+        },
+
+        'nbsVisiteurParJour':{
+            Type: Integer,
+            options:{
+                'dto':[
+                    {'exists':True, 'fields':[]}
+                ]
         
             }
         },
@@ -26,7 +40,19 @@ entity = {
         'salleList':{
             Type: "List<Salle>",
             options:{
-                'dto':[[]]
+                'dto':[
+                    {'exists':True, 'fields':[]}
+                ]
+        
+            }
+        },
+
+        'adresse':{
+            Type: "Adresse",
+            options:{
+                'dto':[
+                    {'exists':True, 'fields':[]}
+                ]
         
             }
         },
