@@ -24,6 +24,9 @@ def create_entites(args):
             infered_type = tf.infere_type_by_name(field)
             if field.startswith('@'):
                 field = field.replace('@', '')
+                if ':' in field:
+                    field = field.split(':')[0]
+                    
             fields += et.field_template.format(
                 field_name=field,
                 field_type=infered_type,

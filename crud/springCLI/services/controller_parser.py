@@ -217,7 +217,7 @@ def generate_angular_service(file_path):
     )
 
     for url in urls_set:
-        urls += 'URL_API' + url + '\n'
+        urls += 'URL_' + url + '\n'
 
     if not os.path.exists('typescriptService'):
         os.makedirs('typescriptService')

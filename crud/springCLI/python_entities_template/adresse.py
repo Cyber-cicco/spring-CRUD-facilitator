@@ -7,8 +7,8 @@ entity = {
     
     'Adresse' : {
             
-        'codePostal':{
-            Type: String,
+        'id':{
+            Type: Long,
             options:{
                 'dto':[
                     {'exists':True, 'fields':[]}
@@ -29,6 +29,16 @@ entity = {
 
         'nomVille':{
             Type: String,
+            options:{
+                'dto':[
+                    {'exists':True, 'fields':[]}
+                ]
+        
+            }
+        },
+
+        'codePostal':{
+            Type: Object,
             options:{
                 'dto':[
                     {'exists':True, 'fields':[]}

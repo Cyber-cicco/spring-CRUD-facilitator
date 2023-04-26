@@ -2,9 +2,7 @@ import os
 import importlib
 from springCLI.datas.autocompletion import *
 
-template_field = '''
-{annotations}
-    private {type} {nom_variable};
+template_field = '''{annotations}    private {type} {nom_variable};
 '''
 
 class JavaContent:
@@ -56,7 +54,12 @@ def define_content_based_on_entity(class_name, entities_name):
                 imports_set_dto.add('\nimport java.util.Set;')
 
         if field_as_var.startswith('id'):
-            annotations='''    @Id()'''
+            annotations='''    @Id()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+'''
+            imports_set_entity.add('''
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;''')
         entity_fields += template_field.format(
             annotations=annotations,
             type=type,
@@ -76,8 +79,6 @@ def define_content_based_on_entity(class_name, entities_name):
                         )
                     else:
                         for _field in dto['fields']:
-                            print(type)
-                            print(_field)
                             field_as_var = _field + type
                             new_type = find_type_by_entity_name(type, _field)
                             dto_fields += template_field.format(

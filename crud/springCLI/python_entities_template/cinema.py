@@ -27,26 +27,6 @@ entity = {
             }
         },
 
-        'nbsVisiteurParJour':{
-            Type: Integer,
-            options:{
-                'dto':[
-                    {'exists':True, 'fields':[]}
-                ]
-        
-            }
-        },
-
-        'salleList':{
-            Type: "List<Salle>",
-            options:{
-                'dto':[
-                    {'exists':True, 'fields':[]}
-                ]
-        
-            }
-        },
-
         'adresse':{
             Type: "Adresse",
             options:{
