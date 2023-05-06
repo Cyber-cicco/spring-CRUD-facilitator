@@ -1,5 +1,6 @@
 package fr.cicco.crud.service;
 
+import fr.cicco.crud.repository.AdresseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;    
@@ -21,6 +22,7 @@ public class MagasinService   {
 
     private final MagasinRepository magasinRepository;
     private final MagasinMapper magasinMapper;
+    private final AdresseRepository adresseRepository;
 
     public List<MagasinDto> findAll() {
         return magasinRepository.findAll().stream()
@@ -34,7 +36,7 @@ public class MagasinService   {
     }
     
     public MagasinDto save(MagasinDto magasinDto) {
-        magasinRepository.save(magasinMapper.toMagasin(magasinDto));
+        magasinRepository.save(magasinMapper.toMagasin(magasinDto, adresseRepository));
         return magasinDto;
     }
     

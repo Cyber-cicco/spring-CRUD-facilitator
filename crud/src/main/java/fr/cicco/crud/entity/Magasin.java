@@ -18,7 +18,9 @@ public class Magasin   {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nom;
-    private Double prix;
+    @ManyToOne
+    @JoinColumn(name = "id_adresse")
+    private Adresse adresse;
     @OneToMany(mappedBy = "magasin")
     private List<Commande> commandeList;
 
