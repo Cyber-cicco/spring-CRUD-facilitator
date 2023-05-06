@@ -7,5 +7,5 @@ import java.util.Optional;
     
 
 public interface MagasinRepository extends JpaRepository<Magasin, Long>  {
-
+    Optional<Magasin> findMagasinByNom(String nom);
 }

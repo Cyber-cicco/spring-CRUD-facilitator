@@ -1,5 +1,7 @@
 package fr.cicco.crud.service;
 
+import fr.cicco.crud.exception.EntityNotFoundException;
+import fr.cicco.crud.repository.AccompagnementRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;    
@@ -20,6 +22,7 @@ public class MenuService   {
 
 
     private final MenuRepository menuRepository;
+    private final AccompagnementRepository accompagnementRepository;
     private final MenuMapper menuMapper;
 
     public List<MenuDto> findAll() {
@@ -29,12 +32,11 @@ public class MenuService   {
     }
 
     public MenuDto findById(Long id) {
-        //TODO change type of exception with custom exception. Add exception handler
-        return menuMapper.toMenuDto(menuRepository.findById(id).orElseThrow(RuntimeException::new));
+        return menuMapper.toMenuDto(menuRepository.findById(id).orElseThrow(EntityNotFoundException::new));
     }
     
     public MenuDto save(MenuDto menuDto) {
-        menuRepository.save(menuMapper.toMenu(menuDto));
+        menuRepository.save(menuMapper.toMenu(menuDto, accompagnementRepository));
         return menuDto;
     }
     

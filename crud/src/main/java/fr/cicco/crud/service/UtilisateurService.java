@@ -1,6 +1,8 @@
 package fr.cicco.crud.service;
 
+import fr.cicco.crud.repository.AdresseRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;    
     
@@ -15,11 +17,13 @@ import java.util.Map;
 
 @Service
 @Validated
+@Slf4j
 @RequiredArgsConstructor
 public class UtilisateurService   {
 
 
     private final UtilisateurRepository utilisateurRepository;
+    private final AdresseRepository adresseRepository;
     private final UtilisateurMapper utilisateurMapper;
 
     public List<UtilisateurDto> findAll() {
@@ -34,7 +38,8 @@ public class UtilisateurService   {
     }
     
     public UtilisateurDto save(UtilisateurDto utilisateurDto) {
-        utilisateurRepository.save(utilisateurMapper.toUtilisateur(utilisateurDto));
+        log.info(utilisateurDto.toString());
+        utilisateurRepository.save(utilisateurMapper.toUtilisateur(utilisateurDto, adresseRepository));
         return utilisateurDto;
     }
     

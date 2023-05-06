@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 public class CommandePizzaDto {
     private Long id;
     private Integer nbPizzas;
-    private MenuDto menu;
+    private PizzaDto pizzaDto;
 
 }

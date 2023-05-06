@@ -1,12 +1,12 @@
 package fr.cicco.crud.service;
 
+import fr.cicco.crud.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;    
     
 import fr.cicco.crud.dto.CommandeDto;
 import fr.cicco.crud.mapper.CommandeMapper;
-import fr.cicco.crud.repository.CommandeRepository;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,9 +18,15 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CommandeService   {
 
-
+    private final MagasinRepository magasinRepository;
     private final CommandeRepository commandeRepository;
     private final CommandeMapper commandeMapper;
+    private final UtilisateurRepository utilisateurRepository;
+    private final CommandpizzaRepository commandpizzaRepository;
+    private final PizzaRepository pizzaRepository;
+    private final MenuRepository menuRepository;
+    private final CommandemenuRepository commandemenuRepository;
+    private final AdresseRepository adresseRepository;
 
     public List<CommandeDto> findAll() {
         return commandeRepository.findAll().stream()
@@ -34,7 +40,17 @@ public class CommandeService   {
     }
     
     public CommandeDto save(CommandeDto commandeDto) {
-        commandeRepository.save(commandeMapper.toCommande(commandeDto));
+        commandeRepository.save(commandeMapper.toCommande(
+                commandeDto,
+                utilisateurRepository,
+                commandpizzaRepository,
+                pizzaRepository,
+                menuRepository,
+                adresseRepository,
+                magasinRepository,
+                commandemenuRepository
+                ));
+
         return commandeDto;
     }
     

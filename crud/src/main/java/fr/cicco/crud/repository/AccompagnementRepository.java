@@ -7,5 +7,6 @@ import java.util.Optional;
     
 
 public interface AccompagnementRepository extends JpaRepository<Accompagnement, Long>  {
+    Optional<Accompagnement> findByNom(String nom);
 
 }

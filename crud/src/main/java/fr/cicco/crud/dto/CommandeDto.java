@@ -14,7 +14,8 @@ import java.util.List;
 @Builder
 public class CommandeDto   {
     private Long id;
-    private String emailUtilisateur;
+    private String emailClient;
+    private String emailLivreur;
     private List<CommandePizzaDto> commandePizzaList;
     private String status;
     private LocalDateTime dateCommande;

@@ -7,5 +7,5 @@ import java.util.Optional;
     
 
 public interface ToppingRepository extends JpaRepository<Topping, Long>  {
-
+    Optional<Topping> findToppingByNom(String nom);
 }

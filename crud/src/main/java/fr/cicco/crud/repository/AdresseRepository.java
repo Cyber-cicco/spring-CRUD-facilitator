@@ -7,5 +7,6 @@ import java.util.Optional;
     
 
 public interface AdresseRepository extends JpaRepository<Adresse, Long>  {
+    Optional<Adresse> findAdresseByCodePostalAndVilleAndRue(String codePostal, String ville, String rue);
 
 }
