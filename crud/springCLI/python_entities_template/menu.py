@@ -1,14 +1,24 @@
 
 from ..datas.autocompletion import *
 
-name = 'Utilisateur'
+name = 'Menu'
 
 entity = {
     
-    'Utilisateur' : {
+    'Menu' : {
             
         'id':{
             Type: Long,
+            options:{
+                'dto':[
+                    {'exists':True, 'fields':[]}
+                ]
+        
+            }
+        },
+
+        'prix':{
+            Type: Double,
             options:{
                 'dto':[
                     {'exists':True, 'fields':[]}
@@ -27,17 +37,7 @@ entity = {
             }
         },
 
-        'prenom':{
-            Type: String,
-            options:{
-                'dto':[
-                    {'exists':True, 'fields':[]}
-                ]
-        
-            }
-        },
-
-        'email':{
+        'photo':{
             Type: "String",
             options:{
                 'dto':[
@@ -47,7 +47,7 @@ entity = {
             }
         },
 
-        'motDePasse':{
+        'description':{
             Type: "String",
             options:{
                 'dto':[
@@ -57,8 +57,8 @@ entity = {
             }
         },
 
-        'isAdmin':{
-            Type: Boolean,
+        'accompagnementList':{
+            Type: "List<Accompagnement>",
             options:{
                 'dto':[
                     {'exists':True, 'fields':[]}
@@ -67,8 +67,8 @@ entity = {
             }
         },
 
-        'isLivreur':{
-            Type: Boolean,
+        'pizzaList':{
+            Type: "List<Pizza>",
             options:{
                 'dto':[
                     {'exists':True, 'fields':[]}
@@ -77,21 +77,10 @@ entity = {
             }
         },
 
-        'adresseList':{
-            Type: "List<Adresse>",
+        'commandeMenuList':{
+            Type: "List<CommandeMenu>",
             options:{
                 'dto':[
-                    {'exists':True, 'fields':[]}
-                ]
-        
-            }
-        },
-
-        'commandeList':{
-            Type: "List<Commande>",
-            options:{
-                'dto':[
-                    {'exists':True, 'fields':[]}
                 ]
         
             }

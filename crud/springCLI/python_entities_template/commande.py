@@ -1,11 +1,11 @@
 
 from ..datas.autocompletion import *
 
-name = 'Utilisateur'
+name = 'Commande'
 
 entity = {
     
-    'Utilisateur' : {
+    'Commande' : {
             
         'id':{
             Type: Long,
@@ -17,8 +17,18 @@ entity = {
             }
         },
 
-        'nom':{
-            Type: String,
+        'livreur':{
+            Type: "Utilisateur",
+            options:{
+                'dto':[
+                    {'exists':True, 'fields':["email"]}
+                ]
+        
+            }
+        },
+
+        'commandePizzaList':{
+            Type: "List<CommandePizza>",
             options:{
                 'dto':[
                     {'exists':True, 'fields':[]}
@@ -27,17 +37,17 @@ entity = {
             }
         },
 
-        'prenom':{
-            Type: String,
+        'client':{
+            Type: "Utilisateur",
             options:{
                 'dto':[
-                    {'exists':True, 'fields':[]}
+                    {'exists':True, 'fields':["email"]}
                 ]
         
             }
         },
 
-        'email':{
+        'status':{
             Type: "String",
             options:{
                 'dto':[
@@ -47,8 +57,8 @@ entity = {
             }
         },
 
-        'motDePasse':{
-            Type: "String",
+        'dateCommande':{
+            Type: LocalDateTime,
             options:{
                 'dto':[
                     {'exists':True, 'fields':[]}
@@ -57,8 +67,18 @@ entity = {
             }
         },
 
-        'isAdmin':{
-            Type: Boolean,
+        'magasin':{
+            Type: "Magasin",
+            options:{
+                'dto':[
+                    {'exists':True, 'fields':["nom"]}
+                ]
+        
+            }
+        },
+
+        'commandeMenuList':{
+            Type: "List<CommandeMenu>",
             options:{
                 'dto':[
                     {'exists':True, 'fields':[]}
@@ -67,28 +87,8 @@ entity = {
             }
         },
 
-        'isLivreur':{
-            Type: Boolean,
-            options:{
-                'dto':[
-                    {'exists':True, 'fields':[]}
-                ]
-        
-            }
-        },
-
-        'adresseList':{
-            Type: "List<Adresse>",
-            options:{
-                'dto':[
-                    {'exists':True, 'fields':[]}
-                ]
-        
-            }
-        },
-
-        'commandeList':{
-            Type: "List<Commande>",
+        'adresse':{
+            Type: "Adresse",
             options:{
                 'dto':[
                     {'exists':True, 'fields':[]}

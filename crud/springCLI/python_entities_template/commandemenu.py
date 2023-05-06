@@ -1,11 +1,11 @@
 
 from ..datas.autocompletion import *
 
-name = 'Adresse'
+name = 'CommandeMenu'
 
 entity = {
     
-    'Adresse' : {
+    'CommandeMenu' : {
             
         'id':{
             Type: Long,
@@ -17,8 +17,8 @@ entity = {
             }
         },
 
-        'rue':{
-            Type: String,
+        'nbMenus':{
+            Type: Integer,
             options:{
                 'dto':[
                     {'exists':True, 'fields':[]}
@@ -27,8 +27,8 @@ entity = {
             }
         },
 
-        'ville':{
-            Type: String,
+        'menu':{
+            Type: "Menu",
             options:{
                 'dto':[
                     {'exists':True, 'fields':[]}
@@ -37,11 +37,10 @@ entity = {
             }
         },
 
-        'codePostal':{
-            Type: "String",
+        'commande':{
+            Type: "Commande",
             options:{
                 'dto':[
-                    {'exists':True, 'fields':[]}
                 ]
         
             }

@@ -18,11 +18,13 @@ def infere_type_by_name(type):
         return returned_type.format(returned='Long')
     elif re.search(r'\w*(d|D)ate\w*', type):
         return returned_type.format(returned='LocalDateTime')
-    elif 'duree' in type or 'age' in type or 'length' in type or type.startswith('nb') or 'capacit' in type or 'price' in type or 'prix' in type :
+    elif 'duree' in type or 'age' in type or 'length' in type or type.startswith('nb') or 'capacit' in type :
         return returned_type.format(returned='Integer')
-    elif re.search(r'(e|E)xist', type):
+    elif 'price' in type or 'prix' in type:
+        return returned_type.format(returned='Double') 
+    elif re.search(r'(e|E)xist', type) or type.startswith('is'):
         return returned_type.format(returned='Boolean')
-    elif re.search(r'(N|n)ame', type) or re.search(r'(n|N)om', type):
+    elif re.search(r'(N|n)ame', type) or re.search(r'(n|N)om', type) or re.search(r'(R|r)ue', type) or re.search(r'(c|C)ity', type) or re.search(r'(v|V)ille', type):
         return returned_type.format(returned='String')
     else:
-        return returned_type.format(returned='Object')
+        return returned_type.format(returned='"String"')

@@ -1,11 +1,11 @@
 
 from ..datas.autocompletion import *
 
-name = 'Utilisateur'
+name = 'Pizza'
 
 entity = {
     
-    'Utilisateur' : {
+    'Pizza' : {
             
         'id':{
             Type: Long,
@@ -27,8 +27,8 @@ entity = {
             }
         },
 
-        'prenom':{
-            Type: String,
+        'prix':{
+            Type: Double,
             options:{
                 'dto':[
                     {'exists':True, 'fields':[]}
@@ -37,7 +37,7 @@ entity = {
             }
         },
 
-        'email':{
+        'toCreate':{
             Type: "String",
             options:{
                 'dto':[
@@ -47,7 +47,17 @@ entity = {
             }
         },
 
-        'motDePasse':{
+        'pate':{
+            Type: "Pate",
+            options:{
+                'dto':[
+                    {'exists':True, 'fields':[]}
+                ]
+        
+            }
+        },
+
+        'code':{
             Type: "String",
             options:{
                 'dto':[
@@ -57,8 +67,8 @@ entity = {
             }
         },
 
-        'isAdmin':{
-            Type: Boolean,
+        'categorie':{
+            Type: "String",
             options:{
                 'dto':[
                     {'exists':True, 'fields':[]}
@@ -67,8 +77,8 @@ entity = {
             }
         },
 
-        'isLivreur':{
-            Type: Boolean,
+        'version':{
+            Type: Integer,
             options:{
                 'dto':[
                     {'exists':True, 'fields':[]}
@@ -77,8 +87,8 @@ entity = {
             }
         },
 
-        'adresseList':{
-            Type: "List<Adresse>",
+        'toppingList':{
+            Type: "List<Topping>",
             options:{
                 'dto':[
                     {'exists':True, 'fields':[]}
@@ -87,8 +97,18 @@ entity = {
             }
         },
 
-        'commandeList':{
-            Type: "List<Commande>",
+        'ingredientList':{
+            Type: "List<Ingredient>",
+            options:{
+                'dto':[
+                    {'exists':True, 'fields':[]}
+                ]
+        
+            }
+        },
+
+        'commandePizzaList':{
+            Type: "List<CommandePizza>",
             options:{
                 'dto':[
                     {'exists':True, 'fields':[]}
