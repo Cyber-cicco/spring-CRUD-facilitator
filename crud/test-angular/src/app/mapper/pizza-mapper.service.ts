@@ -18,20 +18,8 @@ export class PizzaMapperService extends BasicMapperService {
       id: pizza.id,
       nom: pizza.nom ,
       version: pizza.version,
-      ingredients: (()=>{
-        let res = '';
-        for(let ingredient of pizza.ingredientList){
-          res += ingredient.nom +' '
-        }
-        return res;
-      })(),
-      toppings: (()=>{
-        let res = '';
-        for(let val of pizza.toppingList){
-          res += val.nom +' '
-        }
-        return res;
-      })(),
+      ingredients: pizza.ingredientList.map(val=>val.nom).join(', '),
+      toppings: pizza.ingredientList.map(val=>val.nom).join(', '),
       pate: "",
       prix: 0,
     }

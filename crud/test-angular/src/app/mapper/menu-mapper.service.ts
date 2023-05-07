@@ -18,20 +18,8 @@ export class MenuMapperService extends BasicMapperService{
       id:menu.id,
       prix:menu.prix,
       nom:menu.nom,
-      accompagnements: (()=>{
-        let res = ""
-        menu.accompagnementList.forEach(val=>{
-          res += val.nom
-        })
-        return res;
-      })(),
-      pizzas:(()=> {
-        let res = ""
-        menu.accompagnementList.forEach(val => {
-          res += val.nom
-        });
-        return res;
-      })()
+      accompagnements: menu.accompagnementList.map(val=>val.nom).join(', '),
+      pizzas:menu.pizzaList.map(val=>val.nom).join(', ')
     }
   }
 }
