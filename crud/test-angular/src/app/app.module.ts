@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import {SharedModule} from "./shared/shared.module";
 import {AdminModule} from "./admin/admin.module";
 import {HttpClientModule} from "@angular/common/http";
-import {Ng2BootstrapModule} from "ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -18,7 +17,6 @@ import {Ng2BootstrapModule} from "ng-bootstrap";
     HttpClientModule,
     AppRoutingModule,
     SharedModule,
-    Ng2BootstrapModule
   ],
   providers: [],
   bootstrap: [AppComponent]
