@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {CrudDataflowService} from "../../../data/crud-dataflow.service";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'test-modal-suppr',
@@ -7,4 +9,16 @@ import { Component } from '@angular/core';
 })
 export class ModalSupprComponent {
 
+  private id = 0;
+
+  constructor(private dialog:MatDialog, private crud:CrudDataflowService) {
+    this.id = this.crud.getSupprSubject().getValue();
+  }
+
+
+  closeModal(sendNotification: boolean) {
+    console.log(this.id);
+    if (sendNotification) this.crud.getConfSupprSubject().next(this.id);
+    this.dialog.closeAll();
+  }
 }

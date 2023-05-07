@@ -12,6 +12,7 @@ import { IngredientsComponent } from './ingredients/ingredients.component';
 import { StatistiquesComponent } from './statistiques/statistiques.component';
 import { PromotionsComponent } from './promotions/promotions.component';
 import {SharedModule} from "../shared/shared.module";
+import {MaterialModule} from "../material/material.module";
 
 
 
@@ -31,7 +32,8 @@ import {SharedModule} from "../shared/shared.module";
     ],
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    MaterialModule
   ]
 })
 export class AdminModule { }

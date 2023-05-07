@@ -4,6 +4,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { TableauComponent } from './tableau/tableau.component';
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import { ModalSupprComponent } from './modal/modal-suppr/modal-suppr.component';
+import {MatButtonModule} from "@angular/material/button";
+import {MaterialModule} from "../material/material.module";
 
 
 
@@ -20,7 +22,9 @@ import { ModalSupprComponent } from './modal/modal-suppr/modal-suppr.component';
   imports: [
     CommonModule,
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,
+    MatButtonModule,
+    MaterialModule
   ]
 })
 export class SharedModule { }

@@ -1,23 +1,23 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Menu} from "../../models/menu";
 import {MenuService} from "../../providers/menu.service";
-import {UtilisateurPresentation} from "../../models/utilisateur-presentation";
 import {MenuMapperService} from "../../mapper/menu-mapper.service";
 import {MenuPresentation} from "../../models/menu-presentation";
 import {BaseAdmin} from "../../models/base-admin";
+import {CrudDataflowService} from "../../data/crud-dataflow.service";
 
 @Component({
   selector: 'test-menus',
   templateUrl: './menus.component.html',
   styleUrls: ['./menus.component.scss']
 })
-export class MenusComponent extends BaseAdmin{
+export class MenusComponent extends BaseAdmin implements OnInit, OnDestroy{
 
 
-  constructor(private menuService:MenuService, mapper:MenuMapperService) {
-    super();
+  constructor(private menuService:MenuService, mapper:MenuMapperService, crud:CrudDataflowService) {
+    super(crud);
     this.menuService.getAll().subscribe((value)=>{
-
+      this.constructMap(value, mapper);
     })
   }
   override constructMap(value: Menu[], mapper: MenuMapperService) {
@@ -28,5 +28,12 @@ export class MenusComponent extends BaseAdmin{
       if(menuPresentation[0] != undefined){
         this.items.push(mapper.toPresentationKeys(menuPresentation));
       }
+  }
+  ngOnDestroy(): void {
+    this.unsubscribe();
+  }
+
+  ngOnInit(): void {
+    this.subscsribe();
   }
 }

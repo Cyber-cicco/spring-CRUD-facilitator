@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UtilisateurService} from "../../providers/utilisateur.service";
 import {Utilisateur} from "../../models/utilisateur";
 import {UtilisateurMapperService} from "../../mapper/utilisateur-mapper.service";
@@ -11,21 +11,17 @@ import {CrudDataflowService} from "../../data/crud-dataflow.service";
   templateUrl: './utilisateurs.component.html',
   styleUrls: ['./utilisateurs.component.scss']
 })
-export class UtilisateursComponent extends BaseAdmin implements OnDestroy{
+export class UtilisateursComponent extends BaseAdmin implements OnInit, OnDestroy{
 
   constructor(private utilisateurService:UtilisateurService,
               mapper:UtilisateurMapperService,
-              private crud:CrudDataflowService,
-              ) {
-    super();
+              crud:CrudDataflowService) {
+    super(crud);
     this.utilisateurService.getAll().subscribe((value)=>{
       this.constructMap(value, mapper);
 
     })
-    this.crud.getSupprSubject().asObservable().subscribe((value)=>{
-      console.log("suppression d'un utilisateur");
-      console.log(value);
-    })
+
   }
   override constructMap(value: Utilisateur[], mapper: UtilisateurMapperService) {
     let utilisateursPresentation:UtilisateurPresentation[] = [];
@@ -35,9 +31,13 @@ export class UtilisateursComponent extends BaseAdmin implements OnDestroy{
     for(let utilisateur of utilisateursPresentation){
       this.items.push(mapper.toPresentationKeys(utilisateursPresentation));
     }
-    console.log(this.items);
   }
 
   ngOnDestroy(): void {
+    this.unsubscribe();
+  }
+
+  ngOnInit(): void {
+    this.subscsribe();
   }
 }

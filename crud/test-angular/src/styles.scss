@@ -1,9 +1,40 @@
-/* You can add global styles to this file, and also import other style files */
 @use './assets/styles/consts';
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
 
-h1{
-    text-align: center;
-}
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$test-angular-primary: mat.define-palette(mat.$indigo-palette);
+$test-angular-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$test-angular-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$test-angular-theme: mat.define-light-theme((
+  color: (
+    primary: $test-angular-primary,
+    accent: $test-angular-accent,
+    warn: $test-angular-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($test-angular-theme);
+
+/* You can add global styles to this file, and also import other style files */
+
 
 body{
   background: consts.$background-color;
@@ -18,8 +49,8 @@ body{
 }
 
 .danger{
-  color :white;
-  background: red;
+  color :white !important;
+  background: red !important;
 }
 
 .creation{
@@ -40,7 +71,7 @@ body{
 }
 
 .valid{
-  background-color: consts.$main-color;
+  background-color: consts.$main-color !important;
 }
 
 .neutral{
@@ -165,3 +196,6 @@ fieldset{
 .menu-chkb{
   width:45px
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

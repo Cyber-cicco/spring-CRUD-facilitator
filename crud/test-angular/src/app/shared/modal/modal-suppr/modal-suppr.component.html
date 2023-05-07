@@ -1,3 +1,7 @@
-<ng-template>
-
-</ng-template>
+<div class="modal">
+  <div class="modal-body">Êtes vous bien sur de vouloir supprimer cet élément?</div>
+  <div class="modal-footer">
+    <button mat-button class="btn danger" (click)="closeModal(true)">Oui</button>
+    <button mat-button class="btn" (click)="closeModal(false)">Annuler</button>
+  </div>
+</div>
