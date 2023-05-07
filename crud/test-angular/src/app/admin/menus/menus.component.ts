@@ -26,7 +26,7 @@ export class MenusComponent extends BaseAdmin implements OnInit, OnDestroy{
         menuPresentation.push(mapper.toMenuPresentation(menu));
       }
       if(menuPresentation[0] != undefined){
-        this.items.push(mapper.toPresentationKeys(menuPresentation));
+        this.items = mapper.toPresentationKeys(menuPresentation);
       }
   }
   ngOnDestroy(): void {
@@ -34,6 +34,8 @@ export class MenusComponent extends BaseAdmin implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    this.subscsribe();
+    this.subscribe((id:number)=>{
+      this.menuService.deleteById(String(id));
+    });
   }
 }

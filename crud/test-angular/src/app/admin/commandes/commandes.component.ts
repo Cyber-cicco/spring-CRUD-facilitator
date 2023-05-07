@@ -25,7 +25,7 @@ export class CommandesComponent extends BaseAdmin implements OnInit, OnDestroy{
       commandePresentations.push(mapper.toCommandePresentation(commande));
     }
     if(commandePresentations[0] != undefined){
-      this.items.push(mapper.toPresentationKeys(commandePresentations));
+      this.items = mapper.toPresentationKeys(commandePresentations);
     }
   }
   ngOnDestroy(): void {
@@ -33,6 +33,8 @@ export class CommandesComponent extends BaseAdmin implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    this.subscsribe();
+    this.subscribe((id:number)=>{
+      this.commandeService.deleteById(String(id));
+    });
   }
 }

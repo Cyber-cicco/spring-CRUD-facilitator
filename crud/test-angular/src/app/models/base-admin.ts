@@ -13,16 +13,13 @@ export abstract class BaseAdmin {
     });
   }
   constructMap(value:Object[], mapper:BasicMapperService) {
-    this.items.push(mapper.toPresentationKeys(value));
+    this.items = mapper.toPresentationKeys(value);
   }
 
   protected unsubscribe(): void {
     this.supprSubscription.unsubscribe()
   }
-  protected subscsribe() {
-    this.supprSubscription = this.crud.getConfSupprSubject().asObservable().subscribe((value)=>{
-      console.log("hi mom")
-      console.log(value)
-    });
+  protected subscribe(subscriptionAction:(id:number)=>void) {
+    this.supprSubscription = this.crud.getConfSupprSubject().asObservable().subscribe(subscriptionAction);
   }
 }

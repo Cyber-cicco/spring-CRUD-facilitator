@@ -17,7 +17,6 @@ export class ModalSupprComponent {
 
 
   closeModal(sendNotification: boolean) {
-    console.log(this.id);
     if (sendNotification) this.crud.getConfSupprSubject().next(this.id);
     this.dialog.closeAll();
   }

@@ -14,22 +14,27 @@ import {CrudDataflowService} from "../../data/crud-dataflow.service";
 export class UtilisateursComponent extends BaseAdmin implements OnInit, OnDestroy{
 
   constructor(private utilisateurService:UtilisateurService,
-              mapper:UtilisateurMapperService,
+              private mapper:UtilisateurMapperService,
               crud:CrudDataflowService) {
     super(crud);
-    this.utilisateurService.getAll().subscribe((value)=>{
-      this.constructMap(value, mapper);
-
-    })
-
+    this.showDatas();
   }
+
+  showDatas(){
+    this.utilisateurService.getAll().subscribe((value)=>{
+      this.items = [];
+      this.constructMap(value, this.mapper);
+    })
+  }
+
   override constructMap(value: Utilisateur[], mapper: UtilisateurMapperService) {
     let utilisateursPresentation:UtilisateurPresentation[] = [];
     for (let utilisateur of value){
       utilisateursPresentation.push(mapper.toUtilisateurPresentation(utilisateur));
     }
-    for(let utilisateur of utilisateursPresentation){
-      this.items.push(mapper.toPresentationKeys(utilisateursPresentation));
+    if (utilisateursPresentation[0] != undefined) {
+      this.items = mapper.toPresentationKeys(utilisateursPresentation);
+
     }
   }
 
@@ -38,6 +43,10 @@ export class UtilisateursComponent extends BaseAdmin implements OnInit, OnDestro
   }
 
   ngOnInit(): void {
-    this.subscsribe();
+    this.subscribe((id:number)=>{
+      this.utilisateurService.deleteById(String(id)).subscribe(value=>{
+        this.showDatas();
+      });
+    });
   }
 }

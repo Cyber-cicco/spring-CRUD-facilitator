@@ -23,6 +23,8 @@ export class IngredientsComponent extends BaseAdmin  implements OnInit, OnDestro
   }
 
   ngOnInit(): void {
-    this.subscsribe();
+    this.subscribe((id:number)=>{
+      this.ingredientService.deleteById(String(id));
+    });
   }
 }

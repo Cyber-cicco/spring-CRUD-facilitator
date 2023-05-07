@@ -53,6 +53,7 @@ export class UtilisateurService{
     deleteById(id: string){
         let newURL = this.URL_API_API_V1_UTILISATEUR_ID;
         newURL = newURL.replace('{id}', id);
+        console.log("deleting is working!")
         return this.http.delete<Object>(newURL);
     }
 

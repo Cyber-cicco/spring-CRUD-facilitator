@@ -26,7 +26,7 @@ export class PizzasComponent extends BaseAdmin implements OnInit, OnDestroy {
       pizzaPresentation.push(mapper.toPizzapresentation(pizza));
     }
     if (pizzaPresentation[0] != undefined) {
-      this.items.push(mapper.toPresentationKeys(pizzaPresentation));
+      this.items = mapper.toPresentationKeys(pizzaPresentation);
     }
   }
   ngOnDestroy(): void {
@@ -34,6 +34,8 @@ export class PizzasComponent extends BaseAdmin implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscsribe();
+    this.subscribe((id:number)=>{
+      this.pizzaService.deleteById(String(id));
+    });
   }
 }

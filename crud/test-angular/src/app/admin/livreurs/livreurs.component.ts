@@ -26,7 +26,7 @@ export class LivreursComponent extends BaseAdmin implements OnInit, OnDestroy{
       utilisateursPresentation.push(mapper.toUtilisateurPresentation(utilisateur));
     }
     if(utilisateursPresentation[0] != undefined){
-      this.items.push(mapper.toPresentationKeys(utilisateursPresentation));
+      this.items = mapper.toPresentationKeys(utilisateursPresentation);
     }
   }
   ngOnDestroy(): void {
@@ -34,6 +34,8 @@ export class LivreursComponent extends BaseAdmin implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    this.subscsribe();
+    this.subscribe((id:number)=>{
+      this.utilisateurService.deleteById(String(id));
+    });
   }
 }

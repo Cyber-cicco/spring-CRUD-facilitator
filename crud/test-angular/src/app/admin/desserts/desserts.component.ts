@@ -22,6 +22,8 @@ export class DessertsComponent extends BaseAdmin implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    this.subscsribe();
+    this.subscribe((id:number)=>{
+      this.dessertService.deleteById(String(id));
+    });
   }
 }
