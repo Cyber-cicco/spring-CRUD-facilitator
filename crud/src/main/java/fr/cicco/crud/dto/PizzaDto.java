@@ -22,6 +22,5 @@ public class PizzaDto   {
     private Integer version;
     private List<ToppingDto> toppingList;
     private List<IngredientDto> ingredientList;
-    private List<CommandePizzaDto> commandePizzaList;
 
 }

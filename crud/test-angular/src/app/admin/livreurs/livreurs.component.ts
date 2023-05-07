@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import {UtilisateurService} from "../../providers/utilisateur.service";
+import {UtilisateurPresentation} from "../../models/utilisateur-presentation";
+import {UtilisateurMapperService} from "../../mapper/utilisateur-mapper.service";
+import {BaseAdmin} from "../../models/base-admin";
 import {Utilisateur} from "../../models/utilisateur";
 
 @Component({
@@ -7,13 +10,22 @@ import {Utilisateur} from "../../models/utilisateur";
   templateUrl: './livreurs.component.html',
   styleUrls: ['./livreurs.component.scss']
 })
-export class LivreursComponent {
+export class LivreursComponent extends BaseAdmin{
 
-  items:Utilisateur[] = [];
+    constructor(private utilisateurService:UtilisateurService, mapper:UtilisateurMapperService) {
+    super();
+    this.utilisateurService.getAllLivreurs().subscribe((value)=>{
+      this.constructMap(value, mapper);
 
-  constructor(private livreurService:UtilisateurService) {
-    this.livreurService.getAllLivreurs().subscribe((value)=>{
-      this.items = value;
     })
+  }
+  override constructMap(value: Utilisateur[], mapper: UtilisateurMapperService) {
+    let utilisateursPresentation:UtilisateurPresentation[] = [];
+    for (let utilisateur of value){
+      utilisateursPresentation.push(mapper.toUtilisateurPresentation(utilisateur));
+    }
+    if(utilisateursPresentation[0] != undefined){
+      this.items.push(mapper.toPresentationKeys(utilisateursPresentation));
+    }
   }
 }

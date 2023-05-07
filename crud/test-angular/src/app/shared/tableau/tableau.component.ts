@@ -8,8 +8,7 @@ import {Component, Input} from '@angular/core';
 
 export class TableauComponent {
 
-  @Input() items:any[] = [];
-  @Input() map = new Map<string, string>();
+  @Input() items:Map<string, string>[] = []
 
 
 }

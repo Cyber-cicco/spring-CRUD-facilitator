@@ -16,6 +16,5 @@ export interface Pizza {
   version:number,
   toppingList:Topping[],
   ingredientList:Ingredient[],
-  commandePizzaList:CommandePizza[],
 
 }

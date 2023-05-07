@@ -1,1 +1,167 @@
 /* You can add global styles to this file, and also import other style files */
+@use './assets/styles/consts';
+
+h1{
+    text-align: center;
+}
+
+body{
+  background: consts.$background-color;
+  color: consts.$contrast-color;
+  text-align: center;
+}
+
+.login{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.danger{
+  color :white;
+  background: red;
+}
+
+.creation{
+  display: none;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo{
+  width: 60px;
+  height: 60px;
+}
+
+.buttons{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.valid{
+  background-color: consts.$main-color;
+}
+
+.neutral{
+  background-color: black;
+  color: white;
+}
+
+.btn{
+  max-width: 150px;
+  display: flex;
+  font-size: 1.2em;
+  align-items: center;
+  justify-content: center;
+  border-bottom-style: none;
+  margin : 15px;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.btn-small{
+  max-width: 100px;
+  align-items: center;
+  justify-content: center;
+  border-bottom-style: none;
+  margin: 5px;
+  padding: 7px 3px;
+  font-size: 0.9em;
+  border-radius: 10px;
+}
+
+.form-group{
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.form-control{
+  padding: 5px;
+  border-radius: 15px;
+  background-color: darken(consts.$background-color, 10);
+  font-size: 1.3em;
+}
+
+.form{
+  min-width: 50%;
+  display: flex;
+  flex-direction: column;
+  background: darken(consts.$background-color, 5);
+  padding: 20px;
+  border-radius: 15px;
+}
+
+h1{
+  text-align: center;
+}
+
+.table{
+  width: 90%;
+  padding: 15px;
+  min-height: 100%;
+  align-self: center;
+  overflow: scroll;
+  text-align: center;
+  margin: 10px;
+  border-radius: 10px;
+  border-style: solid;
+}
+.crud-cell{
+  padding: 10px;
+}
+
+textarea{
+  height: 400px;
+}
+
+.tab-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: scroll;
+  flex-direction: row;
+}
+
+.crud-container{
+  width: 70%;
+
+  overflow: scroll;
+}
+
+.activity-container{
+  width: 25%;
+}
+
+.modal-editer{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  max-width: 500px;
+  max-height: 900px;
+  overflow: auto;
+  z-index: 10;
+  margin: -450px -350px;
+  background-color: rgba(0,0,0,0);
+}
+.modal-background{
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: rgba(0, 0, 0, .5);
+  top:0;
+  left: 0;
+}
+
+.pizza-chkb{
+  width:45px
+}
+
+fieldset{
+}
+
+.menu-chkb{
+  width:45px
+}

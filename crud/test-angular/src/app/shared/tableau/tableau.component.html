@@ -1,12 +1,24 @@
-<table>
-  <thead>
-    <tr>
-      <th *ngFor="let item of items[0] | keyvalue">{{item.key}}</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let item of items">
-      <td *ngFor="let row of item | keyvalue">{{row.value}}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="tab-container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th *ngFor="let item of items[0]?.keys()">{{item}}</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of items">
+            <td *ngFor="let row of item.values()">{{row}}</td>
+            <td>
+              <div class="buttons">
+                <button class="btn-small neutral">Modifier</button>
+                <button class="btn-small ">Supprimer</button>
+              </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="buttons">
+  <button class="btn valid">Ajouter</button>
+</div>
