@@ -13,6 +13,5 @@ import lombok.NoArgsConstructor;
 public class MagasinDto   {
     private Long id;
     private String nom;
-
     private AdresseDto adresse;
 }

@@ -38,7 +38,6 @@ public class UtilisateurService   {
     }
     
     public UtilisateurDto save(UtilisateurDto utilisateurDto) {
-        log.info(utilisateurDto.toString());
         utilisateurRepository.save(utilisateurMapper.toUtilisateur(utilisateurDto, adresseRepository));
         return utilisateurDto;
     }
@@ -54,6 +53,16 @@ public class UtilisateurService   {
         response.put("message", "entity has been deleted");
         utilisateurRepository.deleteById(id);
         return response;
-    }      
-    
+    }
+
+    public List<UtilisateurDto> findAllLivreurs() {
+        return utilisateurRepository.findUtilisateursByIsLivreur(true).stream()
+                .map(utilisateurMapper::toUtilisateurDto)
+                .toList();
+    }
+    public List<UtilisateurDto> findAllCLients() {
+        return utilisateurRepository.findUtilisateursByIsLivreurAndIsAdmin(false, false).stream()
+                .map(utilisateurMapper::toUtilisateurDto)
+                .toList();
+    }
 }

@@ -15,6 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/v1/accompagnement")
 public class AccompagnementController   {
 
@@ -24,6 +25,19 @@ public class AccompagnementController   {
     @GetMapping("/all")
     public ResponseEntity<List<AccompagnementDto>> getAllAccompagnement(){
         return ResponseEntity.ok(accompagnementService.findAll());
+    }
+
+    @GetMapping("/boissons/all")
+    public ResponseEntity<List<AccompagnementDto>> getAllBoissons(){
+        return ResponseEntity.ok(accompagnementService.findAllBoissons());
+    }
+    @GetMapping("/desserts/all")
+    public ResponseEntity<List<AccompagnementDto>> getAllDesserts(){
+        return ResponseEntity.ok(accompagnementService.findAllDessert());
+    }
+    @GetMapping("/encas/all")
+    public ResponseEntity<List<AccompagnementDto>> getAllEnCas(){
+        return ResponseEntity.ok(accompagnementService.findAllEnCas());
     }
 
     @GetMapping("/{id}")

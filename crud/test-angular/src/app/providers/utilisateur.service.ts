@@ -13,39 +13,47 @@ export class UtilisateurService{
    private URL_API_API_V1_UTILISATEUR = environnement.urlApi + "/api/v1/utilisateur";
    private URL_API_API_V1_UTILISATEUR_ID = environnement.urlApi + "/api/v1/utilisateur/{id}";
    private URL_API_API_V1_UTILISATEUR_ALL = environnement.urlApi + "/api/v1/utilisateur/all";
+  private URL_API_API_V1_CLIENT_ALL = environnement.urlApi + "/api/v1/utilisateur/clients";
+  private URL_API_API_V1_LIVREUR_ALL= environnement.urlApi + "/api/v1/utilisateur/livreurs";
 
 
     constructor(private http:HttpClient){}
 
 
     getAll(){
-        return this.http.get<Utilisateur[]>(this.URL_API_API_V1_UTILISATEUR_ALL)
+        return this.http.get<Utilisateur[]>(this.URL_API_API_V1_UTILISATEUR_ALL);
     }
 
 
+  getAllClients(){
+    return this.http.get<Utilisateur[]>(this.URL_API_API_V1_CLIENT_ALL);
+  }
     getById(id: string){
         let newURL = this.URL_API_API_V1_UTILISATEUR_ID
         newURL = newURL.replace('{id}', id);
-        return this.http.get<Utilisateur>(newURL)
+        return this.http.get<Utilisateur>(newURL);
     }
 
+  getAllLivreurs(){
+    return this.http.get<Utilisateur[]>(this.URL_API_API_V1_LIVREUR_ALL);
+  }
 
     post(dto : Utilisateur){
-        return this.http.post<Utilisateur>(this.URL_API_API_V1_UTILISATEUR,dto)
+        return this.http.post<Utilisateur>(this.URL_API_API_V1_UTILISATEUR,dto);
     }
 
 
     patchById(id: string, dto : Utilisateur){
-        let newURL = this.URL_API_API_V1_UTILISATEUR_ID
+        let newURL = this.URL_API_API_V1_UTILISATEUR_ID;
         newURL = newURL.replace('{id}', id);
-        return this.http.patch<Utilisateur>(newURL,dto)
+        return this.http.patch<Utilisateur>(newURL,dto);
     }
 
 
     deleteById(id: string){
-        let newURL = this.URL_API_API_V1_UTILISATEUR_ID
+        let newURL = this.URL_API_API_V1_UTILISATEUR_ID;
         newURL = newURL.replace('{id}', id);
-        return this.http.delete<Object>(newURL)
+        return this.http.delete<Object>(newURL);
     }
 
 

@@ -15,6 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/v1/utilisateur")
 public class UtilisateurController   {
 
@@ -31,6 +32,14 @@ public class UtilisateurController   {
         return ResponseEntity.ok(utilisateurService.findById(id));
     }
 
+    @GetMapping("/clients")
+    public ResponseEntity<List<UtilisateurDto>> getClients(){
+        return ResponseEntity.ok(utilisateurService.findAllCLients());
+    }
+    @GetMapping("/livreurs")
+    public ResponseEntity<List<UtilisateurDto>> getLivreurs(){
+        return ResponseEntity.ok(utilisateurService.findAllLivreurs());
+    }
     @PostMapping
     public ResponseEntity<UtilisateurDto> saveUtilisateur(@RequestBody UtilisateurDto dto){
         return ResponseEntity.ok(utilisateurService.save(dto));

@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin
 @RequiredArgsConstructor
 public abstract class BaseController<T> {{
 
@@ -82,6 +83,7 @@ controller = {
     'annotations':
     '''
 @RestController
+@CrossOrigin
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/{class_name_lower}")''',
     'body':

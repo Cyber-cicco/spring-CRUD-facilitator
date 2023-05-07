@@ -1,5 +1,6 @@
 package fr.cicco.crud.service;
 
+import fr.cicco.crud.models.TypeAccompagnement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;    
@@ -49,6 +50,24 @@ public class AccompagnementService   {
         response.put("message", "entity has been deleted");
         accompagnementRepository.deleteById(id);
         return response;
-    }      
-    
+    }
+
+    public List<AccompagnementDto> findAllBoissons() {
+        return findAccompagnementByType(TypeAccompagnement.BOISSON);
+    }
+
+    private List<AccompagnementDto> findAccompagnementByType(TypeAccompagnement type){
+        return accompagnementRepository.findAccompagnementByTypeAccompagnementContaining(String.valueOf(type))
+                .stream()
+                .map(accompagnementMapper::toAccompagnementDto)
+                .toList();
+    }
+
+    public List<AccompagnementDto> findAllDessert() {
+        return findAccompagnementByType(TypeAccompagnement.DESSERT);
+    }
+
+    public List<AccompagnementDto> findAllEnCas() {
+        return findAccompagnementByType(TypeAccompagnement.ENCAS);
+    }
 }
