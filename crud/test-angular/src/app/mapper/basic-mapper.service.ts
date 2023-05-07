@@ -12,7 +12,6 @@ export class BasicMapperService {
       for(let item of items){
         let map = new Map<string, string>();
         for(let [key, value] of Object.entries(item)){
-          console.log(value);
           map.set((this.mapper.mapChamps.has(key)) ? this.mapper.mapChamps.get(key)! : key, value)
         }
         mapArray.push(map);

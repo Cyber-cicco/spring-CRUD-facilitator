@@ -36,6 +36,8 @@ export class ClientsComponent extends BaseAdmin implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.subscribe((id:number)=>{
       this.utilisateurService.deleteById(String(id));
-    });
+    },
+      (id:number)=>{},
+      ()=>{});
   }
 }

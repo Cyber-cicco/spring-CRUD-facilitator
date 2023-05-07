@@ -36,6 +36,8 @@ export class PizzasComponent extends BaseAdmin implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscribe((id:number)=>{
       this.pizzaService.deleteById(String(id));
-    });
+    },
+      (id:number)=>{},
+      ()=>{});
   }
 }

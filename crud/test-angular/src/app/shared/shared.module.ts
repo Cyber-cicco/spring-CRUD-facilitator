@@ -6,6 +6,7 @@ import {RouterLink, RouterLinkActive} from "@angular/router";
 import { ModalSupprComponent } from './modal/modal-suppr/modal-suppr.component';
 import {MatButtonModule} from "@angular/material/button";
 import {MaterialModule} from "../material/material.module";
+import { ModalModifComponent } from './modal/modal-modif/modal-modif.component';
 
 
 
@@ -13,7 +14,8 @@ import {MaterialModule} from "../material/material.module";
     declarations: [
         NavbarComponent,
         TableauComponent,
-        ModalSupprComponent
+        ModalSupprComponent,
+        ModalModifComponent
     ],
     exports: [
         NavbarComponent,

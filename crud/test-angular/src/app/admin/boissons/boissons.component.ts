@@ -24,6 +24,8 @@ export class BoissonsComponent extends BaseAdmin implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.subscribe((id:number)=>{
       this.boissonService.deleteById(String(id));
-    })
+    },
+      (id:number)=>{},
+      ()=>{});
   }
 }

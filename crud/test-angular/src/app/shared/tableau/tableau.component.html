@@ -11,7 +11,7 @@
             <td *ngFor="let row of item.values()">{{row}}</td>
             <td>
               <div class="buttons">
-                <button class="btn-small neutral">Modifier</button>
+                <button class="btn-small neutral" (click)="openForm(item.get('Identifiant'))">Modifier</button>
                 <button class="btn-small" (click)="sendSupprNotification(item.get('Identifiant'))">Supprimer</button>
               </div>
             </td>

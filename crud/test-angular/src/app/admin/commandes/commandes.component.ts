@@ -35,6 +35,8 @@ export class CommandesComponent extends BaseAdmin implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.subscribe((id:number)=>{
       this.commandeService.deleteById(String(id));
-    });
+    },
+      (id:number)=>{},
+      ()=>{});
   }
 }

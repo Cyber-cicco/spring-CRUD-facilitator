@@ -45,8 +45,11 @@ export class UtilisateursComponent extends BaseAdmin implements OnInit, OnDestro
   ngOnInit(): void {
     this.subscribe((id:number)=>{
       this.utilisateurService.deleteById(String(id)).subscribe(value=>{
+        console.log(value);
         this.showDatas();
       });
-    });
+    },
+      (id:number)=>{},
+      ()=>{});
   }
 }
