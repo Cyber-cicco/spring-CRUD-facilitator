@@ -3,13 +3,15 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './navbar/navbar.component';
 import { TableauComponent } from './tableau/tableau.component';
 import {RouterLink, RouterLinkActive} from "@angular/router";
+import { ModalSupprComponent } from './modal/modal-suppr/modal-suppr.component';
 
 
 
 @NgModule({
     declarations: [
         NavbarComponent,
-        TableauComponent
+        TableauComponent,
+        ModalSupprComponent
     ],
     exports: [
         NavbarComponent,

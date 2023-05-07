@@ -7,9 +7,12 @@ import {Subject} from "rxjs";
 export class CrudDataflowService {
 
   private supprSubject:Subject<number> =  new Subject();
+  private confSupprSubject:Subject<number> = new Subject();
   private modifSubject:Subject<number> = new Subject();
   constructor() {}
 
-
+  public getSupprSubject(){
+    return this.supprSubject;
+  }
 
 }
