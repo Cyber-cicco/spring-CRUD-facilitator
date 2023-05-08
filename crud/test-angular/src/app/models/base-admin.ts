@@ -2,7 +2,8 @@ import {BasicMapperService} from "../mapper/basic-mapper.service";
 import {CrudDataflowService} from "../data/crud-dataflow.service";
 import {Subscription} from "rxjs";
 import {BasicService} from "../providers/basic-service";
-import {FormObject} from "../form-models/form-object";
+import {MatDialog} from "@angular/material/dialog";
+import {ModalModifComponent} from "../shared/modal/modal-modif/modal-modif.component";
 
 /**
  * Classe abstraite représentant les comportements attendus des composants liés à l'administration des
@@ -34,7 +35,7 @@ export abstract class BaseAdmin<T extends Object, D extends Object> {
   protected creationSubscription:Subscription;
 
   /**Initialisation des souscriptions dans le constructeur*/
-  protected constructor(protected crud:CrudDataflowService) {
+  protected constructor(protected crud:CrudDataflowService, protected modalService:MatDialog) {
     this.supprSubscription = crud.getConfSupprSubject().subscribe();
     this.modifSubscription = crud.getConfModifSubject().subscribe();
     this.creationSubscription = crud.getConfCreationSubject().subscribe();
@@ -75,8 +76,9 @@ export abstract class BaseAdmin<T extends Object, D extends Object> {
     this.creationSubscription = this.crud.getConfCreationSubject().asObservable().subscribe();
     this.modifNotifSubscription = this.crud.getModifNotifSubject().asObservable().subscribe((id)=>{
         service.getById(String(id)).subscribe((value)=>{
-          let formMap:Map<string, FormObject> = mapper.toFormMap(value);
-          console.log(formMap);
+          let formMap = mapper.toFormMap(value);
+          this.crud.getModifSubject().next(formMap);
+          this.modalService.open(ModalModifComponent);
       })
     });
   }

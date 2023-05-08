@@ -20,9 +20,9 @@ export class PizzaMapperService extends BasicMapperService<Pizza, PizzaPresentat
       nom: pizza.nom ,
       version: pizza.version,
       ingredients: pizza.ingredientList.map(val=>val.nom).join(', '),
-      toppings: pizza.ingredientList.map(val=>val.nom).join(', '),
-      pate: "",
-      prix: 0,
+      toppings: pizza.toppingList.map(val=>val.nom).join(', '),
+      pate: pizza.pate?.nom,
+      prix: pizza.prix,
     }
   }
 }

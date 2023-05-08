@@ -5,7 +5,7 @@ import {UtilisateurMapperService} from "../../mapper/utilisateur-mapper.service"
 import {UtilisateurPresentation} from "../../models/utilisateur-presentation";
 import {BaseAdmin} from "../../models/base-admin";
 import {CrudDataflowService} from "../../data/crud-dataflow.service";
-import {FormObject} from "../../form-models/form-object";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'test-utilisateurs',
@@ -16,11 +16,10 @@ export class UtilisateursComponent extends BaseAdmin<Utilisateur, UtilisateurPre
 
   constructor(private utilisateurService:UtilisateurService,
               private mapper:UtilisateurMapperService,
-              crud:CrudDataflowService) {
-    super(crud);
+              crud:CrudDataflowService,
+              modalService:MatDialog) {
+    super(crud,modalService);
   }
-
-
 
   override constructMap(value: Utilisateur[], mapper: UtilisateurMapperService) {
     let utilisateursPresentation:UtilisateurPresentation[] = [];

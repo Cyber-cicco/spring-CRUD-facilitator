@@ -3,9 +3,9 @@ import {AccompagnementService} from "../../providers/accompagnement.service";
 import {BaseAdmin} from "../../models/base-admin";
 import {BasicMapperService} from "../../mapper/basic-mapper.service";
 import {CrudDataflowService} from "../../data/crud-dataflow.service";
-import {FormObject} from "../../form-models/form-object";
 import {Accompagnement} from "../../models/accompagnement";
 import {AccompagnementPresentation} from "../../models/accompagnement-presentation";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'test-boissons',
@@ -13,8 +13,8 @@ import {AccompagnementPresentation} from "../../models/accompagnement-presentati
   styleUrls: ['./boissons.component.scss']
 })
 export class BoissonsComponent extends BaseAdmin<Accompagnement, AccompagnementPresentation> implements OnInit, OnDestroy{
-  constructor(private boissonService: AccompagnementService, private mapper: BasicMapperService<Accompagnement, AccompagnementPresentation>, crud: CrudDataflowService) {
-    super(crud);
+  constructor(private boissonService: AccompagnementService, private mapper: BasicMapperService<Accompagnement, AccompagnementPresentation>, crud: CrudDataflowService, modalService:MatDialog) {
+    super(crud, modalService);
     this.boissonService.getAllBoissons().subscribe((value) => {
       this.constructMap(value, mapper);
     })

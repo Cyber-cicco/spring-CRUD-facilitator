@@ -43,20 +43,15 @@ export class UtilisateurService implements BasicService<Utilisateur>{
         return this.http.post<Utilisateur>(this.URL_API_API_V1_UTILISATEUR,dto);
     }
 
-
     patchById(id: string, dto : Utilisateur){
         let newURL = this.URL_API_API_V1_UTILISATEUR_ID;
         newURL = newURL.replace('{id}', id);
         return this.http.patch<Utilisateur>(newURL,dto);
     }
 
-
     deleteById(id: string){
         let newURL = this.URL_API_API_V1_UTILISATEUR_ID;
         newURL = newURL.replace('{id}', id);
         return this.http.delete<Object>(newURL);
     }
-
-
-
 }

@@ -39,6 +39,4 @@ export class FormMapperService {
   getMap(){
     return this.formMap;
   }
-
-
 }

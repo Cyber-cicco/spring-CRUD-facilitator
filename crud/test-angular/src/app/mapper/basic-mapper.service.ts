@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {MapperService} from "./mapper.service";
-import {FormObject} from "../form-models/form-object";
 import {Validators} from "@angular/forms";
 import {FormMapperService} from "./form-mapper.service";
+import {TransferFormObject} from "../models/transfer-form-object";
 
 /**
  * Classe servant à transformer les objets récupérés du back en objets permettant de les
@@ -17,7 +17,7 @@ import {FormMapperService} from "./form-mapper.service";
 })
 export class BasicMapperService<T extends Object, D extends Object> {
 
-  constructor(private mapper:MapperService, private formMapper:FormMapperService) {}
+  constructor(private mapper:MapperService, protected formMapper:FormMapperService) {}
   /**
    * Permet de transformer les clés de l'objet à afficher en clés
    * présentables pour l'en tête du tableau
@@ -40,13 +40,17 @@ export class BasicMapperService<T extends Object, D extends Object> {
    * des champs nécessaires à la création ou au changement d'une entité
    * @param entity :l'entité
    * */
-  toFormMap(entity: T) {
-    let newMap = new Map<string, FormObject>();
+  toFormMap(entity: Object):TransferFormObject[] {
+    let newMap:TransferFormObject[] = []
     for(let [key, value] of Object.entries(entity)){
-      let formObject:FormObject = this.formMapper.getMap().get(key) ?? {options: [], type: "text", validators:[Validators.required], value:""};
-      formObject.value = value;
-      newMap.set(key, formObject);
+      let transferFormObject:TransferFormObject = {
+        name:(this.mapper.mapChamps.has(key)) ? this.mapper.mapChamps.get(key)! : key[0].toUpperCase() + key.substring(1),
+        form:this.formMapper.getMap().get(key) ?? {options: [], type: "text", validators:[Validators.required], value:value}
+      }
+      transferFormObject.form.value = value;
+      newMap.push(transferFormObject);
     }
+    console.log(newMap);
     return newMap
   }
 }

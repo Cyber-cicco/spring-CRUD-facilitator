@@ -3,7 +3,7 @@ import {CrudDataflowService} from "../../../data/crud-dataflow.service";
 import {Subscription} from "rxjs";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
-import {FormObject} from "../../../form-models/form-object";
+import {TransferFormObject} from "../../../models/transfer-form-object";
 
 /**
  * Modal permettant de récupérer les champs de l'entité qu'elle est censé créer / modifier
@@ -19,7 +19,7 @@ import {FormObject} from "../../../form-models/form-object";
 export class ModalModifComponent implements OnInit, OnDestroy{
 
   /**Map des champs du formulaire et des ses propriétés*/
-  items = new Map<string,FormObject>();
+  items:TransferFormObject[] = [];
   /**Souscription à au sujet offrant les champs du formulaire à remplir*/
   modifSubscription:Subscription = new Subscription();
   /**Formulaire*/
@@ -34,20 +34,18 @@ export class ModalModifComponent implements OnInit, OnDestroy{
     this.modifSubscription.unsubscribe();
   }
 
-  /**Création des champs du formulaire
-   * TODO : Finir l'implémentation de la création des champs
-   * */
+  /**Création des champs du formulaire*/
   ngOnInit(): void {
     this.modifSubscription = this.crud.getModifSubject().subscribe(value => {
       if(value != undefined){
+        this.items = value;
         const formGroupFields:any = {};
-        for(let key of value.keys()){
-          let control =new FormControl("");
-          //control.addValidators()
-          formGroupFields[key] = control;
+        for(let tfo of value){
+          let control =new FormControl({value:tfo.form.value, disabled:tfo.form.options.includes('readonly')});
+          if (tfo.form.validators != undefined) control.addValidators(tfo.form.validators);
+          formGroupFields[tfo.name] = control;
         }
         this.formModification = this.fb.group(formGroupFields);
-        this.items = value;
       }
     });
   }

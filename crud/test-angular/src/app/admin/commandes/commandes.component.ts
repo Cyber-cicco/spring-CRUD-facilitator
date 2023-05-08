@@ -5,7 +5,7 @@ import {BaseAdmin} from "../../models/base-admin";
 import {CommandeMapperService} from "../../mapper/commande-mapper.service";
 import {CommandePresentation} from "../../models/commande-presentation";
 import {CrudDataflowService} from "../../data/crud-dataflow.service";
-import {FormObject} from "../../form-models/form-object";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'test-commandes',
@@ -14,8 +14,8 @@ import {FormObject} from "../../form-models/form-object";
 })
 export class CommandesComponent extends BaseAdmin<Commande, CommandePresentation> implements OnInit, OnDestroy{
 
-  constructor(private commandeService:CommandeService, private mapper:CommandeMapperService, crud:CrudDataflowService) {
-    super(crud);
+  constructor(private commandeService:CommandeService, private mapper:CommandeMapperService, crud:CrudDataflowService, modalService:MatDialog) {
+    super(crud, modalService);
     this.commandeService.getAll().subscribe((value)=>{
       this.constructMap(value, mapper)
     })

@@ -1,8 +1,8 @@
 <div class="modal-body">
   <ng-form [formGroup]="formModification" class="form">
-    <div *ngFor="let item of items | keyvalue" class="form-group">
-      <label [for]="item.key">{{item.key}}</label>
-      <input type="text" [formControlName]="item.key">
+    <div *ngFor="let item of items" class="form-group">
+      <label [for]="item.name">{{item.name}}</label>
+      <input *ngIf="item.form.type == 'number' || item.form.type == 'text' || item.form.type == 'password'"  [type]="item.form.type" formControlName="{{item.name}}">
     </div>
   </ng-form>
   <div class="buttons">

@@ -5,7 +5,7 @@ import {BaseAdmin} from "../../models/base-admin";
 import {PizzaMapperService} from "../../mapper/pizza-mapper.service";
 import {PizzaPresentation} from "../../models/pizza-presentation";
 import {CrudDataflowService} from "../../data/crud-dataflow.service";
-import {FormObject} from "../../form-models/form-object";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'test-pizzas',
@@ -14,8 +14,8 @@ import {FormObject} from "../../form-models/form-object";
 })
 export class PizzasComponent extends BaseAdmin<Pizza, PizzaPresentation> implements OnInit, OnDestroy {
 
-  constructor(private pizzaService: PizzaService, private mapper: PizzaMapperService, crud: CrudDataflowService) {
-    super(crud);
+  constructor(private pizzaService: PizzaService, private mapper: PizzaMapperService, crud: CrudDataflowService, modalService:MatDialog) {
+    super(crud, modalService);
     this.pizzaService.getAll().subscribe((value) => {
       this.constructMap(value, mapper);
     })

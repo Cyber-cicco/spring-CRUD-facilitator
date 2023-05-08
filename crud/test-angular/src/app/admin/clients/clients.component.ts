@@ -5,7 +5,7 @@ import {BaseAdmin} from "../../models/base-admin";
 import {UtilisateurMapperService} from "../../mapper/utilisateur-mapper.service";
 import {UtilisateurPresentation} from "../../models/utilisateur-presentation";
 import {CrudDataflowService} from "../../data/crud-dataflow.service";
-import {FormObject} from "../../form-models/form-object";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'test-clients',
@@ -14,8 +14,8 @@ import {FormObject} from "../../form-models/form-object";
 })
 export class ClientsComponent extends BaseAdmin<Utilisateur, UtilisateurPresentation> implements OnInit, OnDestroy{
 
-  constructor(private utilisateurService:UtilisateurService, private mapper:UtilisateurMapperService, crud:CrudDataflowService) {
-    super(crud);
+  constructor(private utilisateurService:UtilisateurService, private mapper:UtilisateurMapperService, crud:CrudDataflowService, modalService:MatDialog) {
+    super(crud, modalService);
     this.utilisateurService.getAllClients().subscribe((value)=>{
       this.constructMap(value, mapper);
 

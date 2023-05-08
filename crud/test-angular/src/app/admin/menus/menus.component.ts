@@ -5,7 +5,7 @@ import {MenuMapperService} from "../../mapper/menu-mapper.service";
 import {MenuPresentation} from "../../models/menu-presentation";
 import {BaseAdmin} from "../../models/base-admin";
 import {CrudDataflowService} from "../../data/crud-dataflow.service";
-import {FormObject} from "../../form-models/form-object";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'test-menus',
@@ -15,8 +15,8 @@ import {FormObject} from "../../form-models/form-object";
 export class MenusComponent extends BaseAdmin<Menu, MenuPresentation> implements OnInit, OnDestroy{
 
 
-  constructor(private menuService:MenuService, private mapper:MenuMapperService, crud:CrudDataflowService) {
-    super(crud);
+  constructor(private menuService:MenuService, private mapper:MenuMapperService, crud:CrudDataflowService, modalService:MatDialog) {
+    super(crud, modalService);
     this.menuService.getAll().subscribe((value)=>{
       this.constructMap(value, mapper);
     })
