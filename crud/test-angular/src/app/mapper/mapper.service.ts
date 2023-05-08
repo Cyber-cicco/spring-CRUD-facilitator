@@ -13,7 +13,7 @@ export class MapperService {
     this.mapChamps.set('pizza', 'Pizza');
     this.mapChamps.set('menu', 'Menu');
     this.mapChamps.set('status', 'Status');
-    this.mapChamps.set('dateCommande', 'date de création');
+    this.mapChamps.set('dateCommande', 'Date de création');
     this.mapChamps.set('nomMagasin', 'Pizzeria');
     this.mapChamps.set('adresse', 'Adresse');
     this.mapChamps.set('prix', 'Prix');
@@ -23,6 +23,11 @@ export class MapperService {
     this.mapChamps.set('version', 'Version');
     this.mapChamps.set('ingredients', 'Composition');
     this.mapChamps.set('toppings', 'Toppings');
-    this.mapChamps.set('', '');
+    this.mapChamps.set('pate', 'Pate');
+    //this.mapChamps.set('', '');
+    //this.mapChamps.set('', '');
+    //this.mapChamps.set('', '');
+    //this.mapChamps.set('', '');
+    //this.mapChamps.set('', '');
   }
 }

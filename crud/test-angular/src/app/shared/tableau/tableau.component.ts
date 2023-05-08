@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {CrudDataflowService} from "../../data/crud-dataflow.service";
 import {MatDialog} from "@angular/material/dialog";
 import {ModalSupprComponent} from "../modal/modal-suppr/modal-suppr.component";
@@ -11,7 +11,7 @@ import {ModalModifComponent} from "../modal/modal-modif/modal-modif.component";
   styleUrls: ['./tableau.component.scss']
 })
 
-export class TableauComponent implements OnChanges{
+export class TableauComponent {
   @Input() items:Map<string, string>[] = []
 
   constructor(private crud:CrudDataflowService, private dialog:MatDialog) {}
@@ -35,10 +35,16 @@ export class TableauComponent implements OnChanges{
 
   openForm(id:string|undefined){
     if(id != undefined && !isNaN(Number(id))){
-      this.crud.getModifSubject().next(Number(id));
+      let map = new Map<string,string>();
+      for(let item of this.items){
+        if(item.get("Identifiant") == id){
+          map = item;
+        }
+      }
+      this.crud.getModifSubject().next(map);
       this.openDialog(ModalModifComponent, '1','1');
+    } else {
+      throw "Erreur, la ligne du tableau semble ne pas posséder d'identifiant";
     }
-  }
-  ngOnChanges(changes: SimpleChanges): void {
   }
 }

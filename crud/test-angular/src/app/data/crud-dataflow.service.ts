@@ -8,7 +8,7 @@ export class CrudDataflowService {
 
   private supprSubject:BehaviorSubject<number> =  new BehaviorSubject<number>(0);
   private confSupprSubject:Subject<number> = new Subject();
-  private modifSubject:BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  private modifSubject:BehaviorSubject<Map<string, string>|undefined> = new BehaviorSubject<Map<string, string>|undefined>(undefined);
   private confModifSubject:Subject<any> = new Subject();
   private creationSubject:Subject<boolean> = new Subject();
   private confCreationSubject:Subject<any> = new Subject();

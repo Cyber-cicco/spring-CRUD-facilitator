@@ -1,1 +1,12 @@
-<h1>hi mom</h1>
+<div class="modal-body">
+  <ng-form [formGroup]="formModification" class="form">
+    <div *ngFor="let item of items | keyvalue" class="form-group">
+      <label [for]="item.key">{{item.key}}</label>
+      <input type="text" [formControlName]="item.key">
+    </div>
+  </ng-form>
+  <div class="buttons">
+    <button mat-button class="btn danger" (click)="closeModal(true)">Oui</button>
+    <button mat-button class="btn" (click)="closeModal(false)">Annuler</button>
+  </div>
+</div>
