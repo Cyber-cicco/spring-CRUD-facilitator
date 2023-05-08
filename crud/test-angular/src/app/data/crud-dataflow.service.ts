@@ -11,6 +11,7 @@ export class CrudDataflowService {
   private confSupprSubject:Subject<number> = new Subject();
   private modifSubject:BehaviorSubject<TransferFormObject[]> = new BehaviorSubject<TransferFormObject[]>([]);
   private modifNotifSubject:Subject<number> = new Subject<number>();
+  private asyncFormFieldsSubject:BehaviorSubject<Map<string, string[]>> = new BehaviorSubject<Map<string, string[]>>(new Map<string, string[]>())
   private confModifSubject:Subject<any> = new Subject();
   private creationSubject:Subject<boolean> = new Subject();
   private confCreationSubject:Subject<any> = new Subject();
@@ -37,5 +38,8 @@ export class CrudDataflowService {
   }
   public getModifNotifSubject(){
     return this.modifNotifSubject;
+  }
+  public getAsyncFieldsSubscriptions(){
+    return this.asyncFormFieldsSubject;
   }
 }

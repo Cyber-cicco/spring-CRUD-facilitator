@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {MapperService} from "./mapper.service";
 import {Validators} from "@angular/forms";
 import {FormMapperService} from "./form-mapper.service";
 import {TransferFormObject} from "../models/transfer-form-object";
+import {FormType} from "../form-models/form-type-enum";
 
 /**
  * Classe servant à transformer les objets récupérés du back en objets permettant de les
@@ -28,11 +29,15 @@ export class BasicMapperService<T extends Object, D extends Object> {
     for(let item of items){
       let map = new Map<string, string>();
       for(let [key, value] of Object.entries(item)){
-        map.set((this.mapper.mapChamps.has(key)) ? this.mapper.mapChamps.get(key)! : key, value)
+        map.set(this.changeNameToPretty(key), value)
       }
       mapArray.push(map);
     }
     return mapArray;
+  }
+
+  public changeNameToPretty(name:string){
+    return (this.mapper.mapChamps.has(name)) ? this.mapper.mapChamps.get(name)! : name[0].toUpperCase() + name.substring(1)
   }
 
   /**
@@ -44,8 +49,8 @@ export class BasicMapperService<T extends Object, D extends Object> {
     let newMap:TransferFormObject[] = []
     for(let [key, value] of Object.entries(entity)){
       let transferFormObject:TransferFormObject = {
-        name:(this.mapper.mapChamps.has(key)) ? this.mapper.mapChamps.get(key)! : key[0].toUpperCase() + key.substring(1),
-        form:this.formMapper.getMap().get(key) ?? {options: [], type: "text", validators:[Validators.required], value:value}
+        name:this.changeNameToPretty(key),
+        form:this.formMapper.getMap().get(key) ?? {options: [], type: FormType.TEXT, validators:[Validators.required], value:value}
       }
       transferFormObject.form.value = value;
       newMap.push(transferFormObject);

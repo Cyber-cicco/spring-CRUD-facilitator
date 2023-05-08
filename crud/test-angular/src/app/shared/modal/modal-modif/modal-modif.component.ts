@@ -4,6 +4,7 @@ import {Subscription} from "rxjs";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {TransferFormObject} from "../../../models/transfer-form-object";
+import {FormOption} from "../../../form-models/form-option-enum";
 
 /**
  * Modal permettant de récupérer les champs de l'entité qu'elle est censé créer / modifier
@@ -22,6 +23,8 @@ export class ModalModifComponent implements OnInit, OnDestroy{
   items:TransferFormObject[] = [];
   /**Souscription à au sujet offrant les champs du formulaire à remplir*/
   modifSubscription:Subscription = new Subscription();
+  /**Fields du formulaire nécessitant d'être récupérés auprès de l'API*/
+  asyncFields = new Map<string, string[]>();
   /**Formulaire*/
   formModification: FormGroup;
   constructor(private crud:CrudDataflowService,
@@ -41,13 +44,16 @@ export class ModalModifComponent implements OnInit, OnDestroy{
         this.items = value;
         const formGroupFields:any = {};
         for(let tfo of value){
-          let control =new FormControl({value:tfo.form.value, disabled:tfo.form.options.includes('readonly')});
+          let control =new FormControl({value:tfo.form.value, disabled:tfo.form.options.includes(FormOption.READONLY)});
           if (tfo.form.validators != undefined) control.addValidators(tfo.form.validators);
           formGroupFields[tfo.name] = control;
         }
         this.formModification = this.fb.group(formGroupFields);
       }
     });
+    this.asyncFields = this.crud.getAsyncFieldsSubscriptions().getValue()
+    console.log(this.asyncFields);
+
   }
   /**Foncition appelée lors du clique sur un bouton fermant la modale
    * TODO: implémenter la création de la nouvelle map à partir des champs du formulaire

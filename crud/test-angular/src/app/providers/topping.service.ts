@@ -15,7 +15,6 @@ export class ToppingService implements BasicService<Topping>{
    private URL_API_API_V1_TOPPING = environnement.urlApi + "/api/v1/topping";
    private URL_API_API_V1_TOPPING_ALL = environnement.urlApi + "/api/v1/topping/all";
 
-
     constructor(private http:HttpClient){}
 
 
@@ -48,7 +47,6 @@ export class ToppingService implements BasicService<Topping>{
         newURL = newURL.replace('{id}', id);
         return this.http.delete<Object>(newURL)
     }
-
 
 
 }

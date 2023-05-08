@@ -6,6 +6,10 @@ import {PizzaMapperService} from "../../mapper/pizza-mapper.service";
 import {PizzaPresentation} from "../../models/pizza-presentation";
 import {CrudDataflowService} from "../../data/crud-dataflow.service";
 import {MatDialog} from "@angular/material/dialog";
+import {ToppingService} from "../../providers/topping.service";
+import {IngredientService} from "../../providers/ingredient.service";
+import {PateService} from "../../providers/pate.service";
+import {map, Observable} from "rxjs";
 
 @Component({
   selector: 'test-pizzas',
@@ -14,11 +18,15 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class PizzasComponent extends BaseAdmin<Pizza, PizzaPresentation> implements OnInit, OnDestroy {
 
-  constructor(private pizzaService: PizzaService, private mapper: PizzaMapperService, crud: CrudDataflowService, modalService:MatDialog) {
+  constructor(private pizzaService: PizzaService,
+              private mapper: PizzaMapperService,
+              crud: CrudDataflowService,
+              modalService:MatDialog,
+              private toppingService:ToppingService,
+              private ingredientService:IngredientService,
+              private pateService:PateService) {
     super(crud, modalService);
-    this.pizzaService.getAll().subscribe((value) => {
-      this.constructMap(value, mapper);
-    })
+
   }
 
   override constructMap(value: Pizza[], mapper: PizzaMapperService) {
@@ -35,6 +43,24 @@ export class PizzasComponent extends BaseAdmin<Pizza, PizzaPresentation> impleme
   }
 
   ngOnInit(): void {
+    this.pizzaService.getAll().subscribe((value) => {
+      this.constructMap(value, this.mapper);
+    })
+    let fieldMap = new Map<string, string[]>();
     this.subscribe(this.pizzaService, this.mapper);
+    new Observable((observer)=>{
+      this.toppingService.getAll()
+        .pipe(map(value => value.map(t=>t.nom)))
+        .subscribe(value => fieldMap.set(this.mapper.changeNameToPretty("toppingList"), value));
+      this.ingredientService.getAll()
+        .pipe(map(value => value.map(t=>t.nom)))
+        .subscribe(value => fieldMap.set(this.mapper.changeNameToPretty("ingredientList"), value));
+      this.pateService.getAll()
+        .pipe(map(value => value.map(t=>t.nom)))
+        .subscribe(value => fieldMap.set(this.mapper.changeNameToPretty("pate"), value));
+      observer.next("done");
+    }).subscribe(()=>{
+      this.crud.getAsyncFieldsSubscriptions().next(fieldMap)
+    })
   }
 }
