@@ -1,0 +1,83 @@
+@use 'src/assets/styles/consts';
+
+$navBarSize : 65px;
+nav.navBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: black;
+  color: white;
+  z-index: 10;
+  height: $navBarSize;
+  @media screen and (max-width : 1000px) {
+    height: $navBarSize*1.5;
+  }
+  .title {
+    font-size: 3em;
+    display: flex;
+    width: 33%;
+    margin: 15px;
+    @media screen and (max-width : 1000px) {
+      width: 75%;
+      font-size: 3em;
+    }
+  }
+  .navList{
+    padding-top: 10px;
+  }
+
+
+
+  li {
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 80%;
+    margin: 15px;
+    @media screen and (max-width : 1000px) {
+      width: 25%;
+      display: none;
+    }
+
+    :hover{
+      color: consts.$main-color;
+    }
+  }
+  .hamb{
+    display: none;
+    width: $navBarSize*2 - 20;
+    height: $navBarSize*2 - 20;
+    @media screen and (max-width : 1000px) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .hambline{
+      width: 80%;
+      height: 10px;
+      margin: 7px;
+      margin-right: 50px;
+      background-color: white;
+    }
+  }
+}
+.nav-espace{
+  min-height: $navBarSize;
+}
+a{
+  text-decoration: none;
+  color: white;
+
+}
+
+.logo{
+  width: 66px;
+}

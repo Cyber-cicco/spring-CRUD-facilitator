@@ -1,0 +1,13 @@
+<div class="modal">
+  <ng-form [formGroup]="formModification" class="form">
+    <div *ngFor="let item of items" class="form-group">
+      <label [for]="item.name">{{item.name}}</label>
+      <input class="form-control" *ngIf="item.form.type == 'number' || item.form.type == 'text' || item.form.type == 'password'"  [type]="item.form.type" formControlName="{{item.name}}">
+    </div>
+    <div class="buttons">
+      <button mat-button class="btn danger" (click)="closeModal(true)">Oui</button>
+      <button mat-button class="btn" (click)="closeModal(false)">Annuler</button>
+    </div>
+  </ng-form>
+
+</div>

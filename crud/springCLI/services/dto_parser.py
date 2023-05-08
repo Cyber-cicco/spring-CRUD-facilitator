@@ -15,7 +15,7 @@ def find_all_fields(file_path:str):
         imports = []
         imports_string = ""
         contents = f.read()
-        pattern = r"(private|protected)(\s+\w+|\s+\w+<.+>)+\s+(\w+);"
+        pattern = r"(private|protected)(\s+\w+|\s+\w+<.+>)+\s+(\w+)(\s?=.*)?;"
         matches = re.findall(pattern, contents)
         for match in matches:
             java_type = match[1]

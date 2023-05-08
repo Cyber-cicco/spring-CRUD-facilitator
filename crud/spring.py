@@ -46,9 +46,6 @@ elif args.jpa:
     if len(args.class_name) > 1:
         print("Il est déconseillé d'utiliser l'option --jpa pour plus d'une classe : elle auront toutes les mêmes attributs")
     jec.create_entites(args)
-elif args.test:
-    for plop in ['Chiasse', 'Prout']:
-        eg.create_entity_body(plop)
 else:
     jws = JavaWriterService()
     jws.handle_args(args)

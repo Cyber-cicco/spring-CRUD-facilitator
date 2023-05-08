@@ -1,0 +1,24 @@
+<div class="tab-container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th *ngFor="let item of items[0]?.keys()">{{item}}</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of items">
+            <td *ngFor="let row of item.values()">{{row}}</td>
+            <td>
+              <div class="buttons">
+                <button class="btn-small neutral" (click)="openForm(item.get('Identifiant'))">Modifier</button>
+                <button class="btn-small" (click)="sendSupprNotification(item.get('Identifiant'))">Supprimer</button>
+              </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="buttons">
+  <button mat-raised-button class="btn valid">Ajouter</button>
+</div>

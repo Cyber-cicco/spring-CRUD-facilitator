@@ -126,14 +126,14 @@ def generate_angular_http_query(http_endpoint, urls_set, imports_set):
     #the arguments and change the url
     if "{" in path :
         url_changer = '''
-    let newURL = {url}'''.format(url='this.' + variable_url)
+        let newURL = {url}'''.format(url='this.' + variable_url)
         by = 'By'
         path_var_matches = re.findall(r'{(\w+)}', path)
         for match in path_var_matches:
             by += match[0].upper() + match[1:]
             required_args += ', ' + match + ': string'
             url_changer += '''
-    newURL = newURL.replace('{{{match}}}', {match});'''.format(match=match)
+        newURL = newURL.replace('{{{match}}}', {match});'''.format(match=match)
     
     #check if there are request parameters, and change the arguments accordingly, plus the URL
     if request_params:

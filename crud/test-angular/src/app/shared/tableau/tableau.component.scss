@@ -1,0 +1,16 @@
+.table{
+    width: 90%;
+    padding: 15px;
+    min-height: 100%;
+    align-self: center;
+    overflow: scroll;
+    text-align: center;
+    margin: 10px;
+    border-radius: 10px;
+    border-style: solid;
+}
+.tab-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

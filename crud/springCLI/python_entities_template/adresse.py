@@ -17,7 +17,7 @@ entity = {
             }
         },
 
-        'nomRue':{
+        'rue':{
             Type: String,
             options:{
                 'dto':[
@@ -27,7 +27,7 @@ entity = {
             }
         },
 
-        'nomVille':{
+        'ville':{
             Type: String,
             options:{
                 'dto':[
@@ -38,7 +38,7 @@ entity = {
         },
 
         'codePostal':{
-            Type: Object,
+            Type: "String",
             options:{
                 'dto':[
                     {'exists':True, 'fields':[]}

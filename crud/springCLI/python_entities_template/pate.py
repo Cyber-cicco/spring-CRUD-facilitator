@@ -1,11 +1,11 @@
 
 from ..datas.autocompletion import *
 
-name = 'Salle'
+name = 'Pate'
 
 entity = {
     
-    'Salle' : {
+    'Pate' : {
             
         'id':{
             Type: Long,
@@ -27,18 +27,8 @@ entity = {
             }
         },
 
-        'cinema':{
-            Type: "Cinema",
-            options:{
-                'dto':[
-                    {'exists':True, 'fields':['nom', 'nbsVisiteurParJour' ]}
-                ]
-        
-            }
-        },
-
-        'nbPlacesDisponibles':{
-            Type: Integer,
+        'prix':{
+            Type: Double,
             options:{
                 'dto':[
                     {'exists':True, 'fields':[]}
@@ -47,11 +37,10 @@ entity = {
             }
         },
 
-        'nbPlacesReserves':{
-            Type: Integer,
+        'pizzaList':{
+            Type: "List<Pizza>",
             options:{
                 'dto':[
-                    {'exists':True, 'fields':[]}
                 ]
         
             }

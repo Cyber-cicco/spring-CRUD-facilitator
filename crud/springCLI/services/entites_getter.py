@@ -65,6 +65,7 @@ import jakarta.persistence.GenerationType;''')
             type=type,
             nom_variable=field_as_var
         )
+
         if 'dto' in options:
             for dto in options['dto']:
                 if dto['exists']:
@@ -86,6 +87,8 @@ import jakarta.persistence.GenerationType;''')
                                 type=new_type,
                                 nom_variable=field_as_var,
                             )
+
+        
 
     return JavaContent(entity_fields, imports_set_entity, dto_fields, imports_set_dto)
     
