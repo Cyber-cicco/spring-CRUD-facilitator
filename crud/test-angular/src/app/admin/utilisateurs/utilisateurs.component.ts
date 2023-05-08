@@ -5,27 +5,22 @@ import {UtilisateurMapperService} from "../../mapper/utilisateur-mapper.service"
 import {UtilisateurPresentation} from "../../models/utilisateur-presentation";
 import {BaseAdmin} from "../../models/base-admin";
 import {CrudDataflowService} from "../../data/crud-dataflow.service";
+import {FormObject} from "../../form-models/form-object";
 
 @Component({
   selector: 'test-utilisateurs',
   templateUrl: './utilisateurs.component.html',
   styleUrls: ['./utilisateurs.component.scss']
 })
-export class UtilisateursComponent extends BaseAdmin implements OnInit, OnDestroy{
+export class UtilisateursComponent extends BaseAdmin<Utilisateur, UtilisateurPresentation> implements OnInit, OnDestroy{
 
   constructor(private utilisateurService:UtilisateurService,
               private mapper:UtilisateurMapperService,
               crud:CrudDataflowService) {
     super(crud);
-    this.showDatas();
   }
 
-  showDatas(){
-    this.utilisateurService.getAll().subscribe((value)=>{
-      this.items = [];
-      this.constructMap(value, this.mapper);
-    })
-  }
+
 
   override constructMap(value: Utilisateur[], mapper: UtilisateurMapperService) {
     let utilisateursPresentation:UtilisateurPresentation[] = [];
@@ -43,13 +38,7 @@ export class UtilisateursComponent extends BaseAdmin implements OnInit, OnDestro
   }
 
   ngOnInit(): void {
-    this.subscribe((id:number)=>{
-      this.utilisateurService.deleteById(String(id)).subscribe(value=>{
-        console.log(value);
-        this.showDatas();
-      });
-    },
-      (id:number)=>{},
-      ()=>{});
+    this.subscribe(this.utilisateurService, this.mapper);
+    this.showDatas(this.utilisateurService, this.mapper);
   }
 }

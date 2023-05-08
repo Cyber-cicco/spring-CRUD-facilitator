@@ -4,11 +4,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 
 import {Pate} from "../models/pate";
+import {BasicService} from "./basic-service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class PateService{
+export class PateService implements BasicService<Pate>{
 
    private URL_API_API_V1_PATE_ID = environnement.urlApi + "/api/v1/pate/{id}";
    private URL_API_API_V1_PATE_ALL = environnement.urlApi + "/api/v1/pate/all";

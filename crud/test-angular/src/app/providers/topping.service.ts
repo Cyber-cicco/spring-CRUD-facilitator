@@ -4,11 +4,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 
 import {Topping} from "../models/topping";
+import {BasicService} from "./basic-service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ToppingService{
+export class ToppingService implements BasicService<Topping>{
 
    private URL_API_API_V1_TOPPING_ID = environnement.urlApi + "/api/v1/topping/{id}";
    private URL_API_API_V1_TOPPING = environnement.urlApi + "/api/v1/topping";

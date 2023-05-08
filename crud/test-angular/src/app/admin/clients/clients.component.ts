@@ -5,15 +5,16 @@ import {BaseAdmin} from "../../models/base-admin";
 import {UtilisateurMapperService} from "../../mapper/utilisateur-mapper.service";
 import {UtilisateurPresentation} from "../../models/utilisateur-presentation";
 import {CrudDataflowService} from "../../data/crud-dataflow.service";
+import {FormObject} from "../../form-models/form-object";
 
 @Component({
   selector: 'test-clients',
   templateUrl: './clients.component.html',
   styleUrls: ['./clients.component.scss']
 })
-export class ClientsComponent extends BaseAdmin implements OnInit, OnDestroy{
+export class ClientsComponent extends BaseAdmin<Utilisateur, UtilisateurPresentation> implements OnInit, OnDestroy{
 
-  constructor(private utilisateurService:UtilisateurService, mapper:UtilisateurMapperService, crud:CrudDataflowService) {
+  constructor(private utilisateurService:UtilisateurService, private mapper:UtilisateurMapperService, crud:CrudDataflowService) {
     super(crud);
     this.utilisateurService.getAllClients().subscribe((value)=>{
       this.constructMap(value, mapper);
@@ -34,10 +35,6 @@ export class ClientsComponent extends BaseAdmin implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    this.subscribe((id:number)=>{
-      this.utilisateurService.deleteById(String(id));
-    },
-      (id:number)=>{},
-      ()=>{});
+    this.subscribe(this.utilisateurService, this.mapper);
   }
 }

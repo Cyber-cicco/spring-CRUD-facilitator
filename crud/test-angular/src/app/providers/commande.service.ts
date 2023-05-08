@@ -4,11 +4,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 
 import {Commande} from "../models/commande";
+import {BasicService} from "./basic-service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class CommandeService{
+export class CommandeService implements BasicService<Commande>{
 
    private URL_API_API_V1_COMMANDE = environnement.urlApi + "/api/v1/commande";
    private URL_API_API_V1_COMMANDE_ID = environnement.urlApi + "/api/v1/commande/{id}";

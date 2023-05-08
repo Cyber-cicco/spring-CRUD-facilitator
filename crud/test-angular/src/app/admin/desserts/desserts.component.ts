@@ -3,15 +3,18 @@ import {AccompagnementService} from "../../providers/accompagnement.service";
 import {BaseAdmin} from "../../models/base-admin";
 import {BasicMapperService} from "../../mapper/basic-mapper.service";
 import {CrudDataflowService} from "../../data/crud-dataflow.service";
+import {FormObject} from "../../form-models/form-object";
+import {Accompagnement} from "../../models/accompagnement";
+import {AccompagnementPresentation} from "../../models/accompagnement-presentation";
 
 @Component({
   selector: 'test-desserts',
   templateUrl: './desserts.component.html',
   styleUrls: ['./desserts.component.scss']
 })
-export class DessertsComponent extends BaseAdmin implements OnInit, OnDestroy{
+export class DessertsComponent extends BaseAdmin<Accompagnement, AccompagnementPresentation> implements OnInit, OnDestroy{
 
-  constructor(private dessertService:AccompagnementService, mapper:BasicMapperService, crud:CrudDataflowService) {
+  constructor(private dessertService:AccompagnementService, private mapper:BasicMapperService<Accompagnement, AccompagnementPresentation>, crud:CrudDataflowService) {
     super(crud);
     this.dessertService.getAllDessert().subscribe((value)=>{
       this.constructMap(value, mapper);
@@ -22,10 +25,6 @@ export class DessertsComponent extends BaseAdmin implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    this.subscribe((id:number)=>{
-      this.dessertService.deleteById(String(id));
-    },
-      (id:number)=>{},
-      ()=>{});
+    this.subscribe(this.dessertService, this.mapper);
   }
 }

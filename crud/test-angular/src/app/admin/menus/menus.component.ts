@@ -5,16 +5,17 @@ import {MenuMapperService} from "../../mapper/menu-mapper.service";
 import {MenuPresentation} from "../../models/menu-presentation";
 import {BaseAdmin} from "../../models/base-admin";
 import {CrudDataflowService} from "../../data/crud-dataflow.service";
+import {FormObject} from "../../form-models/form-object";
 
 @Component({
   selector: 'test-menus',
   templateUrl: './menus.component.html',
   styleUrls: ['./menus.component.scss']
 })
-export class MenusComponent extends BaseAdmin implements OnInit, OnDestroy{
+export class MenusComponent extends BaseAdmin<Menu, MenuPresentation> implements OnInit, OnDestroy{
 
 
-  constructor(private menuService:MenuService, mapper:MenuMapperService, crud:CrudDataflowService) {
+  constructor(private menuService:MenuService, private mapper:MenuMapperService, crud:CrudDataflowService) {
     super(crud);
     this.menuService.getAll().subscribe((value)=>{
       this.constructMap(value, mapper);
@@ -34,10 +35,6 @@ export class MenusComponent extends BaseAdmin implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    this.subscribe((id:number)=>{
-      this.menuService.deleteById(String(id));
-    },
-      (id:number)=>{},
-      ()=>{});
+    this.subscribe(this.menuService, this.mapper);
   }
 }

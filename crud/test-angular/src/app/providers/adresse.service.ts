@@ -4,11 +4,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 
 import {Adresse} from "../models/adresse";
+import {BasicService} from "./basic-service";
+import {Accompagnement} from "../models/accompagnement";
 
 @Injectable({
   providedIn: 'root'
 })
-export class AdresseService{
+export class AdresseService implements BasicService<Adresse>{
 
    private URL_API_API_V1_ADRESSE = environnement.urlApi + "/api/v1/adresse";
    private URL_API_API_V1_ADRESSE_ALL = environnement.urlApi + "/api/v1/adresse/all";

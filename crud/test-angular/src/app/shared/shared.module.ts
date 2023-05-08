@@ -16,7 +16,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
         NavbarComponent,
         TableauComponent,
         ModalSupprComponent,
-        ModalModifComponent
+        ModalModifComponent,
     ],
     exports: [
         NavbarComponent,

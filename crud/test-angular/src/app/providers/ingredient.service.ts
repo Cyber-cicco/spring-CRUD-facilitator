@@ -4,11 +4,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 
 import {Ingredient} from "../models/ingredient";
+import {BasicService} from "./basic-service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class IngredientService{
+export class IngredientService implements BasicService<Ingredient>{
 
    private URL_API_API_V1_INGREDIENT_ID = environnement.urlApi + "/api/v1/ingredient/{id}";
    private URL_API_API_V1_INGREDIENT = environnement.urlApi + "/api/v1/ingredient";

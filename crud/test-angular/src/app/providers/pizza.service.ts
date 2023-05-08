@@ -4,11 +4,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 
 import {Pizza} from "../models/pizza";
+import {BasicService} from "./basic-service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class PizzaService{
+export class PizzaService implements BasicService<Pizza>{
 
    private URL_API_API_V1_PIZZA_ALL = environnement.urlApi + "/api/v1/pizza/all";
    private URL_API_API_V1_PIZZA = environnement.urlApi + "/api/v1/pizza";

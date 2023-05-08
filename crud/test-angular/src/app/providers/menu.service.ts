@@ -4,11 +4,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 
 import {Menu} from "../models/menu";
+import {BasicService} from "./basic-service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class MenuService{
+export class MenuService implements BasicService<Menu>{
 
    private URL_API_API_V1_MENU_ALL = environnement.urlApi + "/api/v1/menu/all";
    private URL_API_API_V1_MENU = environnement.urlApi + "/api/v1/menu";

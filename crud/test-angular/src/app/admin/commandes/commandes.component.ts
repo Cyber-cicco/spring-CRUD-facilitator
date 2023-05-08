@@ -5,15 +5,16 @@ import {BaseAdmin} from "../../models/base-admin";
 import {CommandeMapperService} from "../../mapper/commande-mapper.service";
 import {CommandePresentation} from "../../models/commande-presentation";
 import {CrudDataflowService} from "../../data/crud-dataflow.service";
+import {FormObject} from "../../form-models/form-object";
 
 @Component({
   selector: 'test-commandes',
   templateUrl: './commandes.component.html',
   styleUrls: ['./commandes.component.scss']
 })
-export class CommandesComponent extends BaseAdmin implements OnInit, OnDestroy{
+export class CommandesComponent extends BaseAdmin<Commande, CommandePresentation> implements OnInit, OnDestroy{
 
-  constructor(private commandeService:CommandeService, mapper:CommandeMapperService, crud:CrudDataflowService) {
+  constructor(private commandeService:CommandeService, private mapper:CommandeMapperService, crud:CrudDataflowService) {
     super(crud);
     this.commandeService.getAll().subscribe((value)=>{
       this.constructMap(value, mapper)
@@ -33,10 +34,7 @@ export class CommandesComponent extends BaseAdmin implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    this.subscribe((id:number)=>{
-      this.commandeService.deleteById(String(id));
-    },
-      (id:number)=>{},
-      ()=>{});
+    this.subscribe(this.commandeService, this.mapper);
   }
+
 }

@@ -5,15 +5,16 @@ import {BaseAdmin} from "../../models/base-admin";
 import {PizzaMapperService} from "../../mapper/pizza-mapper.service";
 import {PizzaPresentation} from "../../models/pizza-presentation";
 import {CrudDataflowService} from "../../data/crud-dataflow.service";
+import {FormObject} from "../../form-models/form-object";
 
 @Component({
   selector: 'test-pizzas',
   templateUrl: './pizzas.component.html',
   styleUrls: ['./pizzas.component.scss']
 })
-export class PizzasComponent extends BaseAdmin implements OnInit, OnDestroy {
+export class PizzasComponent extends BaseAdmin<Pizza, PizzaPresentation> implements OnInit, OnDestroy {
 
-  constructor(private pizzaService: PizzaService, mapper: PizzaMapperService, crud: CrudDataflowService) {
+  constructor(private pizzaService: PizzaService, private mapper: PizzaMapperService, crud: CrudDataflowService) {
     super(crud);
     this.pizzaService.getAll().subscribe((value) => {
       this.constructMap(value, mapper);
@@ -34,10 +35,6 @@ export class PizzasComponent extends BaseAdmin implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscribe((id:number)=>{
-      this.pizzaService.deleteById(String(id));
-    },
-      (id:number)=>{},
-      ()=>{});
+    this.subscribe(this.pizzaService, this.mapper);
   }
 }

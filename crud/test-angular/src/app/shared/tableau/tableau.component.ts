@@ -35,14 +35,7 @@ export class TableauComponent {
 
   openForm(id:string|undefined){
     if(id != undefined && !isNaN(Number(id))){
-      let map = new Map<string,string>();
-      for(let item of this.items){
-        if(item.get("Identifiant") == id){
-          map = item;
-        }
-      }
-      this.crud.getModifSubject().next(map);
-      this.openDialog(ModalModifComponent, '1','1');
+      this.crud.getModifNotifSubject().next(Number(id));
     } else {
       throw "Erreur, la ligne du tableau semble ne pas posséder d'identifiant";
     }

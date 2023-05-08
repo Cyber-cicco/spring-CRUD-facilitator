@@ -4,11 +4,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 
 import {Accompagnement} from "../models/accompagnement";
+import {BasicService} from "./basic-service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class AccompagnementService{
+export class AccompagnementService implements BasicService<Accompagnement>{
 
    private URL_API_API_V1_ACCOMPAGNEMENT = environnement.urlApi + "/api/v1/accompagnement";
    private URL_API_API_V1_ACCOMPAGNEMENT_ALL = environnement.urlApi + "/api/v1/accompagnement/all";

@@ -3,14 +3,15 @@ import {BasicMapperService} from "./basic-mapper.service";
 import {MapperService} from "./mapper.service";
 import {Commande} from "../models/commande";
 import {CommandePresentation} from "../models/commande-presentation";
+import {FormMapperService} from "./form-mapper.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class CommandeMapperService extends BasicMapperService{
+export class CommandeMapperService extends BasicMapperService<Commande, CommandePresentation>{
 
-  constructor(mapper:MapperService) {
-    super(mapper);
+  constructor(mapper:MapperService, formMapper: FormMapperService) {
+    super(mapper, formMapper);
   }
 
   toCommandePresentation(commande: Commande):CommandePresentation {
