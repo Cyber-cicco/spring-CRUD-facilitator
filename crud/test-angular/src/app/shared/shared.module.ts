@@ -8,6 +8,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MaterialModule} from "../material/material.module";
 import { ModalModifComponent } from './modal/modal-modif/modal-modif.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatRadioModule} from "@angular/material/radio";
 
 
 
@@ -22,14 +23,15 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
         NavbarComponent,
         TableauComponent
     ],
-  imports: [
-    CommonModule,
-    RouterLink,
-    RouterLinkActive,
-    MatButtonModule,
-    MaterialModule,
-    FormsModule,
-    ReactiveFormsModule
-  ]
+    imports: [
+        CommonModule,
+        RouterLink,
+        RouterLinkActive,
+        MatButtonModule,
+        MaterialModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatRadioModule
+    ]
 })
 export class SharedModule { }

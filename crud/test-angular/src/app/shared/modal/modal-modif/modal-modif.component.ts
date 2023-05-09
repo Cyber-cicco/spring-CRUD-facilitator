@@ -39,19 +39,20 @@ export class ModalModifComponent implements OnInit, OnDestroy{
 
   /**Création des champs du formulaire*/
   ngOnInit(): void {
+    this.asyncFields = this.crud.getAsyncFieldsSubscriptions().getValue()
     this.modifSubscription = this.crud.getModifSubject().subscribe(value => {
       if(value != undefined){
         this.items = value;
         const formGroupFields:any = {};
         for(let tfo of value){
-          let control =new FormControl({value:tfo.form.value, disabled:tfo.form.options.includes(FormOption.READONLY)});
-          if (tfo.form.validators != undefined) control.addValidators(tfo.form.validators);
-          formGroupFields[tfo.name] = control;
+            let control =new FormControl({value:tfo.form.value, disabled:tfo.form.options.includes(FormOption.READONLY)});
+            if (tfo.form.validators != undefined) control.addValidators(tfo.form.validators);
+            formGroupFields[tfo.name] = control;
         }
         this.formModification = this.fb.group(formGroupFields);
+        console.log(this.formModification);
       }
     });
-    this.asyncFields = this.crud.getAsyncFieldsSubscriptions().getValue()
     console.log(this.asyncFields);
 
   }

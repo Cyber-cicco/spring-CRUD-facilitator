@@ -2,6 +2,7 @@ package fr.cicco.crud.service;
 
 import fr.cicco.crud.exception.EntityNotFoundException;
 import fr.cicco.crud.repository.IngredientRepository;
+import fr.cicco.crud.repository.PateRepository;
 import fr.cicco.crud.repository.ToppingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ public class PizzaService   {
 
 
     private final PizzaRepository pizzaRepository;
+    private final PateRepository pateRepository;
     private final PizzaMapper pizzaMapper;
     private final ToppingRepository toppingRepository;
     private final IngredientRepository ingredientRepository;
@@ -38,7 +40,7 @@ public class PizzaService   {
     }
     
     public PizzaDto save(PizzaDto pizzaDto) {
-        pizzaRepository.save(pizzaMapper.toPizza(pizzaDto, toppingRepository, ingredientRepository));
+        pizzaRepository.save(pizzaMapper.toPizza(pizzaDto, toppingRepository, ingredientRepository, pateRepository));
         return pizzaDto;
     }
     

@@ -10,6 +10,7 @@ import {ToppingService} from "../../providers/topping.service";
 import {IngredientService} from "../../providers/ingredient.service";
 import {PateService} from "../../providers/pate.service";
 import {map, Observable} from "rxjs";
+import {Categorie} from "../../form-models/categorie-enum";
 
 @Component({
   selector: 'test-pizzas',
@@ -60,6 +61,7 @@ export class PizzasComponent extends BaseAdmin<Pizza, PizzaPresentation> impleme
         .subscribe(value => fieldMap.set(this.mapper.changeNameToPretty("pate"), value));
       observer.next("done");
     }).subscribe(()=>{
+      fieldMap.set(this.mapper.changeNameToPretty('categorie'), [Categorie.PETITE, Categorie.MOYENNE, Categorie.GRANDE]);
       this.crud.getAsyncFieldsSubscriptions().next(fieldMap)
     })
   }

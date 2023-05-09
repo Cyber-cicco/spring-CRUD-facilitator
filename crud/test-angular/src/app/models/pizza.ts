@@ -3,7 +3,6 @@
 import {Pate} from "./pate";
 import {Topping} from "./topping";
 import {Ingredient} from "./ingredient";
-import {CommandePizza} from "./commandepizza";
 export interface Pizza {
 
   id:number,

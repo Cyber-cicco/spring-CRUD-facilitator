@@ -35,8 +35,8 @@ export class FormMapperService {
       .set('nomMagasin', {options: [], type: FormType.TEXT, validators:[Validators.required], value: ""})
       .set('emailLivreur', {options: [], type: FormType.TEXT, validators:[Validators.required, Validators.email], value: ""})
       .set('emailClient', {options: [], type: FormType.TEXT, validators:[Validators.required, Validators.email], value: ""})
-      .set('toppingList', {options: [], type: FormType.TEXT, validators:[], value: ""})
-      .set('ingredientList', {options: [], type: FormType.TEXT, validators:[], value: ""})
+      .set('toppingList', {options: [], type: FormType.CHECKBOX, validators:[], value: ""})
+      .set('ingredientList', {options: [], type: FormType.CHECKBOX, validators:[], value: ""})
   }
 
   getMap(){

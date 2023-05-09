@@ -1,8 +1,17 @@
-<div class="modal">
+<div class="modal" xmlns="http://www.w3.org/1999/html">
   <ng-form [formGroup]="formModification" class="form">
     <div *ngFor="let item of items" class="form-group">
-      <label [for]="item.name">{{item.name}}</label>
+      <label>{{item.name}}</label>
       <input class="form-control" *ngIf="item.form.type == 'number' || item.form.type == 'text' || item.form.type == 'password'"  [type]="item.form.type" formControlName="{{item.name}}">
+      <select class="form-control" *ngIf="item.form.type == 'select'">
+        <option *ngFor="let option of asyncFields.get(item.name)">{{option}}</option>
+      </select>
+      <fieldset *ngIf="item.form.type == 'radio'">
+        <div *ngFor="let option of asyncFields.get(item.name)" class="form-group">
+          <label >{{option}}</label>
+          <input name="{{item.name}}" type="radio" formControlName="{{item.name}}" value="{{option}}" >
+        </div>
+      </fieldset>
     </div>
     <div class="buttons">
       <button mat-button class="btn danger" (click)="closeModal(true)">Oui</button>
