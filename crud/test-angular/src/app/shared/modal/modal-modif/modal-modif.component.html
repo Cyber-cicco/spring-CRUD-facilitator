@@ -2,14 +2,15 @@
   <ng-form [formGroup]="formModification" class="form">
     <div *ngFor="let item of items" class="form-group">
       <label>{{item.name}}</label>
-      <input class="form-control" *ngIf="item.form.type == 'number' || item.form.type == 'text' || item.form.type == 'password'"  [type]="item.form.type" formControlName="{{item.name}}">
+      <input class="form-control" *ngIf="item.form.type == 'number' || item.form.type == 'text' || item.form.type == 'password' || item.form.type=='date'"  [type]="item.form.type" formControlName="{{item.name}}">
       <select class="form-control" *ngIf="item.form.type == 'select'">
-        <option *ngFor="let option of asyncFields.get(item.name)">{{option}}</option>
+        <option *ngFor="let option of asyncFields.get(item.name)" value="{{option}}" [selected]="option === item.form.value">{{option}}</option>
       </select>
-      <fieldset *ngIf="item.form.type == 'radio'">
+      <fieldset *ngIf="item.form.type == 'radio' || item.form.type == 'multichoice' || item.form.type == 'checkbox'">
         <div *ngFor="let option of asyncFields.get(item.name)" class="form-group">
-          <label >{{option}}</label>
-          <input name="{{item.name}}" type="radio" formControlName="{{item.name}}" value="{{option}}" >
+          <label>{{option}}</label>
+          <input *ngIf="item.form.type == 'multichoice'" type="number"  formControlName="{{option}}">
+          <input *ngIf="item.form.type == 'radio' || item.form.type == 'checkbox'" name="{{item.name}}" type="{{item.form.type}}" formControlName="{{option}}" value="{{option}}" [checked]="checkChecked(item.form.value, option)">
         </div>
       </fieldset>
     </div>
@@ -18,5 +19,4 @@
       <button mat-button class="btn" (click)="closeModal(false)">Annuler</button>
     </div>
   </ng-form>
-
 </div>

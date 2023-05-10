@@ -6,4 +6,5 @@ export enum FormType{
   RADIO="radio",
   MULTICHOICE="multichoice",
   CHECKBOX="checkbox",
+  DATE="date",
 }

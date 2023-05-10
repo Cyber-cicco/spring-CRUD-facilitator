@@ -12,7 +12,7 @@ export class CrudDataflowService {
   private modifSubject:BehaviorSubject<TransferFormObject[]> = new BehaviorSubject<TransferFormObject[]>([]);
   private modifNotifSubject:Subject<number> = new Subject<number>();
   private asyncFormFieldsSubject:BehaviorSubject<Map<string, string[]>> = new BehaviorSubject<Map<string, string[]>>(new Map<string, string[]>())
-  private confModifSubject:Subject<any> = new Subject();
+  private confModifSubject:Subject<Map<string, string>> = new Subject();
   private creationSubject:Subject<boolean> = new Subject();
   private confCreationSubject:Subject<any> = new Subject();
   constructor() {}

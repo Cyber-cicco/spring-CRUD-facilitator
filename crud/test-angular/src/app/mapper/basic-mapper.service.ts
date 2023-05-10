@@ -49,12 +49,14 @@ export class BasicMapperService<T extends Object, D extends Object> {
     let newMap:TransferFormObject[] = []
     for(let [key, value] of Object.entries(entity)){
       let transferFormObject:TransferFormObject = {
+        id:key,
         name:this.changeNameToPretty(key),
         form:this.formMapper.getMap().get(key) ?? {options: [], type: FormType.TEXT, validators:[Validators.required], value:value}
       }
       transferFormObject.form.value = value;
       newMap.push(transferFormObject);
     }
+    console.log("basic-mapper-service");
     console.log(newMap);
     return newMap
   }

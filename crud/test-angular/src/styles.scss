@@ -226,4 +226,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background: darken(consts.$background-color, 5);
   padding: 20px;
   border-radius: 15px;
+  overflow: scroll;
+  max-height: 90%;
 }

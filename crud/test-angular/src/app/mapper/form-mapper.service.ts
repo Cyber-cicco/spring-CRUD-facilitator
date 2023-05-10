@@ -37,6 +37,15 @@ export class FormMapperService {
       .set('emailClient', {options: [], type: FormType.TEXT, validators:[Validators.required, Validators.email], value: ""})
       .set('toppingList', {options: [], type: FormType.CHECKBOX, validators:[], value: ""})
       .set('ingredientList', {options: [], type: FormType.CHECKBOX, validators:[], value: ""})
+      .set('commandeMenuList', {options: [], type: FormType.MULTICHOICE, validators:[Validators.min(0)], value: ""})
+      .set('commandePizzaList', {options: [], type: FormType.MULTICHOICE, validators:[Validators.min(0)], value: ""})
+      .set('status', {options: [], type: FormType.SELECT, validators:[Validators.required], value: ""})
+      .set('dateCommande', {options: [FormOption.READONLY], type: FormType.DATE, validators:[Validators.required], value: ""})
+      .set('dessert', {options: [], type: FormType.RADIO, validators:[Validators.required], value: ""})
+      .set('boisson', {options: [], type: FormType.RADIO, validators:[Validators.required], value: ""})
+      .set('encas', {options: [], type: FormType.RADIO, validators:[Validators.required], value: ""})
+      .set('pizzaList', {options: [], type: FormType.RADIO, validators:[Validators.required], value: ""})
+      .set('', {options: [], type: FormType.SELECT, validators:[Validators.required], value: ""})
   }
 
   getMap(){

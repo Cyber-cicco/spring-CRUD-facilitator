@@ -33,7 +33,7 @@ export class UtilisateurMapperService extends BasicMapperService<Utilisateur, Ut
       id: utilisateur.id,
       email: utilisateur.email,
       nom: utilisateur.nom,
-      prenom: utilisateur.motDePasse,
+      prenom: utilisateur.prenom,
       motDePasse: utilisateur.motDePasse,
       rue: adresse.rue,
       codePostal: adresse.codePostal,

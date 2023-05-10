@@ -68,7 +68,6 @@ export abstract class BaseAdmin<T extends Object, D extends Object> {
   protected subscribe(service:BasicService<T>, mapper:BasicMapperService<T, D>) {
     this.supprSubscription = this.crud.getConfSupprSubject().asObservable().subscribe((id:number)=>{
       service.deleteById(String(id)).subscribe(value=>{
-        console.log(value);
         this.showDatas(service, mapper);
       });
     });
@@ -77,8 +76,13 @@ export abstract class BaseAdmin<T extends Object, D extends Object> {
     this.modifNotifSubscription = this.crud.getModifNotifSubject().asObservable().subscribe((id)=>{
         service.getById(String(id)).subscribe((value)=>{
           let formMap = mapper.toFormMap(value);
+          console.log("base admin")
+          console.log(formMap)
           this.crud.getModifSubject().next(formMap);
-          this.modalService.open(ModalModifComponent);
+          console.log("put in subject")
+          this.modalService.open(ModalModifComponent, {
+            width:'550px',
+          });
       })
     });
   }

@@ -1,5 +1,8 @@
 package fr.cicco.crud.service;
 
+import fr.cicco.crud.mapper.AdresseMapper;
+import fr.cicco.crud.mapper.MenuMapper;
+import fr.cicco.crud.mapper.PizzaMapper;
 import fr.cicco.crud.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,16 +30,19 @@ public class CommandeService   {
     private final MenuRepository menuRepository;
     private final CommandemenuRepository commandemenuRepository;
     private final AdresseRepository adresseRepository;
+    private final MenuMapper menuMapper;
+    private final PizzaMapper pizzaMapper;
+    private final AdresseMapper adresseMapper;
 
     public List<CommandeDto> findAll() {
         return commandeRepository.findAll().stream()
-            .map(commandeMapper::toCommandeDto)
+            .map(commande -> commandeMapper.toCommandeDto(commande, menuMapper, pizzaMapper, adresseMapper))
             .toList();
     }
 
     public CommandeDto findById(Long id) {
         //TODO change type of exception with custom exception. Add exception handler
-        return commandeMapper.toCommandeDto(commandeRepository.findById(id).orElseThrow(RuntimeException::new));
+        return commandeMapper.toCommandeDto(commandeRepository.findById(id).orElseThrow(RuntimeException::new), menuMapper, pizzaMapper, adresseMapper);
     }
     
     public CommandeDto save(CommandeDto commandeDto) {
@@ -48,7 +54,8 @@ public class CommandeService   {
                 menuRepository,
                 adresseRepository,
                 magasinRepository,
-                commandemenuRepository
+                commandemenuRepository,
+                commandeRepository
                 ));
 
         return commandeDto;

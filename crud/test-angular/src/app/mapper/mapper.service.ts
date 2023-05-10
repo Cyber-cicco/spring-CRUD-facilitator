@@ -18,6 +18,14 @@ export class MapperService {
     set('codePostal', 'Code Postal').
     set('toppingList', 'Toppings').
     set('ingredientList', 'Ingredients').
+    set('dateCommande', 'Date').
+    set('commandePizzaList', 'Pizzas').
+    set('commandeMenuList', 'Menus').
+    set('', '').
     set('', '')
+    //set('', '').
+    //set('', '').
+    //set('', '').
+    //set('', '')
   }
 }

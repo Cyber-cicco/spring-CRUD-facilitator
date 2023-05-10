@@ -4,6 +4,8 @@ import {MapperService} from "./mapper.service";
 import {Menu} from "../models/menu";
 import {MenuPresentation} from "../models/menu-presentation";
 import {FormMapperService} from "./form-mapper.service";
+import {TransferFormObject} from "../models/transfer-form-object";
+import {FormMenu} from "../form-models/form-menu";
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +24,20 @@ export class MenuMapperService extends BasicMapperService<Menu, MenuPresentation
       accompagnements: menu.accompagnementList.map(val=>val.nom).join(', '),
       pizzas:menu.pizzaList.map(val=>val.nom).join(', ')
     }
+  }
+
+  override toFormMap(menu: Menu): TransferFormObject[] {
+    let formMenu:FormMenu = {
+      id: menu.id,
+      nom: menu.nom,
+      photo: menu.photo,
+      description: menu.description,
+      prix: menu.prix,
+      pizzaList: menu.pizzaList.map(p=>p.nom),
+      encas: menu.accompagnementList.filter(a => a.typeAccompagnement == "ENCAS")[0]?.nom,
+      dessert: menu.accompagnementList.filter(a => a.typeAccompagnement == "DESSERT")[0]?.nom,
+      boisson: menu.accompagnementList.filter(a => a.typeAccompagnement == "BOISSON")[0]?.nom,
+    }
+    return super.toFormMap(formMenu);
   }
 }

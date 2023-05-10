@@ -3,7 +3,6 @@ import {CrudDataflowService} from "../../data/crud-dataflow.service";
 import {MatDialog} from "@angular/material/dialog";
 import {ModalSupprComponent} from "../modal/modal-suppr/modal-suppr.component";
 import {ComponentType} from "@angular/cdk/overlay";
-import {ModalModifComponent} from "../modal/modal-modif/modal-modif.component";
 
 @Component({
   selector: 'test-tableau',
@@ -27,7 +26,7 @@ export class TableauComponent {
 
   openDialog(component:ComponentType<unknown>, enterAnimation:string, exitAnimation:string){
     this.dialog.open(component, {
-      width:'350px',
+      width:'550px',
       enterAnimationDuration:enterAnimation,
       exitAnimationDuration:exitAnimation
     })
