@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {CrudDataflowService} from "../../data/crud-dataflow.service";
 import {MatDialog} from "@angular/material/dialog";
 import {ModalSupprComponent} from "../modal/modal-suppr/modal-suppr.component";
@@ -7,6 +7,7 @@ import {BasicService} from "../../providers/basic-service";
 import {ModalModifComponent} from "../modal/modal-modif/modal-modif.component";
 import {BaseEntity} from "../../models/base-entity";
 import {BasicMapperService} from "../../mapper/basic-mapper.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'test-tableau',
@@ -14,16 +15,20 @@ import {BasicMapperService} from "../../mapper/basic-mapper.service";
   styleUrls: ['./tableau.component.scss']
 })
 
-export class TableauComponent<T extends BaseEntity, D extends BaseEntity> implements OnChanges{
-  entities:T[] = [];
+export class TableauComponent<T extends BaseEntity, D extends BaseEntity> implements OnInit, OnChanges{
 
   enTetes:string[] | undefined =[];
 
   presentationItems: string[][] = [];
 
+  Tsubscription:Subscription = new Subscription();
+
   @Input() mapper?:BasicMapperService<T, D>
   @Input() service?:BasicService<T>
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private crud:CrudDataflowService<T>) {}
+
+  ngOnInit(): void {
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.showDatas();
@@ -31,15 +36,18 @@ export class TableauComponent<T extends BaseEntity, D extends BaseEntity> implem
 
   showDatas(){
     if(this.service != undefined){
+      this.Tsubscription = this.crud.getTabRowSubject().subscribe((value)=>{
+        this.constructMap(value!);
+      });
       this.service.getAll().subscribe(value=>{
-        value.forEach(e => this.entities.push(e));
-        this.constructMap(this.entities);
+        this.constructMap(value);
       })
     }
   }
 
   constructMap(value:T[]) {
     if(this.mapper != undefined && value.length > 0){
+      this.presentationItems = [];
       let tabEntities:D[] = value.map(e => this.mapper!.toPresentation(e))
       this.enTetes = this.mapper.toPresentationKeys(tabEntities[0]);
       for(let i = 0; i < value.length; i++){
@@ -55,27 +63,38 @@ export class TableauComponent<T extends BaseEntity, D extends BaseEntity> implem
 
   sendSupprNotification(id: string | undefined) {
     if(id != undefined && this.service != undefined && !isNaN(Number(id))){
-      this.openDialog(ModalSupprComponent, '1', '1');
+    this.dialog.open(ModalSupprComponent, {
+      width:'550px',
+      enterAnimationDuration:'1',
+      exitAnimationDuration:'1',
+      data : {
+        service:this.service,
+        id:id
+      }
+    })
     } else {
       throw "Erreur :  l'élément dans le tableau semble ne pas contenir d'id";
     }
   }
 
-  openDialog(component:ComponentType<unknown>, enterAnimation:string, exitAnimation:string){
-    this.dialog.open(component, {
-      width:'550px',
-      enterAnimationDuration:enterAnimation,
-      exitAnimationDuration:exitAnimation,
-      data : {
-        service:this.service,
-        entity:this.enTetes,
-      }
-    })
+  openDialog(component:ComponentType<unknown>, enterAnimation:string, exitAnimation:string, id:string){
+
   }
 
   openForm(id:string|undefined){
     if(id != undefined && !isNaN(Number(id)) && this.service != undefined){
-      this.openDialog(ModalModifComponent, "1", "1");
+      this.service.getById(id).subscribe(value=>{
+        this.dialog.open(ModalModifComponent, {
+          width:'550px',
+          enterAnimationDuration:'1',
+          exitAnimationDuration:'1',
+          data : {
+            service:this.service,
+            mapper:this.mapper,
+            entity:value
+          }
+        })
+      })
     } else {
       throw "Erreur, la ligne du tableau semble ne pas posséder d'identifiant, ou la subsciption n'est pas initialisée";
     }

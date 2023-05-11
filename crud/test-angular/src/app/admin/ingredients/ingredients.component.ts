@@ -7,6 +7,7 @@ import {Ingredient} from "../../models/ingredient";
 import {IngredientPresentation} from "../../models/ingredient-presentation";
 import {MatDialog} from "@angular/material/dialog";
 import {IngredientDataflowService} from "../../data/ingredient-dataflow.service";
+import {IngredientMapperService} from "../../mapper/ingredient-mapper.service";
 
 @Component({
   selector: 'test-ingredients',
@@ -15,7 +16,7 @@ import {IngredientDataflowService} from "../../data/ingredient-dataflow.service"
 })
 export class IngredientsComponent extends BaseAdmin<Ingredient, IngredientPresentation> {
 
-  constructor(public ingredientService: IngredientService, public mapper: BasicMapperService<Ingredient, IngredientPresentation>, crud: IngredientDataflowService, modalService: MatDialog) {
+  constructor(public ingredientService: IngredientService, public mapper: IngredientMapperService, crud: IngredientDataflowService, modalService: MatDialog) {
     super(crud, modalService);
   }
 }
