@@ -4,44 +4,27 @@ import {MenuService} from "../../providers/menu.service";
 import {MenuMapperService} from "../../mapper/menu-mapper.service";
 import {MenuPresentation} from "../../models/menu-presentation";
 import {BaseAdmin} from "../../models/base-admin";
-import {CrudDataflowService} from "../../data/crud-dataflow.service";
 import {MatDialog} from "@angular/material/dialog";
 import {map, Observable} from "rxjs";
 import {Status} from "../../form-models/status-enum";
 import {AccompagnementService} from "../../providers/accompagnement.service";
 import {PizzaService} from "../../providers/pizza.service";
 import {TypeAccompagnement} from "../../form-models/type-accompagnement-enum";
-import {Accompagnement} from "../../models/accompagnement";
+import {MenuDataflowService} from "../../data/menu-dataflow.service";
 
 @Component({
   selector: 'test-menus',
   templateUrl: './menus.component.html',
   styleUrls: ['./menus.component.scss']
 })
-export class MenusComponent extends BaseAdmin<Menu, MenuPresentation> implements OnInit, OnDestroy{
+export class MenusComponent extends BaseAdmin<Menu, MenuPresentation> implements OnInit{
 
 
-  constructor(private menuService:MenuService, private mapper:MenuMapperService, crud:CrudDataflowService, modalService:MatDialog, private accompagnementService:AccompagnementService, private pizzaService:PizzaService) {
+  constructor(public menuService:MenuService, public mapper:MenuMapperService, crud:MenuDataflowService, modalService:MatDialog, private accompagnementService:AccompagnementService, private pizzaService:PizzaService) {
     super(crud, modalService);
-    this.menuService.getAll().subscribe((value)=>{
-      this.constructMap(value, mapper);
-    })
-  }
-  override constructMap(value: Menu[], mapper: MenuMapperService) {
-    let menuPresentation:MenuPresentation[] = [];
-      for (let menu of value){
-        menuPresentation.push(mapper.toMenuPresentation(menu));
-      }
-      if(menuPresentation[0] != undefined){
-        this.items = mapper.toPresentationKeys(menuPresentation);
-      }
-  }
-  ngOnDestroy(): void {
-    this.unsubscribe();
   }
 
   ngOnInit(): void {
-    this.subscribe(this.menuService, this.mapper);
     let fieldMap = new Map<string,string[]>();
     new Observable((observer)=>{
       this.pizzaService.getAll()

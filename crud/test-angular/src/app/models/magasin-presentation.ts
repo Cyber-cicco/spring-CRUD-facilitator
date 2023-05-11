@@ -1,6 +1,7 @@
 import {Adresse} from "./adresse";
+import { BaseEntity } from "./base-entity";
 
-export interface MagasinPresentation {
+export interface MagasinPresentation extends BaseEntity{
   id:number,
   nom:string,
   adresse:string,

@@ -37,7 +37,7 @@ export class AdresseService implements BasicService<Adresse>{
     }
 
 
-    patchById(id: string, dto : Adresse){
+    patchById(id: string, dto : Partial<Adresse>){
         let newURL = this.URL_API_API_V1_ADRESSE_ID
         newURL = newURL.replace('{id}', id);
         return this.http.patch<Adresse>(newURL,dto)

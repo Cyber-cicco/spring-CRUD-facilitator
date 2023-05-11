@@ -16,7 +16,7 @@ export class MenuMapperService extends BasicMapperService<Menu, MenuPresentation
     super(mapper, formMapper);
   }
 
-  toMenuPresentation(menu: Menu):MenuPresentation {
+  toPresentation(menu: Menu):MenuPresentation {
     return {
       id:menu.id,
       prix:menu.prix,

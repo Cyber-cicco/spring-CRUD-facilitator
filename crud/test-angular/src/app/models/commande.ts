@@ -8,11 +8,11 @@ export interface Commande {
   id:number,
   emailClient:string,
   emailLivreur:string,
-  commandePizzaList:CommandePizza[],
+  commandePizzaList:Partial<CommandePizza>[],
   status:string,
   dateCommande:Date,
   nomMagasin:string,
-  commandeMenuList:CommandeMenu[],
-  adresse:Adresse,
+  commandeMenuList:Partial<CommandeMenu>[],
+  adresse:Partial<Adresse>,
 
 }

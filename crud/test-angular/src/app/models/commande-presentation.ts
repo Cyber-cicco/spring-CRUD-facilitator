@@ -1,4 +1,6 @@
-export interface CommandePresentation {
+import { BaseEntity } from "./base-entity";
+
+export interface CommandePresentation extends BaseEntity{
   id:number,
   emailClient:string,
   emailLivreur:string,

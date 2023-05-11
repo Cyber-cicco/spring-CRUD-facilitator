@@ -3,7 +3,8 @@
 import {Pate} from "./pate";
 import {Topping} from "./topping";
 import {Ingredient} from "./ingredient";
-export interface Pizza {
+import { BaseEntity } from "./base-entity";
+export interface Pizza extends BaseEntity{
 
   id:number,
   nom:string,

@@ -2,17 +2,17 @@
     <table class="table">
         <thead>
         <tr>
-            <th *ngFor="let item of items[0]?.keys()">{{item}}</th>
+            <th *ngFor="let enTete of enTetes">{{enTete}}</th>
             <th>Action</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of items">
-            <td *ngFor="let row of item.values()">{{row}}</td>
+        <tr *ngFor="let item of presentationItems">
+            <td *ngFor="let row of item">{{row}}</td>
             <td>
               <div class="buttons">
-                <button class="btn-small neutral" (click)="openForm(item.get('Identifiant'))">Modifier</button>
-                <button class="btn-small" (click)="sendSupprNotification(item.get('Identifiant'))">Supprimer</button>
+                <button class="btn-small neutral" (click)="openForm(item[0])">Modifier</button>
+                <button class="btn-small" (click)="sendSupprNotification(item[0])">Supprimer</button>
               </div>
             </td>
         </tr>

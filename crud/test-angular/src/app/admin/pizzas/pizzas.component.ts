@@ -11,17 +11,18 @@ import {IngredientService} from "../../providers/ingredient.service";
 import {PateService} from "../../providers/pate.service";
 import {map, Observable} from "rxjs";
 import {Categorie} from "../../form-models/categorie-enum";
+import {PizzaDataflowService} from "../../data/pizza-dataflow.service";
 
 @Component({
   selector: 'test-pizzas',
   templateUrl: './pizzas.component.html',
   styleUrls: ['./pizzas.component.scss']
 })
-export class PizzasComponent extends BaseAdmin<Pizza, PizzaPresentation> implements OnInit, OnDestroy {
+export class PizzasComponent extends BaseAdmin<Pizza, PizzaPresentation> implements OnInit {
 
-  constructor(private pizzaService: PizzaService,
-              private mapper: PizzaMapperService,
-              crud: CrudDataflowService,
+  constructor(public pizzaService: PizzaService,
+              public mapper: PizzaMapperService,
+              crud: PizzaDataflowService,
               modalService:MatDialog,
               private toppingService:ToppingService,
               private ingredientService:IngredientService,
@@ -30,25 +31,9 @@ export class PizzasComponent extends BaseAdmin<Pizza, PizzaPresentation> impleme
 
   }
 
-  override constructMap(value: Pizza[], mapper: PizzaMapperService) {
-    let pizzaPresentation: PizzaPresentation[] = [];
-    for (let pizza of value) {
-      pizzaPresentation.push(mapper.toPizzapresentation(pizza));
-    }
-    if (pizzaPresentation[0] != undefined) {
-      this.items = mapper.toPresentationKeys(pizzaPresentation);
-    }
-  }
-  ngOnDestroy(): void {
-    this.unsubscribe();
-  }
 
   ngOnInit(): void {
-    this.pizzaService.getAll().subscribe((value) => {
-      this.constructMap(value, this.mapper);
-    })
     let fieldMap = new Map<string, string[]>();
-    this.subscribe(this.pizzaService, this.mapper);
     new Observable((observer)=>{
       this.toppingService.getAll()
         .pipe(map(value => value.map(t=>t.nom)))

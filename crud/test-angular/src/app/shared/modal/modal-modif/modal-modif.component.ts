@@ -20,7 +20,7 @@ import { FormValue } from 'src/app/form-models/form-value';
   templateUrl: './modal-modif.component.html',
   styleUrls: ['./modal-modif.component.scss']
 })
-export class ModalModifComponent implements OnInit, OnDestroy{
+export class ModalModifComponent<T> implements OnInit, OnDestroy{
 
   /**Map des champs du formulaire et des ses propriétés*/
   items:TransferFormObject[] = [];
@@ -41,7 +41,7 @@ export class ModalModifComponent implements OnInit, OnDestroy{
   inputValues : Map<string, FormValue | Multichoice[]> = new Map();
 
 
-  constructor(private crud:CrudDataflowService,
+  constructor(private crud:CrudDataflowService<T>,
               private fb:FormBuilder,
               private modalService:MatDialog) {
     this.formModification = fb.group({});
@@ -57,6 +57,7 @@ export class ModalModifComponent implements OnInit, OnDestroy{
 
   /**Création des champs du formulaire*/
   ngOnInit(): void {
+    /*
 
     this.asyncFields = this.crud.getAsyncFieldsSubscriptions().getValue()
     this.modifSubscription = this.crud.getModifSubject().subscribe(value => {
@@ -115,14 +116,14 @@ export class ModalModifComponent implements OnInit, OnDestroy{
         this.formModification = this.fb.group(formGroupFields);
       }
     });
-
+*/
   }
   /**Foncition appelée lors du clique sur un bouton fermant la modale
    * */
   closeModal(validated: boolean) {
     if(validated){
 
-
+/*
       let mapResult = new Map<string, FormValue | Multichoice[]>();
         this.multichoiceValues.forEach((val, key) => {
           let multichoices:Multichoice[] = []
@@ -152,8 +153,10 @@ export class ModalModifComponent implements OnInit, OnDestroy{
             mapResult.set(tfo.id, this.inputValues.get(tfo.name)!);
           }
         }
+        console.log("map created from the form");
         console.log(mapResult);
-
+        this.crud.getConfModifSubject().next(mapResult);
+*/
       }
     this.modalService.closeAll();
   }

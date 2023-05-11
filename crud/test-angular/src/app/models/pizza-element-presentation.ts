@@ -1,4 +1,5 @@
-export interface PizzaElementPresentation {
+import { BaseEntity } from "./base-entity"
+export interface PizzaElementPresentation extends BaseEntity{
 
   id:number,
   nom:string,

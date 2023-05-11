@@ -16,7 +16,7 @@ export class PizzaMapperService extends BasicMapperService<Pizza, PizzaPresentat
   super(mapper, formMapper);
   }
 
-  toPizzapresentation(pizza:Pizza):PizzaPresentation{
+  toPresentation(pizza:Pizza):PizzaPresentation{
     return {
       id: pizza.id,
       nom: pizza.nom ,

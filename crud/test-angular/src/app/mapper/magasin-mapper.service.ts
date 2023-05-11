@@ -4,6 +4,8 @@ import {BasicMapperService} from "./basic-mapper.service";
 import {FormMapperService} from "./form-mapper.service";
 import {Magasin} from "../models/magasin";
 import {MagasinPresentation} from "../models/magasin-presentation";
+import {FormValue} from "../form-models/form-value";
+import {Multichoice} from "../form-models/form-mutlichoice";
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +15,14 @@ export class MagasinMapperService extends BasicMapperService<Magasin, MagasinPre
 
   constructor(mapper:MapperService, formMapper: FormMapperService) {
     super(mapper, formMapper);
+  }
+
+  toPresentation(entity: Magasin): MagasinPresentation {
+    return {
+      id:entity.id,
+      nom:entity.nom,
+      adresse:[entity.adresse.rue, entity.adresse.ville, entity.adresse.codePostal].join(', ')
+    };
   }
 
 }

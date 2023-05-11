@@ -6,26 +6,16 @@ import {CrudDataflowService} from "../../data/crud-dataflow.service";
 import {Ingredient} from "../../models/ingredient";
 import {IngredientPresentation} from "../../models/ingredient-presentation";
 import {MatDialog} from "@angular/material/dialog";
+import {IngredientDataflowService} from "../../data/ingredient-dataflow.service";
 
 @Component({
   selector: 'test-ingredients',
   templateUrl: './ingredients.component.html',
   styleUrls: ['./ingredients.component.scss']
 })
-export class IngredientsComponent extends BaseAdmin<Ingredient, IngredientPresentation> implements OnInit, OnDestroy{
+export class IngredientsComponent extends BaseAdmin<Ingredient, IngredientPresentation> {
 
-  constructor(private ingredientService:IngredientService, private mapper:BasicMapperService<Ingredient, IngredientPresentation>, crud:CrudDataflowService, modalService:MatDialog) {
+  constructor(public ingredientService: IngredientService, public mapper: BasicMapperService<Ingredient, IngredientPresentation>, crud: IngredientDataflowService, modalService: MatDialog) {
     super(crud, modalService);
-    this.ingredientService.getAll().subscribe((value)=>{
-      this.constructMap(value, mapper);
-    })
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe();
-  }
-
-  ngOnInit(): void {
-    this.subscribe(this.ingredientService, this.mapper);
   }
 }

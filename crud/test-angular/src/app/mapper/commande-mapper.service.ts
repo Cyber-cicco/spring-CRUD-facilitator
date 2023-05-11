@@ -6,17 +6,22 @@ import {CommandePresentation} from "../models/commande-presentation";
 import {FormMapperService} from "./form-mapper.service";
 import {TransferFormObject} from "../models/transfer-form-object";
 import {FormCommande} from "../form-models/form-commande";
+import {FormValue} from "../form-models/form-value";
+import {Multichoice} from "../form-models/form-mutlichoice";
+import {CommandeMenu} from "../models/commandemenu";
+import {TypeUtilsService} from "../utils/type-utils.service";
+import {CommandePizza} from "../models/commandepizza";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommandeMapperService extends BasicMapperService<Commande, CommandePresentation>{
 
-  constructor(mapper:MapperService, formMapper: FormMapperService) {
+  constructor(mapper:MapperService, formMapper: FormMapperService, private typeUtil:TypeUtilsService) {
     super(mapper, formMapper);
   }
 
-  toCommandePresentation(commande: Commande):CommandePresentation {
+  toPresentation(commande: Commande):CommandePresentation {
     return {
       id: commande.id,
       adresse: Object.values(commande.adresse).join(', '),
@@ -35,12 +40,12 @@ export class CommandeMapperService extends BasicMapperService<Commande, Commande
       status: commande.status,
       emailClient: commande.emailClient,
       emailLivreur: commande.emailLivreur,
-      commandePizzaList: commande.commandePizzaList.map(c=>{return {nom:c.pizzaDto.nom, nb:c.nbPizzas}}),
-      commandeMenuList: commande.commandeMenuList.map(c=>{return {nom:c.menu.nom, nb:c.nbMenus}}),
+      commandePizzaList: commande.commandePizzaList.map(c=>{return {nom:c.pizzaDto?.nom!, nb:c.nbPizzas!}}),
+      commandeMenuList: commande.commandeMenuList.map(c=>{return {nom:c.menu?.nom!, nb:c.nbMenus!}}),
       nomMagasin: commande.nomMagasin,
-      rue: commande.adresse.rue,
-      codePostal: commande.adresse.codePostal,
-      ville: commande.adresse.ville
+      rue: commande.adresse.rue!,
+      codePostal: commande.adresse.codePostal!,
+      ville: commande.adresse.ville!
     }
     return super.toFormMap(commandeMap);
   }

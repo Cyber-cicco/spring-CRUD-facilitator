@@ -17,7 +17,7 @@ export class UtilisateurMapperService extends BasicMapperService<Utilisateur, Ut
     super(mapper, formMapper);
   }
 
-  toUtilisateurPresentation(utilisateur: Utilisateur): UtilisateurPresentation {
+  toPresentation(utilisateur: Utilisateur): UtilisateurPresentation {
     let lastAdresse = utilisateur.adresseList[utilisateur.adresseList.length - 1];
     return {
       id: utilisateur.id,

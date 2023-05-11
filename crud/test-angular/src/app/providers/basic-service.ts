@@ -7,7 +7,7 @@ import {Observable} from "rxjs";
 export interface BasicService<T> {
   getAll():Observable<T[]>,
   getById(id:string):Observable<T>,
-
+  patchById(id:string, dto:Partial<T>):Observable<T>,
   deleteById(id:string):Observable<Object>
 
 }

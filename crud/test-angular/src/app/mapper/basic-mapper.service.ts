@@ -4,6 +4,7 @@ import {Validators} from "@angular/forms";
 import {FormMapperService} from "./form-mapper.service";
 import {TransferFormObject} from "../models/transfer-form-object";
 import {FormType} from "../form-models/form-type-enum";
+import { BaseEntity } from '../models/base-entity';
 
 /**
  * Classe servant à transformer les objets récupérés du back en objets permettant de les
@@ -16,7 +17,7 @@ import {FormType} from "../form-models/form-type-enum";
 @Injectable({
   providedIn: 'root'
 })
-export class BasicMapperService<T extends Object, D extends Object> {
+export abstract class BasicMapperService<T extends BaseEntity, D extends BaseEntity> {
 
   constructor(private mapper:MapperService, protected formMapper:FormMapperService) {}
   /**
@@ -24,16 +25,12 @@ export class BasicMapperService<T extends Object, D extends Object> {
    * présentables pour l'en tête du tableau
    * @items = les objets à afficher dans le tableau, avec leurs clés non adaptées à l'affichage
    * */
-  toPresentationKeys(items:D[] | T[]):Map<string, string>[]{
-    let mapArray:Map<string,string>[] = [];
-    for(let item of items){
-      let map = new Map<string, string>();
-      for(let [key, value] of Object.entries(item)){
-        map.set(this.changeNameToPretty(key), value)
-      }
-      mapArray.push(map);
+  toPresentationKeys(items:D | T):string[]{
+    let map:string[] = [];
+    for(let key  of Object.keys(items)){
+      map.push(this.changeNameToPretty(key))
     }
-    return mapArray;
+    return map;
   }
 
   public changeNameToPretty(name:string){
@@ -45,20 +42,25 @@ export class BasicMapperService<T extends Object, D extends Object> {
    * des champs nécessaires à la création ou au changement d'une entité
    * @param entity :l'entité
    * */
-  toFormMap(entity: Object):TransferFormObject[] {
-    let newMap:TransferFormObject[] = []
-    for(let [key, value] of Object.entries(entity)){
-      let transferFormObject:TransferFormObject = {
-        id:key,
-        name:this.changeNameToPretty(key),
-        form:this.formMapper.getMap().get(key) ?? {options: [], type: FormType.TEXT, validators:[Validators.required], value:value}
+  toFormMap(entity: Object | undefined):TransferFormObject[] {
+    if(entity != undefined){
+      let newMap:TransferFormObject[] = []
+      for(let [key, value] of Object.entries(entity)){
+        let transferFormObject:TransferFormObject = {
+          id:key,
+          name:this.changeNameToPretty(key),
+          form:this.formMapper.getMap().get(key) ?? {options: [], type: FormType.TEXT, validators:[Validators.required], value:value}
+        }
+        transferFormObject.form.value = value;
+        newMap.push(transferFormObject);
       }
-      transferFormObject.form.value = value;
-      newMap.push(transferFormObject);
+      console.log("basic-mapper-service");
+      console.log(newMap);
+      return newMap
     }
-    console.log("basic-mapper-service");
-    console.log(newMap);
-    return newMap
+   throw "Error: entity is undefined";
   }
+
+  abstract toPresentation(entity:T):D
 }
 
