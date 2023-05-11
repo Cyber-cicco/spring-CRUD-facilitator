@@ -9,7 +9,7 @@
       <fieldset *ngIf="item.form.type == 'radio' || item.form.type == 'multichoice' || item.form.type == 'checkbox'">
         <div *ngFor="let option of asyncFields.get(item.name)" class="form-group">
           <label>{{option}}</label>
-          <input *ngIf="item.form.type == 'multichoice'" type="number"  formControlName="{{option}}">
+          <input *ngIf="item.form.type == 'multichoice'" type="number"  formControlName="{{option}}" (ngModelChange)="addMultichoiceValues(item.id, option, $event)">
           <input *ngIf="item.form.type == 'radio'" name="{{item.name}}" type="{{item.form.type}}" formControlName="{{item.name}}" (click)="addInputValues(item.name, option)" value="{{option}}" [checked]="checkChecked(item.form.value, option)">
           <input *ngIf="item.form.type == 'checkbox'"  type="{{item.form.type}}" formControlName="{{option}}" value="{{option}}" (click)="addBoxValues(item.name, option)" [checked]="checkChecked(item.form.value, option)">
         </div>

@@ -36,6 +36,8 @@ export class ModalModifComponent implements OnInit, OnDestroy{
 
   boxValues:Map<string, Map<string,boolean>> = new Map();
 
+  multichoiceValues: Map<string, Map<string, number>> = new Map();
+
   inputValues : Map<string, FormValue | Multichoice[]> = new Map();
 
 
@@ -95,9 +97,11 @@ export class ModalModifComponent implements OnInit, OnDestroy{
                 for(let option of this.asyncFields.get(tfo.name)!){
                   let control = new FormControl(option);
                   formGroupFields[option] = control;
+                  this.multichoiceValues.set(tfo.id, new Map<string, number>());
 
                   for(let multichoice of tfo.form.value){
                     if(this.instanceOfMultichoice(multichoice)){
+                      this.multichoiceValues.get(tfo.id)!.set(multichoice.nom, multichoice.nb);
                       if(multichoice.nom === option){
                         formGroupFields[option].value = multichoice.nb;
                       }
@@ -118,12 +122,19 @@ export class ModalModifComponent implements OnInit, OnDestroy{
   closeModal(validated: boolean) {
     if(validated){
 
-      console.log("modal moif validated");
+
       let mapResult = new Map<string, FormValue | Multichoice[]>();
+        this.multichoiceValues.forEach((val, key) => {
+          let multichoices:Multichoice[] = []
+          for(let entry of val.entries()){
+            multichoices.push({nom:entry[0], nb:entry[1]})
+          }
+          mapResult.set(key, multichoices);
+        });
 
       for(let tfo of this.items){
 
-        if (![FormType.MULTICHOICE, FormType.CHECKBOX, FormType.RADIO, FormType.SELECT].includes(tfo.form.type)){
+        if ([FormType.TEXT, FormType.PASSWORD, FormType.DATE, FormType.NUMBER].includes(tfo.form.type)){
             mapResult.set(tfo.id, this.formModification.controls[tfo.name]?.value);
 
         } else if (tfo.form.type == FormType.CHECKBOX){
@@ -135,12 +146,14 @@ export class ModalModifComponent implements OnInit, OnDestroy{
             }
 
             mapResult.set(tfo.id, arraySult);
-          } else {
+
+          } else if (tfo.form.type != FormType.MULTICHOICE) {
 
             mapResult.set(tfo.id, this.inputValues.get(tfo.name)!);
           }
         }
         console.log(mapResult);
+
       }
     this.modalService.closeAll();
   }
@@ -154,11 +167,15 @@ export class ModalModifComponent implements OnInit, OnDestroy{
 
   addBoxValues(field:string, value:string){
     this.boxValues.get(field)!.set(value, !this.boxValues.get(field)!.get(value));
-    console.log(this.boxValues);
   }
 
   addInputValues(field:string, value:string){
     this.inputValues.set(field, value);
+  }
+
+  addMultichoiceValues(field:string, name:string, value:any){
+    this.multichoiceValues.get(field)!.set(name, Number(value));
+
   }
 
   addSelectValues(field:string ,$event:any){
