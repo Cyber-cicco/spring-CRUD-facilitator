@@ -25,9 +25,10 @@ public class MagasinService   {
     private final AdresseRepository adresseRepository;
 
     public List<MagasinDto> findAll() {
-        return magasinRepository.findAll().stream()
+        var magasins =  magasinRepository.findAll().stream()
             .map(magasinMapper::toMagasinDto)
             .toList();
+        return (magasins.size() > 0) ? magasins :  List.of(new MagasinDto());
     }
 
     public MagasinDto findById(Long id) {

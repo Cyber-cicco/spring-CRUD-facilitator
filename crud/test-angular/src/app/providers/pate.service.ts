@@ -4,12 +4,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 
 import {Pate} from "../models/pate";
-import {BasicService} from "./basic-service";
+import {BaseHandler} from "./base-handler";
 
 @Injectable({
   providedIn: 'root'
 })
-export class PateService implements BasicService<Pate>{
+export class PateService implements BaseHandler<Pate, Pate> {
 
    private URL_API_API_V1_PATE_ID = environnement.urlApi + "/api/v1/pate/{id}";
    private URL_API_API_V1_PATE_ALL = environnement.urlApi + "/api/v1/pate/all";
@@ -17,6 +17,10 @@ export class PateService implements BasicService<Pate>{
 
 
     constructor(private http:HttpClient){}
+
+  handleModifications(form: Pate): void {
+        throw new Error('Method not implemented.');
+    }
 
 
     getAll(){
@@ -51,4 +55,7 @@ export class PateService implements BasicService<Pate>{
 
 
 
+    handleAjout(form: Pate): void {
+
+    }
 }

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {UtilisateurService} from "../../providers/utilisateur.service";
 import {Utilisateur} from "../../models/utilisateur";
 import {UtilisateurMapperService} from "../../mapper/utilisateur-mapper.service";
@@ -18,6 +18,6 @@ export class UtilisateursComponent extends BaseAdmin<Utilisateur, UtilisateurPre
               public mapper:UtilisateurMapperService,
               crud:UtilisateurDataflowService,
               modalService:MatDialog) {
-    super(crud,modalService);
+    super(crud,modalService, utilisateurService);
   }
 }

@@ -37,8 +37,8 @@ export class PizzaMapperService extends BasicMapperService<Pizza, PizzaPresentat
       nom: pizza.nom,
       prix: pizza.prix,
       pate: pizza.pate?.nom!,
-      ingredientList: pizza.ingredientList.map(p => p.nom),
-      toppingList: pizza.toppingList.map(t=>t.nom),
+      ingredientList: pizza.ingredientList?.map(p => p.nom) ?? [],
+      toppingList: pizza.toppingList?.map(t=>t.nom) ?? [],
     }
     return super.toFormMap(formPizza);
   }

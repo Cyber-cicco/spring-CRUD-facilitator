@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {AccompagnementService} from "../../providers/accompagnement.service";
 import {BaseAdmin} from "../../models/base-admin";
 import {Accompagnement} from "../../models/accompagnement";
 import {AccompagnementPresentation} from "../../models/accompagnement-presentation";
@@ -15,6 +14,6 @@ import {BoissonServiceService} from "../../providers/boisson-service.service";
 })
 export class BoissonsComponent extends BaseAdmin<Accompagnement, AccompagnementPresentation> {
   constructor(public boissonService: BoissonServiceService, public mapper: AccompagnementMapperService, crud: BoissonDataflowService, modalService:MatDialog) {
-    super(crud, modalService);
+    super(crud, modalService, boissonService);
   }
 }

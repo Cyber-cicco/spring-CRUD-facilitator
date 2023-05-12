@@ -35,9 +35,10 @@ public class CommandeService   {
     private final AdresseMapper adresseMapper;
 
     public List<CommandeDto> findAll() {
-        return commandeRepository.findAll().stream()
+        var commandes = commandeRepository.findAll().stream()
             .map(commande -> commandeMapper.toCommandeDto(commande, menuMapper, pizzaMapper, adresseMapper))
             .toList();
+        return (commandes.size() > 0) ? commandes : List.of(new CommandeDto());
     }
 
     public CommandeDto findById(Long id) {

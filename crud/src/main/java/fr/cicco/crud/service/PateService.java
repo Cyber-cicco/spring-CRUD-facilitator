@@ -23,9 +23,10 @@ public class PateService   {
     private final PateMapper pateMapper;
 
     public List<PateDto> findAll() {
-        return pateRepository.findAll().stream()
+        var pates = pateRepository.findAll().stream()
             .map(pateMapper::toPateDto)
             .toList();
+        return (pates.size() > 0) ? pates : List.of(new PateDto());
     }
 
     public PateDto findById(Long id) {

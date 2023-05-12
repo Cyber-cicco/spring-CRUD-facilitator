@@ -4,12 +4,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 
 import {Pizza} from "../models/pizza";
-import {BasicService} from "./basic-service";
+import {BaseHandler} from "./base-handler";
+import {PizzaPresentation} from "../models/pizza-presentation";
 
 @Injectable({
   providedIn: 'root'
 })
-export class PizzaService implements BasicService<Pizza>{
+export class PizzaService implements BaseHandler<Pizza, PizzaPresentation>{
 
    private URL_API_API_V1_PIZZA_ALL = environnement.urlApi + "/api/v1/pizza/all";
    private URL_API_API_V1_PIZZA = environnement.urlApi + "/api/v1/pizza";
@@ -49,6 +50,11 @@ export class PizzaService implements BasicService<Pizza>{
         return this.http.delete<Object>(newURL)
     }
 
+  handleModifications(form: Pizza): void {
+  }
+
+  handleAjout(form: Pizza) {
+  }
 
 
 }

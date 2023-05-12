@@ -23,9 +23,10 @@ public class ToppingService   {
     private final ToppingMapper toppingMapper;
 
     public List<ToppingDto> findAll() {
-        return toppingRepository.findAll().stream()
+        var toppings = toppingRepository.findAll().stream()
             .map(toppingMapper::toToppingDto)
             .toList();
+        return (toppings.size() > 0) ? toppings : List.of(new ToppingDto());
     }
 
     public ToppingDto findById(Long id) {

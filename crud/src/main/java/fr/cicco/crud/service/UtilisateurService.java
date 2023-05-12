@@ -27,9 +27,10 @@ public class UtilisateurService   {
     private final UtilisateurMapper utilisateurMapper;
 
     public List<UtilisateurDto> findAll() {
-        return utilisateurRepository.findAll().stream()
+        var utilisateurs = utilisateurRepository.findAll().stream()
             .map(utilisateurMapper::toUtilisateurDto)
             .toList();
+        return (utilisateurs.size() > 0) ? utilisateurs : List.of(new UtilisateurDto());
     }
 
     public UtilisateurDto findById(Long id) {

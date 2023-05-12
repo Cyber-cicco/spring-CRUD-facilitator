@@ -26,9 +26,10 @@ public class MenuService   {
     private final MenuMapper menuMapper;
 
     public List<MenuDto> findAll() {
-        return menuRepository.findAll().stream()
+        var menus = menuRepository.findAll().stream()
             .map(menuMapper::toMenuDto)
             .toList();
+        return (menus.size() > 0) ? menus : List.of(new MenuDto());
     }
 
     public MenuDto findById(Long id) {

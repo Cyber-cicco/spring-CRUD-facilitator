@@ -24,9 +24,10 @@ public class AccompagnementService   {
     private final AccompagnementMapper accompagnementMapper;
 
     public List<AccompagnementDto> findAll() {
-        return accompagnementRepository.findAll().stream()
+        var accompagnements = accompagnementRepository.findAll().stream()
             .map(accompagnementMapper::toAccompagnementDto)
             .toList();
+        return (accompagnements.size() > 0) ? accompagnements : List.of(new AccompagnementDto());
     }
 
     public AccompagnementDto findById(Long id) {
@@ -57,10 +58,11 @@ public class AccompagnementService   {
     }
 
     private List<AccompagnementDto> findAccompagnementByType(TypeAccompagnement type){
-        return accompagnementRepository.findAccompagnementByTypeAccompagnementContaining(String.valueOf(type))
+        var accompgnements = accompagnementRepository.findAccompagnementByTypeAccompagnementContaining(String.valueOf(type))
                 .stream()
                 .map(accompagnementMapper::toAccompagnementDto)
                 .toList();
+        return (accompgnements.size() > 0) ? accompgnements : List.of(new AccompagnementDto());
     }
 
     public List<AccompagnementDto> findAllDessert() {

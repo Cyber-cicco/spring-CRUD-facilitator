@@ -28,17 +28,30 @@ export class UtilisateurMapperService extends BasicMapperService<Utilisateur, Ut
     }
   }
   override toFormMap(utilisateur: Utilisateur): TransferFormObject[] {
-    let adresse: Adresse = utilisateur.adresseList[utilisateur.adresseList.length - 1]
+    let adresse: Partial<Adresse> | null = (utilisateur.adresseList ===null) ? null : utilisateur?.adresseList[utilisateur.adresseList?.length - 1] ?? []
     let formUser: FormUser = {
       id: utilisateur.id,
       email: utilisateur.email,
       nom: utilisateur.nom,
       prenom: utilisateur.prenom,
       motDePasse: utilisateur.motDePasse,
-      rue: adresse.rue,
-      codePostal: adresse.codePostal,
-      ville: adresse.ville
+      rue: adresse?.rue!,
+      codePostal: adresse?.codePostal!,
+      ville: adresse?.ville!
     }
     return super.toFormMap(formUser);
+  }
+  override fromFormToEntity(form: any): Utilisateur {
+    return {
+      adresseList: [{rue:form.rue, codePostal:form.codePostal, ville: form.ville}],
+      commandeList: [],
+      email: form.email,
+      id: form.id,
+      isAdmin: false,
+      isLivreur: false,
+      motDePasse: form.motDePasse,
+      nom: form.nom,
+      prenom: form.prenom
+    };
   }
 }

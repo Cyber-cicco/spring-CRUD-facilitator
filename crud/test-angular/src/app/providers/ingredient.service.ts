@@ -4,12 +4,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 
 import {Ingredient} from "../models/ingredient";
-import {BasicService} from "./basic-service";
+import {BaseHandler} from "./base-handler";
 
 @Injectable({
   providedIn: 'root'
 })
-export class IngredientService implements BasicService<Ingredient>{
+export class IngredientService implements BaseHandler<Ingredient, Ingredient>{
 
    private URL_API_API_V1_INGREDIENT_ID = environnement.urlApi + "/api/v1/ingredient/{id}";
    private URL_API_API_V1_INGREDIENT = environnement.urlApi + "/api/v1/ingredient";
@@ -17,6 +17,10 @@ export class IngredientService implements BasicService<Ingredient>{
 
 
     constructor(private http:HttpClient){}
+
+  handleModifications(form: Ingredient): void {
+        throw new Error('Method not implemented.');
+    }
 
 
     getAll(){
@@ -50,5 +54,8 @@ export class IngredientService implements BasicService<Ingredient>{
     }
 
 
+    handleAjout(form: Ingredient): void {
+
+    }
 
 }

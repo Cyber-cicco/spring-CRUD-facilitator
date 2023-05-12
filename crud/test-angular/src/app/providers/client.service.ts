@@ -20,4 +20,8 @@ export class ClientService extends UtilisateurService {
   override getAll(): Observable<Utilisateur[]> {
     return this.http.get<Utilisateur[]>(this.URL_API_API_V1_CLIENT_ALL);
   }
+
+  override handleModifications(form: Utilisateur) {
+    console.log(form);
+  }
 }

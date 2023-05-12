@@ -23,9 +23,10 @@ public class AdresseService   {
     private final AdresseMapper adresseMapper;
 
     public List<AdresseDto> findAll() {
-        return adresseRepository.findAll().stream()
+        var adresses = adresseRepository.findAll().stream()
             .map(adresseMapper::toAdresseDto)
             .toList();
+        return (adresses.size() > 0) ? adresses : List.of(new AdresseDto());
     }
 
     public AdresseDto findById(Long id) {

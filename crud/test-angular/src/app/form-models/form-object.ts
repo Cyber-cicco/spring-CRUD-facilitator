@@ -5,7 +5,7 @@ import { Multichoice } from "./form-mutlichoice";
 import { FormValue } from "./form-value";
 
 export interface FormObject {
-  value:FormValue | Multichoice[]
+  value:FormValue | Multichoice[] | null
   validators:ValidatorFn | ValidatorFn[] | undefined
   type:FormType
   options:FormOption[]

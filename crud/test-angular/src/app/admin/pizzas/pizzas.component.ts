@@ -1,10 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Pizza} from "../../models/pizza";
 import {PizzaService} from "../../providers/pizza.service";
 import {BaseAdmin} from "../../models/base-admin";
 import {PizzaMapperService} from "../../mapper/pizza-mapper.service";
 import {PizzaPresentation} from "../../models/pizza-presentation";
-import {CrudDataflowService} from "../../data/crud-dataflow.service";
 import {MatDialog} from "@angular/material/dialog";
 import {ToppingService} from "../../providers/topping.service";
 import {IngredientService} from "../../providers/ingredient.service";
@@ -27,7 +26,7 @@ export class PizzasComponent extends BaseAdmin<Pizza, PizzaPresentation> impleme
               private toppingService:ToppingService,
               private ingredientService:IngredientService,
               private pateService:PateService) {
-    super(crud, modalService);
+    super(crud, modalService, pizzaService);
 
   }
 

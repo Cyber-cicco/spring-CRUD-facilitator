@@ -1,19 +1,22 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {CrudDataflowService} from "../../../data/crud-dataflow.service";
 import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {BasicService} from "../../../providers/basic-service";
+import {BaseEntity} from "../../../models/base-entity";
 
 @Component({
   selector: 'test-modal-suppr',
   templateUrl: './modal-suppr.component.html',
   styleUrls: ['./modal-suppr.component.scss']
 })
-export class ModalSupprComponent<T> implements OnInit{
+export class ModalSupprComponent<T extends BaseEntity> implements OnInit{
 
   private id = 0;
  private service?:BasicService<T>;
 
-  constructor(private dialog:MatDialog,  @Inject(MAT_DIALOG_DATA) public data: any, private crud:CrudDataflowService<T>) {
+ private crud?:CrudDataflowService<T>
+
+  constructor(private dialog:MatDialog,  @Inject(MAT_DIALOG_DATA) public data: any) {
     console.log(this.data);
   }
 
@@ -21,9 +24,9 @@ export class ModalSupprComponent<T> implements OnInit{
 
   closeModal(sendNotification: boolean) {
     console.log(this.service == undefined)
-    if (sendNotification) this.service?.deleteById(String(this.id)).subscribe(value=>
+    if (sendNotification) this.service?.deleteById(String(this.id)).subscribe(()=>
       this.service!.getAll().subscribe(value => {
-        this.crud.getTabRowSubject().next(value);
+        this.crud?.getTabRowSubject().next(value);
       })
     );
     this.dialog.closeAll();
@@ -33,5 +36,6 @@ export class ModalSupprComponent<T> implements OnInit{
     console.log(this.data)
     this.id = this.data.id;
     this.service = this.data.service;
+    this.crud = this.data.crud;
   }
 }

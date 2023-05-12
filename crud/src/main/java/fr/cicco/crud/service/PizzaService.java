@@ -30,9 +30,10 @@ public class PizzaService   {
     private final IngredientRepository ingredientRepository;
 
     public List<PizzaDto> findAll() {
-        return pizzaRepository.findAll().stream()
+        var pizzas = pizzaRepository.findAll().stream()
             .map(pizzaMapper::toPizzaDto)
             .toList();
+        return (pizzas.size() > 0) ? pizzas : List.of(new PizzaDto());
     }
 
     public PizzaDto findById(Long id) {

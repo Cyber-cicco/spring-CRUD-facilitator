@@ -4,12 +4,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 
 import {Utilisateur} from "../models/utilisateur";
-import {BasicService} from "./basic-service";
+import {BaseHandler} from "./base-handler";
+import {UtilisateurPresentation} from "../models/utilisateur-presentation";
 
 @Injectable({
   providedIn: 'root'
 })
-export class UtilisateurService implements BasicService<Utilisateur>{
+export class UtilisateurService implements BaseHandler<Utilisateur, UtilisateurPresentation>{
 
    private URL_API_API_V1_UTILISATEUR = environnement.urlApi + "/api/v1/utilisateur";
    private URL_API_API_V1_UTILISATEUR_ID = environnement.urlApi + "/api/v1/utilisateur/{id}";
@@ -45,4 +46,11 @@ export class UtilisateurService implements BasicService<Utilisateur>{
         newURL = newURL.replace('{id}', id);
         return this.http.delete<Object>(newURL);
     }
+
+  handleModifications(form: Utilisateur): void {
+      console.log("modification");
+  }
+  handleAjout(form: Utilisateur) {
+      console.log("ajout");
+  }
 }

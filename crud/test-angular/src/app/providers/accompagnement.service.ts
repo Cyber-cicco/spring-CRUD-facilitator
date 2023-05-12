@@ -4,12 +4,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 
 import {Accompagnement} from "../models/accompagnement";
-import {BasicService} from "./basic-service";
+import {BaseHandler} from "./base-handler";
 
 @Injectable({
   providedIn: 'root'
 })
-export class AccompagnementService implements BasicService<Accompagnement>{
+export class AccompagnementService implements BaseHandler<Accompagnement, Accompagnement>{
 
    private URL_API_API_V1_ACCOMPAGNEMENT = environnement.urlApi + "/api/v1/accompagnement";
    private URL_API_API_V1_ACCOMPAGNEMENT_ALL = environnement.urlApi + "/api/v1/accompagnement/all";
@@ -53,4 +53,10 @@ export class AccompagnementService implements BasicService<Accompagnement>{
     getAllEncas() {
         return this.http.get<Accompagnement[]>(this.URL_API_API_V1_ENCAS_ALL);
     }
+
+  handleModifications(form: Accompagnement): void {
+  }
+  handleAjout(form: Accompagnement): void {
+
+  }
 }

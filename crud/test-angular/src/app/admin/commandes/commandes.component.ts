@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Commande} from "../../models/commande";
 import {CommandeService} from "../../providers/commande.service";
 import {BaseAdmin} from "../../models/base-admin";
@@ -20,7 +20,7 @@ import {CommandeDataflowService} from "../../data/commande-dataflow.service";
 export class CommandesComponent extends BaseAdmin<Commande, CommandePresentation> {
 
   constructor(public commandeService:CommandeService, public mapper:CommandeMapperService, crud:CommandeDataflowService, modalService:MatDialog, private menuService:MenuService, private pizzaService:PizzaService, private magasinService:MagasinService, ) {
-    super(crud, modalService);
+    super(crud, modalService, commandeService);
   }
 
   ngOnInit(): void {

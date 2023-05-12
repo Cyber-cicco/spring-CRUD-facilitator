@@ -4,12 +4,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 
 import {Commande} from "../models/commande";
-import {BasicService} from "./basic-service";
+import {BaseHandler} from "./base-handler";
+import {CommandePresentation} from "../models/commande-presentation";
 
 @Injectable({
   providedIn: 'root'
 })
-export class CommandeService implements BasicService<Commande>{
+export class CommandeService implements BaseHandler<Commande, CommandePresentation>{
 
    private URL_API_API_V1_COMMANDE = environnement.urlApi + "/api/v1/commande";
    private URL_API_API_V1_COMMANDE_ID = environnement.urlApi + "/api/v1/commande/{id}";
@@ -49,6 +50,12 @@ export class CommandeService implements BasicService<Commande>{
         return this.http.delete<Object>(newURL)
     }
 
+  handleModifications(form: any): void {
+  }
 
 
+
+  handleAjout(form: Commande): void {
+
+  }
 }

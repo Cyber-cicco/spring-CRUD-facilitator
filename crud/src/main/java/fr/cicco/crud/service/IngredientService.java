@@ -23,9 +23,10 @@ public class IngredientService   {
     private final IngredientMapper ingredientMapper;
 
     public List<IngredientDto> findAll() {
-        return ingredientRepository.findAll().stream()
+        var ingrdients = ingredientRepository.findAll().stream()
             .map(ingredientMapper::toIngredientDto)
             .toList();
+        return (ingrdients.size() > 0) ? ingrdients : List.of(new IngredientDto());
     }
 
     public IngredientDto findById(Long id) {

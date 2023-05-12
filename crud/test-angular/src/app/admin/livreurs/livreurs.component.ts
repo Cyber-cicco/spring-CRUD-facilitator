@@ -1,5 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {UtilisateurService} from "../../providers/utilisateur.service";
+import {Component} from '@angular/core';
 import {UtilisateurPresentation} from "../../models/utilisateur-presentation";
 import {UtilisateurMapperService} from "../../mapper/utilisateur-mapper.service";
 import {BaseAdmin} from "../../models/base-admin";
@@ -16,7 +15,7 @@ import {LivreurService} from "../../providers/livreur.service";
 export class LivreursComponent extends BaseAdmin<Utilisateur, UtilisateurPresentation>{
 
     constructor(public utilisateurService:LivreurService, public mapper:UtilisateurMapperService, crud:UtilisateurDataflowService, modalService:MatDialog) {
-    super(crud, modalService);
+    super(crud, modalService, utilisateurService);
 
   }
 }

@@ -12,7 +12,7 @@ export interface Utilisateur extends BaseEntity{
   motDePasse:string,
   isAdmin:boolean,
   isLivreur:boolean,
-  adresseList:Adresse[],
+  adresseList:Partial<Adresse>[],
   commandeList:Commande[],
 
 }

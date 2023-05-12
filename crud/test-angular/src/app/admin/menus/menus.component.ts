@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Menu} from "../../models/menu";
 import {MenuService} from "../../providers/menu.service";
 import {MenuMapperService} from "../../mapper/menu-mapper.service";
@@ -21,7 +21,7 @@ export class MenusComponent extends BaseAdmin<Menu, MenuPresentation> implements
 
 
   constructor(public menuService:MenuService, public mapper:MenuMapperService, crud:MenuDataflowService, modalService:MatDialog, private accompagnementService:AccompagnementService, private pizzaService:PizzaService) {
-    super(crud, modalService);
+    super(crud, modalService, menuService);
   }
 
   ngOnInit(): void {
