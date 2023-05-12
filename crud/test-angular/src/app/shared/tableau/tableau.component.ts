@@ -25,7 +25,8 @@ export class TableauComponent<T extends BaseEntity, D extends BaseEntity> implem
 
   @Input() mapper?:BasicMapperService<T, D>
   @Input() service?:BasicService<T>
-  constructor(private dialog: MatDialog, private crud:CrudDataflowService<T>) {}
+  @Input() crud?: CrudDataflowService<T>;
+  constructor(private dialog: MatDialog) {}
 
   ngOnInit(): void {
   }
@@ -35,7 +36,7 @@ export class TableauComponent<T extends BaseEntity, D extends BaseEntity> implem
   }
 
   showDatas(){
-    if(this.service != undefined){
+    if(this.service != undefined && this.crud != undefined){
       this.Tsubscription = this.crud.getTabRowSubject().subscribe((value)=>{
         this.constructMap(value!);
       });
@@ -91,7 +92,8 @@ export class TableauComponent<T extends BaseEntity, D extends BaseEntity> implem
           data : {
             service:this.service,
             mapper:this.mapper,
-            entity:value
+            entity:value,
+            crud:this.crud
           }
         })
       })

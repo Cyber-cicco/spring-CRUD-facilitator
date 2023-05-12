@@ -47,6 +47,7 @@ export class PizzasComponent extends BaseAdmin<Pizza, PizzaPresentation> impleme
       observer.next("done");
     }).subscribe(()=>{
       fieldMap.set(this.mapper.changeNameToPretty('categorie'), [Categorie.PETITE, Categorie.MOYENNE, Categorie.GRANDE]);
+      console.log(fieldMap);
       this.crud.getAsyncFieldsSubscriptions().next(fieldMap)
     })
   }

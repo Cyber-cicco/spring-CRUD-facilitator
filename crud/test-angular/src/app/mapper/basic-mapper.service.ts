@@ -61,6 +61,12 @@ export abstract class BasicMapperService<T extends BaseEntity, D extends BaseEnt
    throw "Error: entity is undefined";
   }
 
+  protected isFormEntity(obj:Object):obj is D{
+    return "id" in obj;
+  }
+
   abstract toPresentation(entity:T):D
+
+  abstract fromFormToEntity(form:any):T
 }
 

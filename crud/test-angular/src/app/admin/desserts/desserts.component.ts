@@ -1,11 +1,12 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {AccompagnementService} from "../../providers/accompagnement.service";
 import {BaseAdmin} from "../../models/base-admin";
-import {BasicMapperService} from "../../mapper/basic-mapper.service";
 import {Accompagnement} from "../../models/accompagnement";
 import {AccompagnementPresentation} from "../../models/accompagnement-presentation";
 import {MatDialog} from "@angular/material/dialog";
 import {DessertDataflowService} from "../../data/dessert-dataflow.service";
+import {AccompagnementMapperService} from "../../mapper/accompagnement-mapper.service";
+import {DessertService} from "../../providers/dessert.service";
 
 @Component({
   selector: 'test-desserts',
@@ -14,7 +15,7 @@ import {DessertDataflowService} from "../../data/dessert-dataflow.service";
 })
 export class DessertsComponent extends BaseAdmin<Accompagnement, AccompagnementPresentation> {
 
-  constructor(public dessertService:AccompagnementService, public mapper:BasicMapperService<Accompagnement, AccompagnementPresentation>, crud:DessertDataflowService, modalService:MatDialog) {
+  constructor(public dessertService:DessertService, public mapper:AccompagnementMapperService, crud:DessertDataflowService, modalService:MatDialog) {
     super(crud, modalService);
   }
 }

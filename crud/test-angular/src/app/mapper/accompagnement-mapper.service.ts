@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
 import {BasicMapperService} from "./basic-mapper.service";
-import {Ingredient} from "../models/ingredient";
+import {Accompagnement} from "../models/accompagnement";
 import {MapperService} from "./mapper.service";
 import {FormMapperService} from "./form-mapper.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class IngredientMapperService extends BasicMapperService<Ingredient, Ingredient>{
+export class AccompagnementMapperService extends BasicMapperService<Accompagnement, Accompagnement> {
 
   constructor(mapper:MapperService, formMapper:FormMapperService ) {
-    super(mapper, formMapper)
+    super(mapper, formMapper);
   }
 
-  toPresentation(entity: Ingredient): Ingredient {
+  toPresentation(entity: Accompagnement): Accompagnement {
     return entity;
   }
 
-  override fromFormToEntity(form: any): Ingredient {
-    return {id: form.id, nom: form.nom, prix: form.prix};
+  fromFormToEntity(form: Accompagnement): Accompagnement {
+    return form;
   }
 }

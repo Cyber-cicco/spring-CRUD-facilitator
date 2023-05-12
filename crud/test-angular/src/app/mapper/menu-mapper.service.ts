@@ -6,6 +6,7 @@ import {MenuPresentation} from "../models/menu-presentation";
 import {FormMapperService} from "./form-mapper.service";
 import {TransferFormObject} from "../models/transfer-form-object";
 import {FormMenu} from "../form-models/form-menu";
+import {transformMenu} from "@angular/material/menu";
 
 @Injectable({
   providedIn: 'root'
@@ -39,5 +40,15 @@ export class MenuMapperService extends BasicMapperService<Menu, MenuPresentation
       boisson: menu.accompagnementList.filter(a => a.typeAccompagnement == "BOISSON")[0]?.nom,
     }
     return super.toFormMap(formMenu);
+  }
+  override fromFormToEntity(form: any): Menu {
+    return {
+      accompagnementList: form.accompagnementList.map((a:any)=>{ return {nom:a}}),
+      description: form.description,
+      id: form.id,
+      nom: form.nom,
+      photo: form.photo,
+      pizzaList: form.pizzaList.map((p:any)=>{return {libelle:p}}),
+      prix: form.prix}
   }
 }

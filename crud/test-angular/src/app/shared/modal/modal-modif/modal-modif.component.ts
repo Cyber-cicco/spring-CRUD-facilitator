@@ -1,6 +1,5 @@
-import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {CrudDataflowService} from "../../../data/crud-dataflow.service";
-import {Subscription} from "rxjs";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {TransferFormObject} from "../../../models/transfer-form-object";
@@ -38,14 +37,14 @@ export class ModalModifComponent<T extends BaseEntity, D extends BaseEntity> imp
   mapper:BasicMapperService<T, D> | undefined
 
   boxValues:Map<string, Map<string,boolean>> = new Map();
+  crud?:CrudDataflowService<T>
 
   multichoiceValues: Map<string, Map<string, number>> = new Map();
 
   inputValues : Map<string, FormValue | Multichoice[]> = new Map();
 
 
-  constructor(private crud:CrudDataflowService<T>,
-              private fb:FormBuilder,
+  constructor(private fb:FormBuilder,
               private modalService:MatDialog,
               @Inject(MAT_DIALOG_DATA) public data: any
   ) {
@@ -59,8 +58,11 @@ export class ModalModifComponent<T extends BaseEntity, D extends BaseEntity> imp
   /**Création des champs du formulaire*/
   ngOnInit(): void {
 
-    this.asyncFields = this.crud.getAsyncFieldsSubscriptions().getValue()
-    this.entity = this.data.entity
+    this.crud = this.data.crud;
+    this.asyncFields = this.crud!.getAsyncFieldsSubscriptions().getValue();
+    console.log(this.asyncFields);
+    this.entity = this.data.entity;
+    this.handler = this.data.handler;
     this.mapper = this.data.mapper;
     if(this.mapper != undefined){
       this.items = this.mapper?.toFormMap(this.entity)
@@ -72,18 +74,17 @@ export class ModalModifComponent<T extends BaseEntity, D extends BaseEntity> imp
   createFormFields(){
     let formGroupFields:any = {};
     for(let tfo of this.items!){
-      console.log(tfo);
+      console.log("début loop");
       if (tfo.form.type != FormType.MULTICHOICE && tfo.form.type != FormType.CHECKBOX){
         let control =new FormControl({value:tfo.form.value, disabled:tfo.form.options.includes(FormOption.READONLY)});
-        console.log(control);
         if (tfo.form.validators != undefined) control.addValidators(tfo.form.validators);
         formGroupFields[tfo.name] = control;
         this.inputValues.set(tfo.name, tfo.form.value);
 
 
       } else if(tfo.form.value instanceof Array){
-        console.log(tfo);
         if(tfo.form.type === FormType.CHECKBOX){
+          console.log("checkbox")
           let boxMap = new Map<string,boolean>();
           if(!this.asyncFields.has(tfo.name)) throw "Les valeurs possibles d'une checkbox n'ont pas été renseignées";
 
@@ -118,30 +119,29 @@ export class ModalModifComponent<T extends BaseEntity, D extends BaseEntity> imp
 
       }
     }
-    console.log(formGroupFields);
     this.formModification = this.fb.group(formGroupFields);
-    console.log(this.formModification.controls)
   }
 
   /**Foncition appelée lors du clique sur un bouton fermant la modale
    * */
   closeModal(validated: boolean) {
     if(validated){
-
-/*
       let mapResult = new Map<string, FormValue | Multichoice[]>();
+      let resutlObject:any = {}
         this.multichoiceValues.forEach((val, key) => {
           let multichoices:Multichoice[] = []
           for(let entry of val.entries()){
             multichoices.push({nom:entry[0], nb:entry[1]})
           }
           mapResult.set(key, multichoices);
+          resutlObject[key] = multichoices;
         });
 
       for(let tfo of this.items){
 
         if ([FormType.TEXT, FormType.PASSWORD, FormType.DATE, FormType.NUMBER].includes(tfo.form.type)){
             mapResult.set(tfo.id, this.formModification.controls[tfo.name]?.value);
+            resutlObject[tfo.id] = this.formModification.controls[tfo.name]?.value
 
         } else if (tfo.form.type == FormType.CHECKBOX){
 
@@ -152,16 +152,17 @@ export class ModalModifComponent<T extends BaseEntity, D extends BaseEntity> imp
             }
 
             mapResult.set(tfo.id, arraySult);
+            resutlObject[tfo.id] = arraySult;
 
           } else if (tfo.form.type != FormType.MULTICHOICE) {
 
             mapResult.set(tfo.id, this.inputValues.get(tfo.name)!);
+            resutlObject[tfo.id] = this.inputValues.get(tfo.name)!
           }
         }
         console.log("map created from the form");
         console.log(mapResult);
-        this.crud.getConfModifSubject().next(mapResult);
-*/
+        console.log(resutlObject);
       }
     this.modalService.closeAll();
   }

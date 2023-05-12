@@ -6,6 +6,7 @@ import {BaseAdmin} from "../../models/base-admin";
 import {Utilisateur} from "../../models/utilisateur";
 import {MatDialog} from "@angular/material/dialog";
 import {UtilisateurDataflowService} from "../../data/utilisateur-dataflow.service";
+import {LivreurService} from "../../providers/livreur.service";
 
 @Component({
   selector: 'test-livreurs',
@@ -14,7 +15,7 @@ import {UtilisateurDataflowService} from "../../data/utilisateur-dataflow.servic
 })
 export class LivreursComponent extends BaseAdmin<Utilisateur, UtilisateurPresentation>{
 
-    constructor(public utilisateurService:UtilisateurService, public mapper:UtilisateurMapperService, crud:UtilisateurDataflowService, modalService:MatDialog) {
+    constructor(public utilisateurService:LivreurService, public mapper:UtilisateurMapperService, crud:UtilisateurDataflowService, modalService:MatDialog) {
     super(crud, modalService);
 
   }

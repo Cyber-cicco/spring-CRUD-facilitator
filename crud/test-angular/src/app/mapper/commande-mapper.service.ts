@@ -49,4 +49,18 @@ export class CommandeMapperService extends BasicMapperService<Commande, Commande
     }
     return super.toFormMap(commandeMap);
   }
+
+  override fromFormToEntity(form: any): Commande {
+    return {
+      adresse: {rue:form.rue, ville:form.ville, codePostal:form.codePostal},
+      commandeMenuList: form.commandeMenuList.map((cm:any) => { return {menu:{nom:cm.nom}, nbMenus:cm.nb }}),
+      commandePizzaList: form.commandePizzaList.map((cp:any) => { return {pizzaDto:{nom:cp.nom}, nbPizzas:cp.nb }}),
+      dateCommande: form.dateCommande,
+      emailClient: form.emailClient,
+      emailLivreur: form.emailLivreur,
+      id: form.id,
+      nomMagasin: form.nomMagasin,
+      status: form.status
+    }
+  }
 }

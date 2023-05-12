@@ -23,7 +23,7 @@ export class PizzaMapperService extends BasicMapperService<Pizza, PizzaPresentat
       version: pizza.version,
       ingredients: pizza.ingredientList.map(val=>val.nom).join(', '),
       toppings: pizza.toppingList.map(val=>val.nom).join(', '),
-      pate: pizza.pate?.nom,
+      pate: pizza.pate?.nom!,
       prix: pizza.prix,
     }
   }
@@ -36,10 +36,25 @@ export class PizzaMapperService extends BasicMapperService<Pizza, PizzaPresentat
       categorie: pizza.categorie,
       nom: pizza.nom,
       prix: pizza.prix,
-      pate: pizza.pate?.nom,
+      pate: pizza.pate?.nom!,
       ingredientList: pizza.ingredientList.map(p => p.nom),
       toppingList: pizza.toppingList.map(t=>t.nom),
     }
     return super.toFormMap(formPizza);
+  }
+
+  override fromFormToEntity(form: any): Pizza {
+    return {
+      categorie:form.categorie,
+      code: form.code,
+      id: form.id,
+      ingredientList: form.ingredientList.map((i:any)=>{return {nom:i}}),
+      nom: form.nom,
+      pate: {nom:form.pate},
+      prix: form.prix,
+      toCreate: form.toCreate,
+      toppingList: form.toppingList.map((t:any)=> {return {nom:t}}),
+      version: form.version
+    }
   }
 }

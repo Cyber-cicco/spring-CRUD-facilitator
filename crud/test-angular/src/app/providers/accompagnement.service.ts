@@ -14,12 +14,10 @@ export class AccompagnementService implements BasicService<Accompagnement>{
    private URL_API_API_V1_ACCOMPAGNEMENT = environnement.urlApi + "/api/v1/accompagnement";
    private URL_API_API_V1_ACCOMPAGNEMENT_ALL = environnement.urlApi + "/api/v1/accompagnement/all";
    private URL_API_API_V1_ACCOMPAGNEMENT_ID = environnement.urlApi + "/api/v1/accompagnement/{id}";
-   private URL_API_API_V1_BOISSONS_ALL = environnement.urlApi + "/api/v1/accompagnement/boissons/all"
-    private URL_API_API_V1_DESSERT_ALL = environnement.urlApi + "/api/v1/accompagnement/desserts/all"
     private URL_API_API_V1_ENCAS_ALL = environnement.urlApi + "/api/v1/accompagnement/encas/all"
 
 
-    constructor(private http:HttpClient){}
+    constructor(protected http:HttpClient){}
 
 
     getAll(){
@@ -52,14 +50,6 @@ export class AccompagnementService implements BasicService<Accompagnement>{
         return this.http.delete<Object>(newURL)
     }
 
-    getAllBoissons(){
-     return this.http.get<Accompagnement[]>(this.URL_API_API_V1_BOISSONS_ALL);
-    }
-
-
-    getAllDessert() {
-        return this.http.get<Accompagnement[]>(this.URL_API_API_V1_DESSERT_ALL);
-    }
     getAllEncas() {
         return this.http.get<Accompagnement[]>(this.URL_API_API_V1_ENCAS_ALL);
     }

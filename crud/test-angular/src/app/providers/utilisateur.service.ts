@@ -14,11 +14,9 @@ export class UtilisateurService implements BasicService<Utilisateur>{
    private URL_API_API_V1_UTILISATEUR = environnement.urlApi + "/api/v1/utilisateur";
    private URL_API_API_V1_UTILISATEUR_ID = environnement.urlApi + "/api/v1/utilisateur/{id}";
    private URL_API_API_V1_UTILISATEUR_ALL = environnement.urlApi + "/api/v1/utilisateur/all";
-  private URL_API_API_V1_CLIENT_ALL = environnement.urlApi + "/api/v1/utilisateur/clients";
-  private URL_API_API_V1_LIVREUR_ALL= environnement.urlApi + "/api/v1/utilisateur/livreurs";
 
 
-    constructor(private http:HttpClient){}
+    constructor(protected http:HttpClient){}
 
 
     getAll(){
@@ -26,18 +24,11 @@ export class UtilisateurService implements BasicService<Utilisateur>{
     }
 
 
-  getAllClients(){
-    return this.http.get<Utilisateur[]>(this.URL_API_API_V1_CLIENT_ALL);
-  }
     getById(id: string){
         let newURL = this.URL_API_API_V1_UTILISATEUR_ID
         newURL = newURL.replace('{id}', id);
         return this.http.get<Utilisateur>(newURL);
     }
-
-  getAllLivreurs(){
-    return this.http.get<Utilisateur[]>(this.URL_API_API_V1_LIVREUR_ALL);
-  }
 
     post(dto : Utilisateur){
         return this.http.post<Utilisateur>(this.URL_API_API_V1_UTILISATEUR,dto);

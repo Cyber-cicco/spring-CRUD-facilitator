@@ -10,7 +10,7 @@ export interface Pizza extends BaseEntity{
   nom:string,
   prix:number,
   toCreate:string,
-  pate:Pate,
+  pate:Partial<Pate>,
   code:string,
   categorie:string,
   version:number,

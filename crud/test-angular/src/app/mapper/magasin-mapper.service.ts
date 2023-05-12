@@ -25,4 +25,8 @@ export class MagasinMapperService extends BasicMapperService<Magasin, MagasinPre
     };
   }
 
+  override fromFormToEntity(form: any): Magasin {
+    return {adresse: {rue:form.rue, codePostal:form.codePostal, ville:form.ville}, id: form.id, nom: form.nom}
+  }
+
 }
