@@ -1,40 +1,34 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {CrudDataflowService} from "../../../data/crud-dataflow.service";
+import {CrudDataflowService} from "../../../config/data/crud-dataflow.service";
 import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
-import {BasicService} from "../../../providers/basic-service";
-import {BaseEntity} from "../../../models/base-entity";
+import {BaseEntity} from "../../../config/models/base-entity";
+import {SupprFormData} from "../../../config/form-models/suppr-form-data";
+import { BaseHandler } from 'src/app/config/providers/base-handler';
 
 @Component({
-  selector: 'test-modal-suppr',
+  selector: 'sid-modal-suppr',
   templateUrl: './modal-suppr.component.html',
   styleUrls: ['./modal-suppr.component.scss']
 })
-export class ModalSupprComponent<T extends BaseEntity> implements OnInit{
+export class ModalSupprComponent<T extends BaseEntity, D extends BaseEntity> implements OnInit{
 
-  private id = 0;
- private service?:BasicService<T>;
+  private entity?:T
+  private service?:BaseHandler<T, D>;
 
- private crud?:CrudDataflowService<T>
+  private crud?:CrudDataflowService<T, D>
 
-  constructor(private dialog:MatDialog,  @Inject(MAT_DIALOG_DATA) public data: any) {
-    console.log(this.data);
-  }
+  constructor(private dialog:MatDialog,  @Inject(MAT_DIALOG_DATA) public data: SupprFormData<T, D>) {}
 
 
 
   closeModal(sendNotification: boolean) {
-    console.log(this.service == undefined)
-    if (sendNotification) this.service?.deleteById(String(this.id)).subscribe(()=>
-      this.service!.getAll().subscribe(value => {
-        this.crud?.getTabRowSubject().next(value);
-      })
-    );
+    if (sendNotification && this.entity != undefined && this.crud != undefined) this.service?.handleFormSuppression(this.entity);
     this.dialog.closeAll();
   }
 
   ngOnInit(): void {
     console.log(this.data)
-    this.id = this.data.id;
+    this.entity= this.data.entity;
     this.service = this.data.service;
     this.crud = this.data.crud;
   }

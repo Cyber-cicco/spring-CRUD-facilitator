@@ -1,12 +1,13 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {CrudDataflowService} from "../../data/crud-dataflow.service";
+import { CrudDataflowService } from 'src/app/config/data/crud-dataflow.service';
 import {MatDialog} from "@angular/material/dialog";
 import {ModalSupprComponent} from "../modal/modal-suppr/modal-suppr.component";
 import {ModalModifComponent} from "../modal/modal-modif/modal-modif.component";
-import {BaseEntity} from "../../models/base-entity";
-import {BasicMapperService} from "../../mapper/basic-mapper.service";
+import { BaseEntity } from 'src/app/config/models/base-entity';
+import { BasicMapperService } from 'src/app/config/mapper/basic-mapper.service';
 import {Subscription} from "rxjs";
-import {BaseHandler} from "../../providers/base-handler";
+import { BaseHandler } from 'src/app/config/providers/base-handler';
+import { BaseTabEntity } from 'src/app/config/models/base-tab-entity';
 
 @Component({
   selector: 'test-tableau',
@@ -14,7 +15,7 @@ import {BaseHandler} from "../../providers/base-handler";
   styleUrls: ['./tableau.component.scss']
 })
 
-export class TableauComponent<T extends BaseEntity, D extends BaseEntity> implements OnInit, OnChanges{
+export class TableauComponent<T extends BaseEntity, D extends BaseTabEntity> implements OnInit, OnChanges{
 
   enTetes:string[] | undefined =[];
 
@@ -24,11 +25,12 @@ export class TableauComponent<T extends BaseEntity, D extends BaseEntity> implem
 
   @Input() mapper?:BasicMapperService<T, D>
   @Input() service?:BaseHandler<T, D>
-  @Input() crud?: CrudDataflowService<T>;
+  @Input() crud?: CrudDataflowService<T,D>;
   @Input() entites?: T[]
   constructor(private dialog: MatDialog) {}
 
   ngOnInit(): void {
+    console.log("in tableau");
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -37,16 +39,16 @@ export class TableauComponent<T extends BaseEntity, D extends BaseEntity> implem
 
 
   fillTableau(entites:T[]|undefined) {
+    console.log("changing");
     if(this.mapper != undefined && entites != undefined && entites.length > 0){
       this.entites = entites;
       this.presentationItems = [];
       let tabEntities:D[] = entites.map(e => this.mapper!.toPresentation(e))
-      if(this.enTetes?.length ===0) this.enTetes = this.mapper.toPresentationKeys(tabEntities[0]);
-      if(tabEntities[0].id != null){
+      if(this.enTetes?.length === 0) this.enTetes = this.mapper.toPresentationKeys(tabEntities[0]);
+      if(this.entites[0].id != null){
         for(let i = 0; i < entites.length; i++){
           let items:string[] = [];
           for(let value of Object.values(tabEntities[i])){
-            console.log(value);
             items.push(value);
           }
           this.presentationItems.push(items);
@@ -55,38 +57,17 @@ export class TableauComponent<T extends BaseEntity, D extends BaseEntity> implem
     }
   }
 
-  sendSupprNotification(id: string | undefined) {
-    if(id != undefined && this.service != undefined && !isNaN(Number(id))){
-    this.dialog.open(ModalSupprComponent, {
-      width:'550px',
-      enterAnimationDuration:'1',
-      exitAnimationDuration:'1',
-      data : {
-        service:this.service,
-        id:id,
-        crud:this.crud
-      }
-    })
+  sendSupprNotification(id: number| undefined) {
+    if(id!= undefined && this.service != undefined && this.entites!= undefined){
+      this.service.handleTabSuppression(this.entites[id]);
     } else {
       throw "Erreur :  l'élément dans le tableau semble ne pas contenir d'id";
     }
   }
 
-  openForm(id:string|undefined){
-    if(id != undefined && !isNaN(Number(id)) && this.service != undefined){
-      this.service.getById(id).subscribe(value=>{
-        this.dialog.open(ModalModifComponent, {
-          width:'550px',
-          enterAnimationDuration:'1',
-          exitAnimationDuration:'1',
-          data : {
-            service:this.service,
-            mapper:this.mapper,
-            entity:value,
-            crud:this.crud,
-          }
-        })
-      })
+  openForm(index:number){
+    if(index!= undefined && this.service != undefined && this.entites!= undefined && this.mapper != undefined){
+      this.service.handleTabModifications(this.entites[index]);
     } else {
       throw "Erreur, la ligne du tableau semble ne pas posséder d'identifiant, ou la subsciption n'est pas initialisée";
     }
@@ -94,22 +75,10 @@ export class TableauComponent<T extends BaseEntity, D extends BaseEntity> implem
   openAjout(){
     if(this.service != undefined && this.entites != undefined && this.entites.length > 0){
       let mockEntity:any = {}
-      console.log(this.entites[0]);
       for(let key of Object.keys(this.entites[0])){
         mockEntity[key] = null;
       }
-      console.log(mockEntity);
-      this.dialog.open(ModalModifComponent, {
-        width:'550px',
-        enterAnimationDuration:'1',
-        exitAnimationDuration:'1',
-        data : {
-          service:this.service,
-          mapper:this.mapper,
-          entity:mockEntity,
-          crud:this.crud,
-        }
-      })
+      this.service.handleTabAjout(mockEntity);
     }
   }
 }

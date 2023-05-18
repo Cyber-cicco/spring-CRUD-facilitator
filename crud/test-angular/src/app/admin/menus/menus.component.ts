@@ -1,16 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {Menu} from "../../models/menu";
-import {MenuService} from "../../providers/menu.service";
-import {MenuMapperService} from "../../mapper/menu-mapper.service";
-import {MenuPresentation} from "../../models/menu-presentation";
-import {BaseAdmin} from "../../models/base-admin";
-import {MatDialog} from "@angular/material/dialog";
+import { Menu } from 'src/app/config/models/menu';
+import { MenuHandlerService } from './providers/menu-handler.service';
+import { MenuMapperService } from './mapper/menu-mapper.service';
+import { MenuPresentation } from './models/menu-presentation';
+import { BaseAdmin } from 'src/app/config/models/base-admin';
 import {map, Observable} from "rxjs";
-import {Status} from "../../form-models/status-enum";
-import {AccompagnementService} from "../../providers/accompagnement.service";
-import {PizzaService} from "../../providers/pizza.service";
-import {TypeAccompagnement} from "../../form-models/type-accompagnement-enum";
-import {MenuDataflowService} from "../../data/menu-dataflow.service";
+import { Status } from '../commandes/enum/status-enum';
+import { AccompagnementService } from 'src/app/config/providers/accompagnement.service';
+import { PizzaService } from 'src/app/config/providers/pizza.service';
+import { TypeAccompagnement } from 'src/app/config/enums/type-accompagnement-enum';
+import { MenuDataflowService } from './data/menu-dataflow.service';
 
 @Component({
   selector: 'test-menus',
@@ -20,8 +19,8 @@ import {MenuDataflowService} from "../../data/menu-dataflow.service";
 export class MenusComponent extends BaseAdmin<Menu, MenuPresentation> implements OnInit{
 
 
-  constructor(public menuService:MenuService, public mapper:MenuMapperService, crud:MenuDataflowService, modalService:MatDialog, private accompagnementService:AccompagnementService, private pizzaService:PizzaService) {
-    super(crud, modalService, menuService);
+  constructor(public menuService:MenuHandlerService, public mapper:MenuMapperService, crud:MenuDataflowService, private accompagnementService:AccompagnementService, private pizzaService:PizzaService) {
+    super(crud, menuService);
   }
 
   ngOnInit(): void {

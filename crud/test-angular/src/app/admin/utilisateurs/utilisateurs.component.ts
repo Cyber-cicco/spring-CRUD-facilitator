@@ -1,11 +1,10 @@
 import {Component} from '@angular/core';
-import {UtilisateurService} from "../../providers/utilisateur.service";
-import {Utilisateur} from "../../models/utilisateur";
-import {UtilisateurMapperService} from "../../mapper/utilisateur-mapper.service";
-import {UtilisateurPresentation} from "../../models/utilisateur-presentation";
-import {BaseAdmin} from "../../models/base-admin";
-import {MatDialog} from "@angular/material/dialog";
-import {UtilisateurDataflowService} from "../../data/utilisateur-dataflow.service";
+import { Utilisateur } from 'src/app/config/models/utilisateur';
+import { UtilisateurMapperService } from './mapper/utilisateur-mapper.service';
+import { UtilisateurPresentation } from './models/utilisateur-presentation';
+import { BaseAdmin } from 'src/app/config/models/base-admin';
+import { UtilisateurDataflowService } from './data/utilisateur-dataflow.service';
+import { UtilisateurHandlerService } from './providers/utilisateur-handler.service';
 
 @Component({
   selector: 'test-utilisateurs',
@@ -14,10 +13,10 @@ import {UtilisateurDataflowService} from "../../data/utilisateur-dataflow.servic
 })
 export class UtilisateursComponent extends BaseAdmin<Utilisateur, UtilisateurPresentation> {
 
-  constructor(public utilisateurService:UtilisateurService,
+  constructor(public utilisateurService:UtilisateurHandlerService,
               public mapper:UtilisateurMapperService,
               crud:UtilisateurDataflowService,
-              modalService:MatDialog) {
-    super(crud,modalService, utilisateurService);
+              ) {
+    super(crud, utilisateurService);
   }
 }

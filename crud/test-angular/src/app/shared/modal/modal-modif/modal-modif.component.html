@@ -2,16 +2,16 @@
   <ng-form [formGroup]="formModification" class="form">
     <div *ngFor="let item of items" class="form-group">
       <label>{{item.name}}</label>
-      <input class="form-control" *ngIf="item.form.type == 'number' || item.form.type == 'text' || item.form.type == 'password' || item.form.type=='date'"  [type]="item.form.type" formControlName="{{item.name}}">
-      <select class="form-control" *ngIf="item.form.type == 'select'"(change)="addSelectValues(item.name, $event)">
-        <option *ngFor="let option of asyncFields.get(item.name)" value="{{option}}" [selected]="option === item.form.value">{{option}}</option>
+      <input class="form-control" *ngIf="item.form.type == 'number' || item.form.type == 'text' || item.form.type == 'password' || item.form.type=='date'"  [type]="item.form.type" formControlName="{{item.id}}">
+      <select class="form-control" *ngIf="item.form.type == 'select'"(change)="addSelectValues(item.id, $event)">
+        <option *ngFor="let option of asyncFields.get(item.id)" value="{{option}}" [selected]="option === item.form.value">{{option}}</option>
       </select>
       <fieldset *ngIf="item.form.type == 'radio' || item.form.type == 'multichoice' || item.form.type == 'checkbox'">
-        <div *ngFor="let option of asyncFields.get(item.name)" class="form-group">
+        <div *ngFor="let option of asyncFields.get(item.id)" class="form-group">
           <label>{{option}}</label>
-          <input *ngIf="item.form.type == 'multichoice'" type="number"  formControlName="{{option}}" (ngModelChange)="addMultichoiceValues(item.id, option, $event)">
-          <input *ngIf="item.form.type == 'radio'" name="{{item.name}}" type="{{item.form.type}}" formControlName="{{item.name}}" (click)="addInputValues(item.name, option)" value="{{option}}" [checked]="checkChecked(item.form.value, option)">
-          <input *ngIf="item.form.type == 'checkbox'"  type="{{item.form.type}}" formControlName="{{option}}" value="{{option}}" (click)="addBoxValues(item.name, option)" [checked]="checkChecked(item.form.value, option)">
+          <input *ngIf="item.form.type == 'multichoice'" type="number"  formControlName="{{option}}" (ngModelChange)="addMultiEntityValues(item.id, option, $event)">
+          <input *ngIf="item.form.type == 'radio'" name="{{item.id}}" type="{{item.form.type}}" formControlName="{{item.id}}" (click)="addInputValues(item.id, option)" value="{{option}}" [checked]="checkChecked(item.form.value, option)">
+          <input *ngIf="item.form.type == 'checkbox'"  type="{{item.form.type}}" formControlName="{{option}}" value="{{option}}" (click)="addBoxValues(item.id, option)" [checked]="checkChecked(item.form.value, option)">
         </div>
       </fieldset>
     </div>

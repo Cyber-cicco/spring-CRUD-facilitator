@@ -1,11 +1,10 @@
 import {Component} from '@angular/core';
-import {BaseAdmin} from "../../models/base-admin";
-import {Accompagnement} from "../../models/accompagnement";
-import {AccompagnementPresentation} from "../../models/accompagnement-presentation";
-import {MatDialog} from "@angular/material/dialog";
-import {DessertDataflowService} from "../../data/dessert-dataflow.service";
-import {AccompagnementMapperService} from "../../mapper/accompagnement-mapper.service";
-import {DessertService} from "../../providers/dessert.service";
+import { BaseAdmin } from 'src/app/config/models/base-admin';
+import { Accompagnement } from 'src/app/config/models/accompagnement';
+import { AccompagnementPresentation } from '../boissons/models/accompagnement-presentation';
+import { DessertDataflowService } from './data/dessert-dataflow.service';
+import { AccompagnementMapperService } from '../boissons/mapper/accompagnement-mapper.service';
+import { DessertHandlerService } from './providers/dessert-handler.service';
 
 @Component({
   selector: 'test-desserts',
@@ -14,7 +13,7 @@ import {DessertService} from "../../providers/dessert.service";
 })
 export class DessertsComponent extends BaseAdmin<Accompagnement, AccompagnementPresentation> {
 
-  constructor(public dessertService:DessertService, public mapper:AccompagnementMapperService, crud:DessertDataflowService, modalService:MatDialog) {
-    super(crud, modalService, dessertService);
+  constructor(public dessertService:DessertHandlerService, public mapper:AccompagnementMapperService, crud:DessertDataflowService) {
+   super(crud, dessertService);
   }
 }

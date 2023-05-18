@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Multichoice } from '../form-models/form-mutlichoice';
+import {MultiEntity} from "../config/form-models/form-mutlichoice";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -7,7 +8,7 @@ export class TypeUtilsService {
 
   constructor() { }
 
-  instanceOfMultichoice(object:Object):object is Multichoice{
+  instanceOfMultichoice(object:Object):object is MultiEntity{
     return "nb" in object;
   }
 
@@ -19,7 +20,7 @@ export class TypeUtilsService {
     return object instanceof Date;
   }
 
-  public instanceOfMultichoiceArray(object:Object):object is Multichoice[]{
+  public instanceOfMultichoiceArray(object:Object):object is MultiEntity[]{
     return object instanceof Array && object.length > 0 && this.instanceOfMultichoice(object[0]) ;
   }
 

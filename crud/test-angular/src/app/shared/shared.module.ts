@@ -29,7 +29,6 @@ import {MatRadioModule} from "@angular/material/radio";
         RouterLinkActive,
         MatButtonModule,
         MaterialModule,
-        FormsModule,
         ReactiveFormsModule,
         MatRadioModule
     ]

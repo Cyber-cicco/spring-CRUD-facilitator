@@ -1,11 +1,10 @@
 import {Component} from '@angular/core';
-import {IngredientService} from "../../providers/ingredient.service";
-import {BaseAdmin} from "../../models/base-admin";
-import {Ingredient} from "../../models/ingredient";
-import {IngredientPresentation} from "../../models/ingredient-presentation";
-import {MatDialog} from "@angular/material/dialog";
-import {IngredientDataflowService} from "../../data/ingredient-dataflow.service";
-import {IngredientMapperService} from "../../mapper/ingredient-mapper.service";
+import { IngredientHandlerService } from './providers/ingredient-handler.service';
+import { BaseAdmin } from 'src/app/config/models/base-admin';
+import { Ingredient } from 'src/app/config/models/ingredient';
+import { IngredientPresentation } from './models/ingredient-presentation';
+import { IngredientDataflowService } from './data/ingredient-dataflow.service';
+import { IngredientMapperService } from './mapper/ingredient-mapper.service';
 
 @Component({
   selector: 'test-ingredients',
@@ -14,7 +13,7 @@ import {IngredientMapperService} from "../../mapper/ingredient-mapper.service";
 })
 export class IngredientsComponent extends BaseAdmin<Ingredient, IngredientPresentation> {
 
-  constructor(public ingredientService: IngredientService, public mapper: IngredientMapperService, crud: IngredientDataflowService, modalService: MatDialog) {
-    super(crud, modalService, ingredientService);
+  constructor(public ingredientService: IngredientHandlerService, public mapper: IngredientMapperService, crud: IngredientDataflowService) {
+    super(crud, ingredientService);
   }
 }

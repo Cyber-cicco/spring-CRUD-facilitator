@@ -1,11 +1,10 @@
 import {Component} from '@angular/core';
-import {BaseAdmin} from "../../models/base-admin";
-import {Accompagnement} from "../../models/accompagnement";
-import {AccompagnementPresentation} from "../../models/accompagnement-presentation";
-import {MatDialog} from "@angular/material/dialog";
-import {BoissonDataflowService} from "../../data/boisson-dataflow.service";
-import {AccompagnementMapperService} from "../../mapper/accompagnement-mapper.service";
-import {BoissonServiceService} from "../../providers/boisson-service.service";
+import {BaseAdmin} from "../../config/models/base-admin";
+import {Accompagnement} from "../../config/models/accompagnement";
+import {AccompagnementPresentation} from "./models/accompagnement-presentation";
+import { BoissonHandlerService } from './providers/boisson-handler.service';
+import {AccompagnementMapperService} from "./mapper/accompagnement-mapper.service";
+import {BoissonDataflowService} from "./data/boisson-dataflow.service";
 
 @Component({
   selector: 'test-boissons',
@@ -13,7 +12,7 @@ import {BoissonServiceService} from "../../providers/boisson-service.service";
   styleUrls: ['./boissons.component.scss']
 })
 export class BoissonsComponent extends BaseAdmin<Accompagnement, AccompagnementPresentation> {
-  constructor(public boissonService: BoissonServiceService, public mapper: AccompagnementMapperService, crud: BoissonDataflowService, modalService:MatDialog) {
-    super(crud, modalService, boissonService);
+  constructor(public boissonService: BoissonHandlerService, public mapper: AccompagnementMapperService, crud: BoissonDataflowService) {
+    super(crud, boissonService);
   }
 }

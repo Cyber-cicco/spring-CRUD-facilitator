@@ -7,12 +7,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of presentationItems">
+        <tr *ngFor="let item of presentationItems; let index = index">
             <td *ngFor="let row of item">{{row}}</td>
             <td>
               <div class="buttons">
-                <button class="btn-small neutral" (click)="openForm(item[0])">Modifier</button>
-                <button class="btn-small" (click)="sendSupprNotification(item[0])">Supprimer</button>
+                <button class="btn-small neutral" (click)="openForm(index)">Modifier</button>
+                <button class="btn-small" (click)="sendSupprNotification(index)">Supprimer</button>
               </div>
             </td>
         </tr>

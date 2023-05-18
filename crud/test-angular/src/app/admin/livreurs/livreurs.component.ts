@@ -1,11 +1,10 @@
 import {Component} from '@angular/core';
-import {UtilisateurPresentation} from "../../models/utilisateur-presentation";
-import {UtilisateurMapperService} from "../../mapper/utilisateur-mapper.service";
-import {BaseAdmin} from "../../models/base-admin";
-import {Utilisateur} from "../../models/utilisateur";
-import {MatDialog} from "@angular/material/dialog";
-import {UtilisateurDataflowService} from "../../data/utilisateur-dataflow.service";
-import {LivreurService} from "../../providers/livreur.service";
+import { UtilisateurPresentation } from '../utilisateurs/models/utilisateur-presentation';
+import { UtilisateurMapperService } from '../utilisateurs/mapper/utilisateur-mapper.service';
+import { BaseAdmin } from 'src/app/config/models/base-admin';
+import { Utilisateur } from 'src/app/config/models/utilisateur';
+import { UtilisateurDataflowService } from '../utilisateurs/data/utilisateur-dataflow.service';
+import { LivreurHandlerService } from './providers/liveur-handler.service';
 
 @Component({
   selector: 'test-livreurs',
@@ -14,8 +13,8 @@ import {LivreurService} from "../../providers/livreur.service";
 })
 export class LivreursComponent extends BaseAdmin<Utilisateur, UtilisateurPresentation>{
 
-    constructor(public utilisateurService:LivreurService, public mapper:UtilisateurMapperService, crud:UtilisateurDataflowService, modalService:MatDialog) {
-    super(crud, modalService, utilisateurService);
+    constructor(public utilisateurService:LivreurHandlerService, public mapper:UtilisateurMapperService, crud:UtilisateurDataflowService) {
+    super(crud, utilisateurService);
 
   }
 }
